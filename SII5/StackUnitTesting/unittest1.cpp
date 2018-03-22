@@ -8,9 +8,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace StackUnitTesting {		
 	TEST_CLASS(PushingUnitTests) {
 	public:
-		
 		TEST_METHOD(PushingToEmptyStack) {
-			Stack st(1);
+			Stack<int, 1> st;
 			Assert::AreEqual<bool>(true, st.isEmpty());
 
 			st.Push(1);
@@ -18,7 +17,7 @@ namespace StackUnitTesting {
 		}
 
 		TEST_METHOD(PushingToNonEmptyStack) {
-			Stack st(3);
+			Stack<int, 1> st;
 
 			st.Push(1);
 
@@ -27,7 +26,7 @@ namespace StackUnitTesting {
 		}
 
 		TEST_METHOD(PushingToFilledStack) {
-			Stack st(1);
+			Stack<int, 1> st;
 
 			st.Push(1);
 			try {
@@ -37,14 +36,12 @@ namespace StackUnitTesting {
 				Assert::AreEqual<size_t>(Overflow, err.getErrorID());
 			}
 		}
-
 	};
 
 	TEST_CLASS(PeekingUnitTests) {
 	public:
-
 		TEST_METHOD(PeekingFromEmptyStack) {
-			Stack st(1);
+			Stack<int, 1> st;
 
 			try {
 				st.Peek();
@@ -55,11 +52,36 @@ namespace StackUnitTesting {
 		}
 
 		TEST_METHOD(PeekingFromNonEmptyStack) {
-			Stack st(1);
+			Stack<int, 1> st;
 			st.Push(1);
 
 			Assert::AreEqual<int>(1, st.Peek());
 		}
+	};
 
+	TEST_CLASS(PopingUnitTests) {
+	public:
+		TEST_METHOD(PopingFromEmptyStack) {
+			Stack<int, 1> st;
+
+			try {
+				st.Pop();
+			}
+			catch (const ErrorTypeClass &err) {
+				Assert::AreEqual<size_t>(Underflow, err.getErrorID());
+			}
+			
+		}
+
+		TEST_METHOD(PopingFromNonEmptyStack) {
+			Stack<int, 3> st;
+
+			st.Push(1);
+			st.Push(2);
+
+			st.Pop();
+
+			Assert::AreEqual<int>(1, st.Peek());
+		}
 	};
 }

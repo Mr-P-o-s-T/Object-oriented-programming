@@ -2,14 +2,14 @@
 #include "ErrorTypeClass.h"
 #include <exception>
 
+template <class T, size_t maxDepth>
 class Stack {
 public:
 	// Creates empty stack
-	Stack(size_t maxDepth) {
+	Stack() {
 		depth = 0;
 		this->maxDepth = maxDepth;
 		top = nullptr;
-		if (!maxDepth) throw ErrorTypeClass(Useless, "Maximal depth equals to 0...");
 	}
 
 	// Copies
@@ -42,13 +42,13 @@ public:
 	}
 
 	// Default stack operation. Throws an exception when stack overflow, or can not allocate memory for a new item
-	void Push(int data);
+	void Push(T data);
 
 	// Default stack operation. Throws an exception when stack is empty
-	int Pop();
+	T Pop();
 
 	// Default stack operation. Throws an exception when stack is empty
-	int & Peek() const {
+	T & Peek() const {
 		if (isEmpty()) throw ErrorTypeClass(Underflow, "Nothing to peek...");
 		return top->data;
 	}
@@ -60,7 +60,7 @@ public:
 private:
 	class Item {
 	public:
-		Item(int data, Item *prev) {
+		Item(T data, Item *prev) {
 			this->data = data;
 			prevTop = prev;
 		}
@@ -72,7 +72,7 @@ private:
 			if (prevTop) delete prevTop;
 		}
 	private:
-		int data;
+		T data;
 		Item *prevTop;
 
 		friend class Stack;
