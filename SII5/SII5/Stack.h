@@ -2,14 +2,15 @@
 #include "ErrorTypeClass.h"
 #include <exception>
 
-template <class T, size_t maxDepth>
+template <class T>
 class Stack {
 public:
 	// Creates empty stack
-	Stack() {
+	Stack(size_t maxDepth) {
 		depth = 0;
 		this->maxDepth = maxDepth;
 		top = nullptr;
+		if (!maxDepth) throw ErrorTypeClass(Useless, "maximal depth is zero...");
 	}
 
 	// Copies

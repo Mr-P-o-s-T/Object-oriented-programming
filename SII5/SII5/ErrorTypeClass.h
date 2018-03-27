@@ -5,6 +5,7 @@ enum ErrorType {
 	NotEnoughMemory,
 	Overflow,
 	Underflow,
+	Useless,
 	UnknownError,
 	AnotherError
 };
@@ -20,6 +21,6 @@ public:
 	 } 
 private:
 	ErrorType errorID;
-	const char *stdMessages[AnotherError] = {"No any error detected...", "Not enough memory...", "Stack overflow...", "Stack is empty...", "Unknown error detected..."};
+	const char *stdMessages[AnotherError] = {"No any error detected...", "Not enough memory...", "Stack overflow...", "Stack is empty...", "This kind of stack is useless:", "Unknown error detected..."};
 	const char *customMessage;
 };

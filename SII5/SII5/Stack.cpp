@@ -1,7 +1,7 @@
 #include "Stack.h"
 
-template <class T, size_t maxDepth>
-void Stack <T, maxDepth>::Push(T data) {
+template <class T>
+void Stack <T>::Push(T data) {
 	try	{
 		if (depth == maxDepth) throw ErrorTypeClass(Overflow, "Adding not alloved...");
 		top = new Item(data, top);
@@ -19,8 +19,8 @@ void Stack <T, maxDepth>::Push(T data) {
 	}
 }
 
-template <class T, size_t maxDepth>
-T Stack <T, maxDepth>::Pop() {
+template <class T>
+T Stack <T>::Pop() {
 	try {
 		if (isEmpty()) throw ErrorTypeClass(Underflow, "Deleting not allowed...");
 		Item *tmp = top;
