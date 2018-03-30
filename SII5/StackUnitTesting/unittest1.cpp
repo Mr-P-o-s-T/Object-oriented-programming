@@ -61,6 +61,7 @@ namespace StackUnitTesting {
 		TEST_METHOD(PeekingFromEmptyStack) {
 			Stack<int> st(1);
 
+			// Attempt of peeking from empty stack must cause an exception
 			try {
 				st.Peek();
 				throw "e";
@@ -74,6 +75,7 @@ namespace StackUnitTesting {
 			Stack<int> st(1);
 			st.Push(1);
 
+			// After adding an element, peek() must return a new element
 			Assert::AreEqual<int>(1, st.Peek());
 		}
 	};
@@ -83,6 +85,7 @@ namespace StackUnitTesting {
 		TEST_METHOD(PopingFromEmptyStack) {
 			Stack<int> st(1);
 
+			// Attempt of poping from empty stack must cause an exception
 			try {
 				st.Pop();
 				throw "e";
@@ -99,7 +102,7 @@ namespace StackUnitTesting {
 			st.Push(2);
 
 			st.Pop();
-
+			// After popping an element, head must point on previous elemet
 			Assert::AreEqual<int>(1, st.Peek());
 		}
 	};
