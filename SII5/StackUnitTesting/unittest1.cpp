@@ -8,19 +8,25 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace StackUnitTesting {		
 	TEST_CLASS(PushingUnitTests) {
 	public:
-		TEST_METHOD(UselessStack) 
+		TEST_METHOD(UselessStack) {
+			// If stack`s depth is 0...
 			try {
+				// Assert::ExpectException() does not work... So this construction has been created...
 				Stack<int> st(0);
 				throw "e";
 			}
 			catch (const ErrorTypeClass&err) {
 				Assert::AreEqual<size_t>(Useless, err.getErrorID());
 			}
+		}
 
 		TEST_METHOD(PushingToEmptyStack) {
 			Stack<int> st(1);
+
+			// After creation stack must be empty...
 			Assert::AreEqual<bool>(true, st.isEmpty());
 
+			// ... and must not, after adding an element
 			st.Push(1);
 			Assert::AreEqual<bool>(false, st.isEmpty());
 		}
@@ -30,6 +36,7 @@ namespace StackUnitTesting {
 
 			st.Push(1);
 
+			// After adding an element, head must point on new element
 			st.Push(2);
 			Assert::AreEqual<int>(2, st.Peek());
 		}
@@ -37,6 +44,7 @@ namespace StackUnitTesting {
 		TEST_METHOD(PushingToFilledStack) {
 			Stack<int> st(1);
 
+			// Attempt of adding to filled stack must cause an excepion
 			st.Push(1);
 			try {
 				st.Push(2);
