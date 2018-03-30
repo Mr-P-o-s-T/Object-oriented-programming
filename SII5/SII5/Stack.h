@@ -65,10 +65,13 @@ private:
 			this->data = data;
 			prevTop = prev;
 		}
+
+		// Copies
 		Item(const Item &source) {
 			prevTop = source.prevTop ? new Item(*source.prevTop) : nullptr;
 			data = source.data;
 		}
+
 		~Item() {
 			if (prevTop) delete prevTop;
 		}

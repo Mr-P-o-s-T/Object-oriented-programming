@@ -1,13 +1,13 @@
 #pragma once
 
 enum ErrorType {
-	NoError,
-	NotEnoughMemory,
-	Overflow,
-	Underflow,
-	Useless,
+	NoError, 
+	NotEnoughMemory, // bad alloc reinterpretation
+	Overflow, // current depth == maxDepth
+	Underflow, // current depth == 0
+	Useless, // maxDepth == 0
 	UnknownError,
-	AnotherError
+	AnotherError // user`s custom error
 };
 
 class ErrorTypeClass {

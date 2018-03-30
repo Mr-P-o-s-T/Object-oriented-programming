@@ -23,10 +23,12 @@ template <class T>
 T Stack <T>::Pop() {
 	try {
 		if (isEmpty()) throw ErrorTypeClass(Underflow, "Deleting not allowed...");
+
 		Item *tmp = top;
 		top = top->prevTop;
 		T result = tmp->data;
 		tmp->prevTop = nullptr;
+
 		delete tmp;
 		depth--;
 		return result;
