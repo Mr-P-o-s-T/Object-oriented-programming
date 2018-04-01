@@ -1,3 +1,3 @@
 # Object-oriented-programming
 
-2 semester.
+2nd semester.
