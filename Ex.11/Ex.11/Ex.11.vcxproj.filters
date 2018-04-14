@@ -13,18 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\Interfaces and abstractions">
+      <UniqueIdentifier>{8961a648-2ce2-4813-bfc3-44e8a187da5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Unary operations">
+      <UniqueIdentifier>{03428c09-9147-4064-9ca0-431ace809567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Binary operations">
+      <UniqueIdentifier>{b675e410-e1c4-4602-855f-2689def32fec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ITerm.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Value.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="ITerm.h">
+      <Filter>Файлы заголовков\Interfaces and abstractions</Filter>
+    </ClInclude>
     <ClInclude Include="Operator.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Interfaces and abstractions</Filter>
     </ClInclude>
     <ClInclude Include="UnarMinus.h">
+      <Filter>Файлы заголовков\Unary operations</Filter>
+    </ClInclude>
+    <ClInclude Include="UnarPlus.h">
+      <Filter>Файлы заголовков\Unary operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Plus.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
