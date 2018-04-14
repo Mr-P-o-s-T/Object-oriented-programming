@@ -115,16 +115,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Calculator.h" />
     <ClInclude Include="Divide.h" />
     <ClInclude Include="Exponent.h" />
     <ClInclude Include="ITerm.h" />
     <ClInclude Include="Minus.h" />
     <ClInclude Include="Multiply.h" />
+    <ClInclude Include="Operations.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Plus.h" />
     <ClInclude Include="UnarMinus.h" />
     <ClInclude Include="UnarPlus.h" />
     <ClInclude Include="Value.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Calculator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
