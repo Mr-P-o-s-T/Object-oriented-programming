@@ -2,9 +2,11 @@
 
 class ITerm {
 public:
-	ITerm();
+	virtual ~ITerm() = 0;
 
+	virtual void addSubterm(ITerm &t) = 0;
+	virtual void deleteSubTerm(bool first) = 0;
 	virtual float getValue() = 0;
-
-	virtual ~ITerm();
 };
+
+ITerm::~ITerm() { }
