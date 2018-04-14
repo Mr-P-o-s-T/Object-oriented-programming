@@ -27,6 +27,6 @@ public:
 	virtual ~Operator() {
 		for (size_t i = 0; i < operands.size(); i++) delete operands[i];
 	}
-private:
+protected:
 	std::vector<ITerm *> operands;
 };

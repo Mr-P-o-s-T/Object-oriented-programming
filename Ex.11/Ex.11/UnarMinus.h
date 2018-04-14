@@ -6,6 +6,6 @@ public:
 	~UnarMinus() = default;
 
 	float getValue() {
-
+		return -(operands[0]->getValue());
 	}
 };
