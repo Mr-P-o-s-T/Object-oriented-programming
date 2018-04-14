@@ -117,6 +117,7 @@
   <ItemGroup>
     <ClInclude Include="ITerm.h" />
     <ClInclude Include="Operator.h" />
+    <ClInclude Include="UnarMinus.h" />
     <ClInclude Include="Value.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
