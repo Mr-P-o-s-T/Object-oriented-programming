@@ -115,7 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Divide.h" />
+    <ClInclude Include="Exponent.h" />
     <ClInclude Include="ITerm.h" />
+    <ClInclude Include="Minus.h" />
+    <ClInclude Include="Multiply.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="Plus.h" />
     <ClInclude Include="UnarMinus.h" />

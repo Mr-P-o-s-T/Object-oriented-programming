@@ -40,7 +40,19 @@
       <Filter>Файлы заголовков\Unary operations</Filter>
     </ClInclude>
     <ClInclude Include="Plus.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\Binary operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Minus.h">
+      <Filter>Файлы заголовков\Binary operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Multiply.h">
+      <Filter>Файлы заголовков\Binary operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Divide.h">
+      <Filter>Файлы заголовков\Binary operations</Filter>
+    </ClInclude>
+    <ClInclude Include="Exponent.h">
+      <Filter>Файлы заголовков\Binary operations</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
