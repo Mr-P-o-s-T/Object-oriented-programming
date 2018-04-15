@@ -193,4 +193,33 @@ namespace Ex11UnitTests {
 		}
 
 	};
+
+	TEST_CLASS(CalculatorUnitTests) {
+	public:
+
+		TEST_METHOD(EmptyExpression) {
+			Calculator calc;
+
+			try {
+				calc.Parser9000("");
+			}
+			catch (const std::exception&) {
+				return;
+			}
+			Assert::Fail();
+		}
+
+		TEST_METHOD(CalculatorsResultTest1) {
+			Calculator calc;
+
+			Assert::AreEqual(calc.Parser9000("-1+2-3*4/5^6"), 0.999232f, 0.0000001f);
+		}
+
+		TEST_METHOD(CalculatorsResultTest2) {
+			Calculator calc;
+
+			Assert::AreEqual(calc.Parser9000("(-1+2-3)*(4/5)^6"), -0.524288f, 0.0000001f);
+		}
+
+	};
 }
