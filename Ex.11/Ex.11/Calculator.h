@@ -10,14 +10,24 @@ public:
 
 	float Parser9000(std::string expression) {
 		ITerm *tmp = buildSubtree(expression);
-		float res = tmp->GetValue();
-		delete tmp;
+		if (tmp) {
+			float res = tmp->GetValue();
+			delete tmp;
+			return res;
+		}
+		else throw std::exception("Empty expression string...");
 	}
 private:
 	ITerm *buildSubtree(std::string &expression);
 
 	std::string getSummand(std::string &expression);
 	std::string getFactor(std::string &expression);
+	std::string getExpFormula(std::string &expression);
+
+	ITerm *summand(std::string &expression);
+	ITerm *factor(std::string &expression);
+	ITerm *expFormula(std::string &expression);
+	ITerm *item(std::string &expression);
 
 	float getNumber(std::string &expression);
 };
