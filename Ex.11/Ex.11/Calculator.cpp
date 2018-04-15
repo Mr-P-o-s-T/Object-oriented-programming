@@ -97,74 +97,97 @@ std::string Calculator::getExpFormula(std::string & expression) {
 }
 
 ITerm * Calculator::summand(std::string &expression) {
-	ITerm *root;
+	ITerm *root = nullptr;
 	std::string newSummand;
-	if (expression.front() == '+') {
-		root = new UnarPlus;
-		expression.erase(expression.begin());
-		newSummand = getSummand(expression);
-		root->addSubterm(factor(newSummand));
-	}
-	else if (expression.front() == '-') {
-		root = new UnarMinus;
-		expression.erase(expression.begin());
-		newSummand = getSummand(expression);
-		root->addSubterm(factor(newSummand));
-	}
-	else {
-		newSummand = getSummand(expression);
-		root = factor(newSummand);
-	}
-	while (!expression.empty()) {
-		{
-			ITerm *tmp;
-			if (expression.front() == '+') tmp = new Plus;
-			else tmp = new Minus;
-			tmp->addSubterm(root);
-			root = tmp;
+	try
+	{
+		if (expression.front() == '+') {
+			root = new UnarPlus;
 			expression.erase(expression.begin());
+			newSummand = getSummand(expression);
+			root->addSubterm(factor(newSummand));
 		}
-		newSummand.clear();
-		newSummand = getSummand(expression);
-		root->addSubterm(factor(newSummand));
+		else if (expression.front() == '-') {
+			root = new UnarMinus;
+			expression.erase(expression.begin());
+			newSummand = getSummand(expression);
+			root->addSubterm(factor(newSummand));
+		}
+		else {
+			newSummand = getSummand(expression);
+			root = factor(newSummand);
+		}
+		while (!expression.empty()) {
+			{
+				ITerm *tmp;
+				if (expression.front() == '+') tmp = new Plus;
+				else tmp = new Minus;
+				tmp->addSubterm(root);
+				root = tmp;
+				expression.erase(expression.begin());
+			}
+			newSummand.clear();
+			newSummand = getSummand(expression);
+			root->addSubterm(factor(newSummand));
+		}
+		return root;
 	}
-	return root;
+	catch (const std::exception& e) {
+		if (root) delete root;
+		throw e;
+	}
 }
 
 ITerm * Calculator::factor(std::string &expression) {
-	std::string newFactor = getFactor(expression);
-	ITerm *root = expFormula(newFactor);
-	while (!expression.empty()) {
-		{
-			ITerm *tmp;
-			if (expression.front() == '*') tmp = new Multiply;
-			else tmp = new Divide;
-			tmp->addSubterm(root);
-			root = tmp;
-			expression.erase(expression.begin());
-		}
-		newFactor.clear();
+	ITerm *root = nullptr;
+	std::string newFactor;
+	try {
 		newFactor = getFactor(expression);
-		root->addSubterm(expFormula(newFactor));
+		root = expFormula(newFactor);
+		while (!expression.empty()) {
+			{
+				ITerm *tmp;
+				if (expression.front() == '*') tmp = new Multiply;
+				else tmp = new Divide;
+				tmp->addSubterm(root);
+				root = tmp;
+				expression.erase(expression.begin());
+			}
+			newFactor.clear();
+			newFactor = getFactor(expression);
+			root->addSubterm(expFormula(newFactor));
+		}
+		return root;
 	}
-	return root;
+	catch (const std::exception& e) {
+		if (root) delete root;
+		throw e;
+	}
 }
 
 ITerm * Calculator::expFormula(std::string &expression) {
-	std::string newExpFormula = getExpFormula(expression);
-	ITerm *root = item(newExpFormula);
-	while (!expression.empty()) {
-		{
-			ITerm *tmp = new Exponent;			
-			tmp->addSubterm(root);
-			root = tmp;
-			expression.erase(expression.begin());
-		}
-		newExpFormula.clear();
+	ITerm *root = nullptr;
+	std::string newExpFormula;
+	try {
 		newExpFormula = getExpFormula(expression);
-		root->addSubterm(item(newExpFormula));
+		root = item(newExpFormula);
+			while (!expression.empty()) {
+				{
+					ITerm *tmp = new Exponent;
+					tmp->addSubterm(root);
+					root = tmp;
+					expression.erase(expression.begin());
+				}
+				newExpFormula.clear();
+				newExpFormula = getExpFormula(expression);
+				root->addSubterm(item(newExpFormula));
+			}
+		return root;
 	}
-	return root;
+	catch (const std::exception& e) {
+		if (root) delete root;
+		throw e;
+	}
 }
 
 ITerm * Calculator::item(std::string &expression) {
@@ -196,11 +219,12 @@ float Calculator::getNumber(std::string &expression) {
 	float res = 0.0f;
 	size_t separator = 0;
 	for (size_t i = 0; i < expression.size(); i++) {
-		if ((expression[i] != '.') || (expression[i] != ',')) {
+		if ((expression[i] >= '0') && (expression[i] <= '9')) {
 			res *= 10.0f;
 			res += expression[i] - 48;
 		}
-		else separator = expression.size() - i - 1;
+		else if ((expression[i] == '.') || (expression[i] == ',')) separator = expression.size() - i - 1;
+		else throw std::exception("Unexpected symbol...");
 	}
 	for ( ; separator > 0; separator--) res /= 10.0f;
 	return res;

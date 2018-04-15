@@ -9,6 +9,8 @@ namespace Ex11UnitTests {
 	public:
 		
 		TEST_METHOD(ValueTest) {
+			// Value`s GetValue() must return current value of this Value
+
 			ITerm *val = new Value(2.57f);
 			if (abs(2.57f - val->GetValue()) > 0.01f) {
 				delete val;
@@ -23,6 +25,8 @@ namespace Ex11UnitTests {
 	public:
 
 		TEST_METHOD(GettingValueWithoutAddingAllOperands) {
+			// If not all operands are set, GetValue must throw an exception
+
 			ITerm *plus = new Plus;
 			plus->addSubterm(new Value(1.0f));
 			try {
@@ -36,6 +40,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(AddingMoreThanNOperands) {
+			// If all operands are set, addSubterm() must throw an exception
+
 			ITerm *uPlus = new UnarPlus;
 			uPlus->addSubterm(new Value(2.2f));
 			try {
@@ -49,6 +55,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(DeletingFromOperatorWithNoAddedSubterms) {
+			// If not all operands are set, deleteSubterm() must throw an exception
+
 			ITerm *uPlus = new UnarPlus;
 			try {
 				uPlus->deleteSubterm(0);
@@ -61,6 +69,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(OutOfRangeDeleting) {
+			// If you want, for example, delete an fourth operand of binary operator, deleteSubterm() must throw an exception
+
 			ITerm *uPlus = new UnarPlus;
 			uPlus->addSubterm(new Value(2.2f));
 			try {
@@ -74,6 +84,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(InRangeDeleting) {
+			// If you want, for example, delete an first operpand of binary operator, throwed exception is an error
+
 			ITerm *uPlus = new UnarPlus;
 			uPlus->addSubterm(new Value(2.2f));
 			try {
@@ -87,6 +99,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(MultiplyedOutOfRangeDeleting) {
+			// If you want, for example, delete from second to fourth operands of binary operator (or from third to fourth operator), deleteSubterm() must throw an exception
+
 			ITerm *plus = new Plus;
 			plus->addSubterm(new Value(2.2f));
 			plus->addSubterm(new Value(2.2f));
@@ -101,6 +115,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(MultiplyedInRangeDeleting) {
+			// If you want, for example, delete from first to second operpands of ternary operator (or even all operatnds), throwed exception is an error
+
 			ITerm *plus = new Plus;
 			plus->addSubterm(new Value(1.0f));
 			plus->addSubterm(new Value(1.0f));
@@ -118,6 +134,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(UnarPlusValueTest) {
+			// Unar plus must return a value of it`s operand
+
 			ITerm *uPlus = new UnarPlus;
 			uPlus->addSubterm(new Value(2.2f));
 			if (abs(2.2f - uPlus->GetValue()) > 0.01f) {
@@ -128,6 +146,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(UnarMinusValueTest) {
+			// Unar minus must return a negative value of it`s operand
+
 			ITerm *uMinus = new UnarMinus;
 			uMinus->addSubterm(new Value(2.2f));
 			if (abs(-2.2f - uMinus->GetValue()) > 0.01f) {
@@ -138,6 +158,7 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(PlusValueTest) {
+			// Plus must return a sum of values of it`s operands
 			ITerm *plus = new Plus;
 			plus->addSubterm(new Value(2.2f));
 			plus->addSubterm(new Value(2.3f));
@@ -149,6 +170,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(MinusValueTest) {
+			// Minus must return a difference of values of it`s operands
+
 			ITerm *minus = new Minus;
 			minus->addSubterm(new Value(2.2f));
 			minus->addSubterm(new Value(2.3f));
@@ -160,6 +183,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(MultiplyValueTest) {
+			// Multiply must return a composition of values of it`s operands
+
 			ITerm *multiply = new Multiply;
 			multiply->addSubterm(new Value(2.2f));
 			multiply->addSubterm(new Value(2.3f));
@@ -171,6 +196,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(DivideValueTest) {
+			// Divide must return a ratio of values of it`s operands
+
 			ITerm *divide = new Divide;
 			divide->addSubterm(new Value(2.3f));
 			divide->addSubterm(new Value(4.6f));
@@ -182,6 +209,8 @@ namespace Ex11UnitTests {
 		}
 
 		TEST_METHOD(ExponentValueTest) {
+			// Exponent must return a potentiation of values of it`s operands
+
 			ITerm *exponent = new Exponent;
 			exponent->addSubterm(new Value(2.0f));
 			exponent->addSubterm(new Value(3.0f));
@@ -198,6 +227,8 @@ namespace Ex11UnitTests {
 	public:
 
 		TEST_METHOD(EmptyExpression) {
+			// Empty string must cause an exception
+
 			Calculator calc;
 
 			try {
@@ -209,16 +240,58 @@ namespace Ex11UnitTests {
 			Assert::Fail();
 		}
 
-		TEST_METHOD(CalculatorsResultTest1) {
+		TEST_METHOD(UnsupportedSymbol) {
+			// Unsupported symbol in string must cause an exception
+
+			Calculator calc;
+
+			try {
+				calc.Parser9000("2+3*x");
+			}
+			catch (const std::exception&) {
+				return;
+			}
+			Assert::Fail();
+		}
+
+		TEST_METHOD(NoOpenBracket) {
+			// Close bracket without open one in string must cause an exception
+
+			Calculator calc;
+
+			try {
+				calc.Parser9000("2+3*4)");
+			}
+			catch (const std::exception&) {
+				return;
+			}
+			Assert::Fail();
+		}
+
+		TEST_METHOD(NoCloseBracket) {
+			// Open bracket without close one in string must cause an exception
+
+			Calculator calc;
+
+			try {
+				calc.Parser9000("(2+3*4");
+			}
+			catch (const std::exception&) {
+				return;
+			}
+			Assert::Fail();
+		}
+
+		TEST_METHOD(WholeNumbersTest) {
 			Calculator calc;
 
 			Assert::AreEqual(calc.Parser9000("-1+2-3*4/5^6"), 0.999232f, 0.0000001f);
 		}
 
-		TEST_METHOD(CalculatorsResultTest2) {
+		TEST_METHOD(FloatNumbersTest) {
 			Calculator calc;
 
-			Assert::AreEqual(calc.Parser9000("(-1+2-3)*(4/5)^6"), -0.524288f, 0.0000001f);
+			Assert::AreEqual(calc.Parser9000("36.5/4.37*12+6589"), 6689.228833f, 0.0000001f);
 		}
 
 	};
