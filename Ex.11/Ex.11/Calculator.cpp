@@ -99,8 +99,7 @@ std::string Calculator::getExpFormula(std::string & expression) {
 ITerm * Calculator::summand(std::string &expression) {
 	ITerm *root = nullptr;
 	std::string newSummand;
-	try
-	{
+	try	{
 		if (expression.front() == '+') {
 			root = new UnarPlus;
 			expression.erase(expression.begin());
