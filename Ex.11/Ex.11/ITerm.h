@@ -1,8 +1,9 @@
 #pragma once
+#include <exception>
 
 class ITerm {
 public:
-	virtual ~ITerm() = 0;
+	virtual ~ITerm() { }
 
 	virtual void addSubterm(ITerm *t) = 0;
 	virtual void deleteSubterm(size_t index) = 0;

@@ -1,7 +1,6 @@
 #pragma once
 #include "ITerm.h"
 #include <vector>
-#include <exception>
 
 template <size_t NArity>
 class Operator : public ITerm {
