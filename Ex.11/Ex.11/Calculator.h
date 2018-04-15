@@ -10,7 +10,7 @@ public:
 
 	float Parser9000(std::string expression) {
 		ITerm *tmp = buildSubtree(expression);
-		float res = tmp->getValue();
+		float res = tmp->GetValue();
 		delete tmp;
 	}
 private:

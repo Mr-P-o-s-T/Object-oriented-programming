@@ -12,7 +12,7 @@ public:
 
 	void deleteSubterms(size_t indexFrom, size_t indexTo) { throw std::exception("Unsupported operation..."); }
 
-	float getValue() { return value; }
+	float GetValue() { return value; }
 private:
 	float value;
 };

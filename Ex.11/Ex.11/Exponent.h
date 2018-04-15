@@ -6,8 +6,8 @@ class Exponent : public Operator<2> {
 public:
 	Exponent() = default;
 	~Exponent() = default;
-
+private:
 	float getValue() {
-		return pow(operands[0]->getValue(), operands[1]->getValue());
+		return pow(operands[0]->GetValue(), operands[1]->GetValue());
 	}
 };

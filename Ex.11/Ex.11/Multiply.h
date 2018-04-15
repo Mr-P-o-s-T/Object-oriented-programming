@@ -5,8 +5,8 @@ class Multiply : public Operator<2> {
 public:
 	Multiply() = default;
 	~Multiply() = default;
-
+private:
 	float getValue() {
-		return operands[0]->getValue() * operands[1]->getValue();
+		return operands[0]->GetValue() * operands[1]->GetValue();
 	}
 };

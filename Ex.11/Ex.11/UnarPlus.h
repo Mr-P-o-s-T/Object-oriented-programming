@@ -5,8 +5,8 @@ class UnarPlus : public Operator<1> {
 public:
 	UnarPlus() = default;
 	~UnarPlus() = default;
-
+private:
 	float getValue() {
-		return operands[0]->getValue();
+		return operands[0]->GetValue();
 	}
 };
