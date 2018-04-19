@@ -1,8 +1,6 @@
-package com.example.lab1ballscollision;
+package com.example.lab1ballscollision.objects;
 
-import java.math.*;
-
-public class Vector {
+class Vector {
     public static Vector nullVector;
 
     static {
