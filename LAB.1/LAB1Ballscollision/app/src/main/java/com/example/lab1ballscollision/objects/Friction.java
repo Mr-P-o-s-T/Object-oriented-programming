@@ -20,7 +20,7 @@ final class Friction extends Force {
     }
 
     @Override
-    void Update(Vector[] dependencies) { // dependencies[0] - speed, // dependencies[1] - gravity force
+    void Update(Vector ... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
         if (length() < maxStictionLength) x = y = z = 0.0;
         else {
             Vector tmp = new Vector();

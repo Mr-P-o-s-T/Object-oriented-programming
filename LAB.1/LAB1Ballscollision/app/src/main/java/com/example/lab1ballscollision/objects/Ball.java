@@ -1,8 +1,8 @@
 package com.example.lab1ballscollision.objects;
 
 public abstract class Ball {
-    protected Vector position, impulse;
-    protected float mass;
+    Vector position, impulse;
+    float mass;
 
     Ball(double x, double y, float m) {
         position = new Vector(x, y);

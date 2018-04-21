@@ -18,5 +18,5 @@ abstract class Force extends Vector {
         super(source);
     }
 
-    abstract void Update(Vector[] dependencies);
+    abstract void Update(Vector ... dependencies);
 }
