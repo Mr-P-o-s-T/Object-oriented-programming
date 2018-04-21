@@ -30,14 +30,14 @@ public final class PhysicBall extends Ball {
 
     private void updateImpulse(double deltaT) {
         if (impulse.subtract(friction).length() < 0.001) impulse = Vector.nullVector;
-        else relativeImpluseChanging(friction.x * deltaT, friction.y * deltaT);
+        else relativeImpulseChanging(friction.x * deltaT, friction.y * deltaT);
     }
 
     public void horisontalRicochet() {
-        relativeImpluseChanging(-impulse.x, impulse.y);
+        impulseChanging(-impulse.x, impulse.y);
     }
 
     public void verticalRicochet() {
-        relativeImpluseChanging(impulse.x, -impulse.y);
+        impulseChanging(impulse.x, -impulse.y);
     }
 }

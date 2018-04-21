@@ -1,6 +1,6 @@
 package com.example.lab1ballscollision.objects;
 
-public abstract class Ball {
+abstract class Ball {
     Vector position, impulse;
     float mass;
 
@@ -32,7 +32,7 @@ public abstract class Ball {
         impulse.y = speedY * mass;
     }
 
-    void relativeImpluseChanging(double deltaSpeedX, double deltaSpeedY) {
+    void relativeImpulseChanging(double deltaSpeedX, double deltaSpeedY) {
         impulse.x += deltaSpeedX * mass;
         impulse.y += deltaSpeedY * mass;
     }
