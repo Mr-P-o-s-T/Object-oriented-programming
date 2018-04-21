@@ -10,8 +10,8 @@ public final class Gravity extends Force {
         super();
     }
 
-    public Gravity(Gravity source) {
-        super(source);
+    public Gravity(Gravity origin) {
+        super(origin);
     }
 
     @Override

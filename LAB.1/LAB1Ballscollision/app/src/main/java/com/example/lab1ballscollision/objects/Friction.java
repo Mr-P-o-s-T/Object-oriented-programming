@@ -14,9 +14,13 @@ final class Friction extends Force {
         mu = nMu;
     }
 
-    Friction(Friction source) {
-        super(source);
-        mu = source.mu;
+    Friction() {
+        super();
+    }
+
+    Friction(Friction origin) {
+        super(origin);
+        mu = origin.mu;
     }
 
     @Override
