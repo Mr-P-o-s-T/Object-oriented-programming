@@ -2,9 +2,9 @@ package com.example.lab1ballscollision.objects;
 
 abstract class Ball {
     Vector position, impulse;
-    float mass;
+    double mass;
 
-    Ball(double x, double y, float m) {
+    Ball(double x, double y, double m) {
         position = new Vector(x, y);
         impulse = new Vector();
         mass = m;

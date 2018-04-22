@@ -1,25 +1,30 @@
 package com.example.lab1ballscollision.objects;
 
 public final class PhysicBall extends Ball {
-    private static double wholeMass = 0.0;
+    private static double arithmeticMeanMass = 0.0;
+    private static long N = 0;
     public static Force gravity;
     private Force friction;
 
-    public PhysicBall(double x, double y, float m) {
+    public PhysicBall(double x, double y, double m) {
         super(x, y, m);
-        wholeMass += m;
+        arithmeticMeanMass += N / (N + 1) * arithmeticMeanMass + m / (N + 1);
         friction = new Friction();
     }
 
     public PhysicBall(PhysicBall origin) {
         super(origin);
-        wholeMass += origin.mass;
+        arithmeticMeanMass += origin.mass;
         friction = new Friction();
     }
 
     @Override
     public double getRadius() {
-        return mass / wholeMass;
+        return mass / arithmeticMeanMass;
+    }
+
+    public void Collision(PhysicBall b) {
+            // todo: fill with code
     }
 
     void positionChanging(double deltaT) {
