@@ -14,7 +14,7 @@ public final class PhysicBall extends Ball {
 
     public PhysicBall(PhysicBall origin) {
         super(origin);
-        arithmeticMeanMass += origin.mass;
+        arithmeticMeanMass += N / (N + 1) * arithmeticMeanMass + origin.mass / (N + 1);
         friction = new Friction();
     }
 
@@ -23,8 +23,28 @@ public final class PhysicBall extends Ball {
         return mass / arithmeticMeanMass;
     }
 
-    public void Collision(PhysicBall b) {
-            // todo: fill with code
+    public void collisionProcessing(PhysicBall b) {
+        // getting collision (C) axis
+        Vector collisionAxis = b.position.subtract(position);
+
+        // getting parallel to collision (C) axis impulse component
+        double i1 = impulse.scalarCompos(collisionAxis) / collisionAxis.length(), i2 = b.impulse.scalarCompos(collisionAxis) / collisionAxis.length();
+
+        // saving orthogonal to collision (C) axis impulse component
+        impulse = impulse.subtract(collisionAxis.multOnScalar(i1));
+        b.impulse = b.impulse.subtract(collisionAxis.multOnScalar(i2));
+
+        // getting new impulses
+        double _i1 = 0.95 * (2 * i2 + i1 - i1 * b.mass / mass) / (mass + b.mass),
+                _i2 = 0.95 * (2 * i1 + i2 - i2 * mass / b.mass) / (mass + b.mass);
+
+        // restoring default impulse vectors
+        impulse = impulse.add(collisionAxis.multOnScalar(_i1));
+        b.impulse = b.impulse.subtract(collisionAxis.multOnScalar(_i2));
+
+        // updating positions
+        position = prevPosition;
+        b.position = b.prevPosition;
     }
 
     void positionChanging(double deltaT) {
@@ -34,7 +54,7 @@ public final class PhysicBall extends Ball {
     }
 
     private void updateImpulse(double deltaT) {
-        if (impulse.subtract(friction).length() < 0.001) impulse = Vector.nullVector;
+        if (impulse.subtract(friction).length() < Vector.epsilon) impulse = new Vector();
         else relativeImpulseChanging(friction.x * deltaT, friction.y * deltaT);
     }
 

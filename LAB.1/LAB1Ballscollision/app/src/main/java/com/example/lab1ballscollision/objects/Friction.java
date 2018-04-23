@@ -25,14 +25,11 @@ final class Friction extends Force {
 
     @Override
     void Update(Vector ... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
-        if (length() < maxStictionLength) x = y = z = 0.0;
-        else {
-            Vector tmp = new Vector();
-            tmp = tmp.subtract(dependencies[0].normalise()); //tmp = -speed
-            tmp = tmp.multOnScalar(mu).multOnScalar(dependencies[1].length());
-            x = tmp.x;
-            y = tmp.y;
-            z = tmp.z;
-        }
+        Vector tmp = new Vector();
+        tmp = tmp.subtract(dependencies[0].normalise()); //tmp = -speed
+        tmp = tmp.multOnScalar(mu).multOnScalar(dependencies[1].length());
+        x = tmp.x;
+        y = tmp.y;
+        z = tmp.z;
     }
 }

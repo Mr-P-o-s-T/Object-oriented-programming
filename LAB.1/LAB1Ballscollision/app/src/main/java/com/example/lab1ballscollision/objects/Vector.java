@@ -1,12 +1,7 @@
 package com.example.lab1ballscollision.objects;
 
 class Vector {
-    public static Vector nullVector;
-
-    static {
-        nullVector = new Vector(0.0,0.0, 0.0);
-    }
-
+    static double epsilon;
     public double x, y, z;
 
     public Vector(double nX, double nY, double nZ) {
@@ -18,7 +13,7 @@ class Vector {
     }
 
     public Vector () {
-        this(nullVector);
+        this(0.0, 0.0);
     }
 
     public Vector(Vector origin) {
@@ -33,6 +28,7 @@ class Vector {
 
     public Vector normalise() {
         double len = length();
+        if (len < epsilon) return new Vector();
         return new Vector(x / len, y / len, z / len);
     }
 
@@ -57,8 +53,12 @@ class Vector {
                  - x * b.z,x * b.y - y * b.x);
     }
 
-    public double alpha(Vector b) {
-        return Math.asin(vectorCompos(b).length() / (length() * b.length()));
+    public double cosAlpha(Vector b) {
+        return scalarCompos(b) / (length() * b.length());
+    }
+
+    public double sinAlpha(Vector b) {
+        return vectorCompos(b).length() / (length() * b.length());
     }
 
 }

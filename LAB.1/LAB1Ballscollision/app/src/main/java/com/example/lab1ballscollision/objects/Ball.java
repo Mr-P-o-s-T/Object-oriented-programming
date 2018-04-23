@@ -1,7 +1,7 @@
 package com.example.lab1ballscollision.objects;
 
 abstract class Ball {
-    Vector position, impulse;
+    Vector position, prevPosition, impulse;
     double mass;
 
     Ball(double x, double y, double m) {
@@ -19,6 +19,7 @@ abstract class Ball {
     abstract double getRadius();
 
     void positionChanging(double deltaT) {
+        prevPosition = position;
         position = position.add(impulse.multOnScalar(deltaT).multOnScalar(1 / mass));
     }
 
