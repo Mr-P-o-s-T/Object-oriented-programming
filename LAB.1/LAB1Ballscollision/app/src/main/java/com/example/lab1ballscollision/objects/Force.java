@@ -1,22 +1,22 @@
 package com.example.lab1ballscollision.objects;
 
-abstract class Force extends Vector {
+public abstract class Force extends Vector {
 
-    Force(double nForceX, double nForceY, double nForceZ) {
+    public Force(double nForceX, double nForceY, double nForceZ) {
         super(nForceX, nForceY, nForceZ);
     }
 
-    Force(double nForceX, double nForceY) {
+    public Force(double nForceX, double nForceY) {
         super(nForceX, nForceY);
     }
 
-    Force() {
+    public Force() {
         super();
     }
 
-    Force(Force origin) {
+    public Force(Force origin) {
         super(origin);
     }
 
-    abstract void Update(Vector ... dependencies);
+    public abstract void Update(Vector ... dependencies);
 }

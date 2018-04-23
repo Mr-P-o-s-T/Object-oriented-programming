@@ -18,6 +18,14 @@ public final class PhysicBall extends Ball {
         friction = new Friction();
     }
 
+    public double getX() {
+        return position.x;
+    }
+
+    public  double getY() {
+        return position.y;
+    }
+
     @Override
     public double getRadius() {
         return mass / arithmeticMeanMass;
@@ -47,7 +55,7 @@ public final class PhysicBall extends Ball {
         b.position = b.prevPosition;
     }
 
-    void positionChanging(double deltaT) {
+    public void positionChanging(double deltaT) {
         super.positionChanging(deltaT);
         updateImpulse(deltaT);
         friction.Update(impulse, gravity);

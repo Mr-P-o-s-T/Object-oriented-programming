@@ -1,6 +1,6 @@
 package com.example.lab1ballscollision.objects;
 
-class Vector {
+public class Vector {
     static double epsilon;
     public double x, y, z;
 
