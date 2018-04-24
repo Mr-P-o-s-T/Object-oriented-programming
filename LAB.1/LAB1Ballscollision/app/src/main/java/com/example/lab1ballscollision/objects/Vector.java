@@ -54,11 +54,11 @@ public class Vector {
     }
 
     public double cosAlpha(Vector b) {
-        return scalarCompos(b) / (length() * b.length());
+        return b.length() < epsilon ? scalarCompos(b) / (length() * b.length()) : 0.0;
     }
 
     public double sinAlpha(Vector b) {
-        return vectorCompos(b).length() / (length() * b.length());
+        return b.length() < epsilon ? vectorCompos(b).length() / (length() * b.length()) : 0.0;
     }
 
 }

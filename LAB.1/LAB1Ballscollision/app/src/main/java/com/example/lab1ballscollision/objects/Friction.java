@@ -24,7 +24,7 @@ final class Friction extends Force {
     }
 
     @Override
-    void Update(Vector ... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
+    public void Update(Vector... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
         Vector tmp = new Vector();
         tmp = tmp.subtract(dependencies[0].normalise()); //tmp = -speed
         tmp = tmp.multOnScalar(mu).multOnScalar(dependencies[1].length());

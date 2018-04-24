@@ -30,15 +30,15 @@ abstract class Ball {
         return delta.length() < getRadius() + secondBall.getRadius();
     }
 
-    public Vector getOffset() {
+    private Vector getOffset() {
         return position.subtract(prevPosition);
     }
 
-    public Vector getPrevPosDiff(Ball secondBall) {
+    private Vector getPrevPosDiff(Ball secondBall) {
         return secondBall.prevPosition.subtract(prevPosition);
     }
 
-    public Vector getPosDiff(Ball secondBall) {
+    private Vector getPosDiff(Ball secondBall) {
         return secondBall.position.subtract(position);
     }
 
@@ -55,4 +55,18 @@ abstract class Ball {
         impulse.x += deltaSpeedX * mass;
         impulse.y += deltaSpeedY * mass;
     }
+
+    private double getCollisionTime(Ball secondBall) {
+        Vector deltaPos = getPrevPosDiff(secondBall), deltaImp = getVelocityDiff(secondBall);
+        double a = deltaImp.x * deltaImp.x + deltaImp.y * deltaImp.y,
+                b = deltaPos.x * deltaImp.x + deltaPos.y * deltaImp.y,
+                c = deltaPos.x * deltaPos.x + deltaPos.y * deltaPos.y - (getRadius() + getRadius())
+                        * (getRadius() + getRadius());
+
+        double D = b * b - 4 * a * c;
+        if (D < 0) {
+
+        }
+    }
 }
+

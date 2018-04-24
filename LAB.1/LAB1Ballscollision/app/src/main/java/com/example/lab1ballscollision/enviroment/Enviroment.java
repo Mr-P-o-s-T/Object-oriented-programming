@@ -43,22 +43,7 @@ public class Enviroment {
     }
 
     private void collisionsProcessing() {
-        for (int i = 0; i < ballsCollection.size(); i++) {
-            for (int j = i + 1; j < ballsCollection.size(); j++) {
-                double dX, dY, dVx, dVy;
-                {
-                    Vector prevDiff = ballsCollection.get(i).getPrevPosDiff(ballsCollection.get(j)),
-                            velocityDiff = ballsCollection.get(i).getVelocityDiff(ballsCollection.get(j));
-                    dX = prevDiff.x; dY = prevDiff.y; dVx = velocityDiff.x; dVy = velocityDiff.y;
-                }
-                double D = 4 * (2 * dX * dY * dVx * dVy - dX * dX * dVy * dVy + dY * dY * dVx * dVx
-                        + (ballsCollection.get(i).getRadius() + ballsCollection.get(j).getRadius())
-                        * (ballsCollection.get(i).getRadius() + ballsCollection.get(j).getRadius())
-                        * (dVx * dVx + dVy * dVy));
-                
-            }
-        }
-        for (Pair item : collisionQueue) item.Reaction();
+
     }
 
     public void ballsProcessing() {
