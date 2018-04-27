@@ -57,16 +57,20 @@ abstract class Ball {
     }
 
     private double getCollisionTime(Ball secondBall) {
-        Vector deltaPos = getPrevPosDiff(secondBall), deltaImp = getVelocityDiff(secondBall);
-        double a = deltaImp.x * deltaImp.x + deltaImp.y * deltaImp.y,
-                b = deltaPos.x * deltaImp.x + deltaPos.y * deltaImp.y,
-                c = deltaPos.x * deltaPos.x + deltaPos.y * deltaPos.y - (getRadius() + getRadius())
-                        * (getRadius() + getRadius());
-
-        double D = b * b - 4 * a * c;
-        if (D < 0) {
-
+        Vector deltaPos = getPrevPosDiff(secondBall), deltaVel = getVelocityDiff(secondBall);
+        double a = deltaVel.length() * deltaVel.length(),
+                b = 2 * deltaPos.scalarCompos(deltaVel),
+                c = deltaPos.length() * deltaPos.length() - (getRadius() + getRadius()) *
+                        (getRadius() + getRadius());
+        if (Math.abs(a) < Vector.epsilon) return Double.MAX_VALUE;
+        else {
+            double D = b * b - 4 * a * c;
+            double dT;
+            if (D < 0) return Double.MAX_VALUE;
+            else if (Math.abs(D) < Vector.epsilon) dT = -b / (2 * a);
+            else dT = (-b - Math.sqrt(D)) / (2 * a);
+            if ((0 <= dT) && (dT <= 1)) return dT;
+            else return Double.MAX_VALUE;
         }
     }
 }
-
