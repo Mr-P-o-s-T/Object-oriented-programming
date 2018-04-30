@@ -10,6 +10,7 @@ import java.util.PriorityQueue;
 public final class Enviroment {
     public static double dT, xMax, yMax, epsilon;
     public static Force gravity;
+    private PhysicBall highlighted;
     private ArrayList<PhysicBall> ballsCollection = new ArrayList<>();
 
     private class Pair implements Comparable<Pair> {
@@ -45,13 +46,30 @@ public final class Enviroment {
         ballsCollection.add(newBall);
     }
 
-    public void deleteBall(PhysicBall b) {
-        b.preDeletingActions();
-        ballsCollection.remove(b);
+    void deleteBall() {
+        highlighted.preDeletingActions();
+        ballsCollection.remove(highlighted);
+    }
+
+    public void highligntBall(double x, double y) {
+        for (PhysicBall item: ballsCollection)
+            if ((x - item.getX()) * (x - item.getX()) + (y - item.getY()) * (y - item.getY()) < item.getRadius() * item.getRadius()) {
+                highlighted = item;
+                break;
+            }
+    }
+
+    private void checkRicochets() {
+        for (PhysicBall item: ballsCollection) {
+            if ((item.getX() < item.getRadius()) || (item.getX() > xMax - item.getRadius()))
+                item.horizontalRicochet();
+            if ((item.getY() < item.getRadius()) || (item.getY() > yMax - item.getRadius()))
+                item.verticalRicochet();
+        }
     }
 
     private void move(double dT) {
-        for (PhysicBall item : ballsCollection) item.positionChanging(dT);
+        for (PhysicBall item: ballsCollection) item.positionChanging(dT);
         for (Pair item: collisionQueue) item.dT -= dT;
     }
 
@@ -69,14 +87,21 @@ public final class Enviroment {
 
     public void ballsProcessing() {
         double currT = dT;
-        for (int i = 0; i < ballsCollection.size(); i++) checkCollisions(i, currT);
+        for (int i = 0; i < ballsCollection.size(); i++) {
+            checkCollisions(i, currT);
+        }
         while (!collisionQueue.isEmpty()) {
             Pair tmp = collisionQueue.poll();
             move(tmp.dT);
-            tmp.first.collisionProcessing(tmp.last);
+            tmp.Reaction();
             checkCollisions(tmp.first, tmp.dT);
             checkCollisions(tmp.last, tmp.dT);
+            checkRicochets();
             currT -= tmp.dT;
+        }
+        for (PhysicBall item: ballsCollection) {
+            item.positionChanging(currT);
+            checkRicochets();
         }
     }
 }

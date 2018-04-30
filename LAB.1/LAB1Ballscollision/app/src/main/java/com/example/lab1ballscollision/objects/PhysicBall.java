@@ -9,17 +9,20 @@ public final class PhysicBall extends Ball {
     public PhysicBall(double x, double y, double m) {
         super(x, y, m);
         arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + m / (N + 1);
+        N++;
         friction = new Friction();
     }
 
     public PhysicBall(PhysicBall origin) {
         super(origin);
         arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + origin.mass / (N + 1);
+        N++;
         friction = new Friction();
     }
 
     public void preDeletingActions() {
-        arithmeticMeanMass = (N + 1) / N * arithmeticMeanMass - mass / N;
+        arithmeticMeanMass = N / (N - 1) * arithmeticMeanMass - mass / (N - 1);
+        N--;
     }
 
     public double getX() {
@@ -66,11 +69,11 @@ public final class PhysicBall extends Ball {
         else relativeImpulseChanging(friction.x * deltaT, friction.y * deltaT);
     }
 
-    public void horisontalRicochet() {
-        impulseChanging(-impulse.x, impulse.y);
+    public void horizontalRicochet() {
+        impulseChanging(-0.95 * impulse.x, impulse.y);
     }
 
     public void verticalRicochet() {
-        impulseChanging(impulse.x, -impulse.y);
+        impulseChanging(impulse.x, - 0.95 * impulse.y);
     }
 }
