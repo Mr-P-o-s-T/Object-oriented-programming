@@ -8,14 +8,18 @@ public final class PhysicBall extends Ball {
 
     public PhysicBall(double x, double y, double m) {
         super(x, y, m);
-        arithmeticMeanMass += N / (N + 1) * arithmeticMeanMass + m / (N + 1);
+        arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + m / (N + 1);
         friction = new Friction();
     }
 
     public PhysicBall(PhysicBall origin) {
         super(origin);
-        arithmeticMeanMass += N / (N + 1) * arithmeticMeanMass + origin.mass / (N + 1);
+        arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + origin.mass / (N + 1);
         friction = new Friction();
+    }
+
+    public void preDeletingActions() {
+        arithmeticMeanMass = (N + 1) / N * arithmeticMeanMass - mass / N;
     }
 
     public double getX() {
@@ -32,6 +36,15 @@ public final class PhysicBall extends Ball {
     }
 
     public void collisionProcessing(PhysicBall b) {
+        double collisionTime = getCollisionTime(b);
+        positionChanging(collisionTime);
+        b.positionChanging(collisionTime);
+        collisionReaction(b);
+        positionChanging(1.0 - collisionTime);
+        b.positionChanging(1.0 - collisionTime);
+    }
+
+    private void collisionReaction(PhysicBall b) {
         // getting collision (C) axis
         Vector collisionAxis = b.position.subtract(position);
 
@@ -49,10 +62,6 @@ public final class PhysicBall extends Ball {
         // restoring default impulse vectors
         impulse = impulse.add(collisionAxis.multOnScalar(_i1));
         b.impulse = b.impulse.subtract(collisionAxis.multOnScalar(_i2));
-
-        // updating positions
-        position = prevPosition;
-        b.position = b.prevPosition;
     }
 
     public void positionChanging(double deltaT) {
