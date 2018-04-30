@@ -36,22 +36,13 @@ public final class PhysicBall extends Ball {
     }
 
     public void collisionProcessing(PhysicBall b) {
-        double collisionTime = getCollisionTime(b);
-        positionChanging(collisionTime);
-        b.positionChanging(collisionTime);
-        collisionReaction(b);
-        positionChanging(1.0 - collisionTime);
-        b.positionChanging(1.0 - collisionTime);
-    }
-
-    private void collisionReaction(PhysicBall b) {
         // getting collision (C) axis
         Vector collisionAxis = b.position.subtract(position);
 
-        // getting parallel to collision (C) axis impulse component
+        // getting parallel to collision (C) axis impulse component (which is changeable)
         double i1 = impulse.scalarCompos(collisionAxis) / collisionAxis.length(), i2 = b.impulse.scalarCompos(collisionAxis) / collisionAxis.length();
 
-        // saving orthogonal to collision (C) axis impulse component
+        // saving orthogonal to collision (C) axis impulse component (which is unchangeable)
         impulse = impulse.subtract(collisionAxis.multOnScalar(i1));
         b.impulse = b.impulse.subtract(collisionAxis.multOnScalar(i2));
 

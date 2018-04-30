@@ -1,12 +1,11 @@
 package com.example.lab1ballscollision.objects;
 
 final class Friction extends Force {
-    private double mu, maxStictionLength;
+    private double mu;
 
-    Friction(double nMu, double maxStiction) {
+    Friction(double nMu) {
         super();
         mu = nMu;
-        maxStictionLength = maxStiction;
     }
 
     Friction(double nMu, double nForceX, double nForceY) {
@@ -26,7 +25,7 @@ final class Friction extends Force {
     @Override
     public void Update(Vector... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
         Vector tmp = new Vector();
-        tmp = tmp.subtract(dependencies[0].normalise()); //tmp = -speed
+        tmp = tmp.subtract(dependencies[0].normalise()); //tmp = -(normalised impulse)
         tmp = tmp.multOnScalar(mu).multOnScalar(dependencies[1].length());
         x = tmp.x;
         y = tmp.y;

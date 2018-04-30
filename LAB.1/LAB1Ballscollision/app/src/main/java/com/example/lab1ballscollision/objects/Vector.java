@@ -1,22 +1,22 @@
 package com.example.lab1ballscollision.objects;
 
 public class Vector {
-    static double epsilon;
+    public static double epsilon;
     public double x, y, z;
 
-    public Vector(double nX, double nY, double nZ) {
+    Vector(double nX, double nY, double nZ) {
         x = nX; y = nY; z = nZ;
     }
 
-    public Vector(double nX, double nY) {
+    Vector(double nX, double nY) {
         this(nX, nY, 0.0);
     }
 
-    public Vector () {
+    Vector () {
         this(0.0, 0.0);
     }
 
-    public Vector(Vector origin) {
+    Vector(Vector origin) {
         x = origin.x;
         y = origin.y;
         z = origin.z;
