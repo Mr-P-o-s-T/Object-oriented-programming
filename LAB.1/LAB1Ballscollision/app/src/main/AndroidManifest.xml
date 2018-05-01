@@ -16,7 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PropertiesActivity" android:label="@string/env_prop"/>
+        <activity
+            android:name=".PropertiesActivity"
+            android:label="@string/env_prop" />
+        <activity android:name=".EnvironmentScreen"></activity>
     </application>
 
 </manifest>
