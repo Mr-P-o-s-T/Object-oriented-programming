@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lab1ballscollision">
 
@@ -7,5 +8,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" />
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainMenu" />
+        <activity
+            android:name=".EnviromentSettings"
+            android:label="@string/title_activity_enviroment_settings"
+            android:parentActivityName=".MainMenu">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.lab1ballscollision.MainMenu" />
+        </activity>
+    </application>
+
 </manifest>

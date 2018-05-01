@@ -1,4 +1,4 @@
-package com.example.lab1ballscollision.enviroment;
+package com.example.lab1ballscollision.environment;
 
 import com.example.lab1ballscollision.objects.PhysicBall;
 import com.example.lab1ballscollision.objects.Force;
@@ -7,7 +7,7 @@ import com.example.lab1ballscollision.objects.Vector;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public final class Enviroment {
+public final class Environment {
     public static double dT, xMax, yMax, epsilon;
     public static Force gravity;
     private PhysicBall highlighted;
@@ -36,7 +36,7 @@ public final class Enviroment {
 
     private PriorityQueue<Pair> collisionQueue = new PriorityQueue<>();
 
-    public Enviroment() {
+    public Environment() {
         PhysicBall.gravity = gravity;
         Vector.epsilon = epsilon;
     }
