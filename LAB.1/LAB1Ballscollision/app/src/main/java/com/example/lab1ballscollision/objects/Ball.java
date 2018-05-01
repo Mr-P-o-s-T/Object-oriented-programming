@@ -1,6 +1,6 @@
 package com.example.lab1ballscollision.objects;
 
-abstract class Ball {
+public abstract class Ball {
     Vector position, impulse;
     double mass;
 
