@@ -42,7 +42,7 @@ public class PropertiesActivity extends AppCompatActivity {
 
         Intent intent = new Intent(PropertiesActivity.this, EnvironmentScreen.class);
         startActivity(intent);
-        
+
         Toast.makeText(this, Double.toString(Environment.xMax) + " " + Environment.yMax + " " + Environment.dT + " " + Environment.epsilon, Toast.LENGTH_LONG).show();
     }
 }
