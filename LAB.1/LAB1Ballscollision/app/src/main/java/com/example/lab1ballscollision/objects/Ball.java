@@ -1,8 +1,11 @@
 package com.example.lab1ballscollision.objects;
 
+<<<<<<< HEAD
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+=======
+>>>>>>> 8cdc784043e14292c85a80b590f34591e0e9263c
 public abstract class Ball {
     Vector position, impulse;
     static public double xMax, yMax;
