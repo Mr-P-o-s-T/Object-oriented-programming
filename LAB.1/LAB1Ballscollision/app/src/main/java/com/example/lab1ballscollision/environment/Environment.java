@@ -67,12 +67,12 @@ public final class Environment {
             }
     }
 
-    private void checkRicochets() {
+    private void checkRicochets(double dT) {
         for (PhysicBall item: ballsCollection) {
             if ((item.getX() < item.getRadius()) || (item.getX() > xMax - item.getRadius()))
-                item.horizontalRicochet();
+                item.horizontalRicochet(dT);
             if ((item.getY() < item.getRadius()) || (item.getY() > yMax - item.getRadius()))
-                item.verticalRicochet();
+                item.verticalRicochet(dT);
         }
     }
 
@@ -104,12 +104,12 @@ public final class Environment {
             tmp.Reaction();
             checkCollisions(tmp.first, tmp.dT);
             checkCollisions(tmp.last, tmp.dT);
-            checkRicochets();
+            checkRicochets(tmp.dT);
             currT -= tmp.dT;
         }
         for (PhysicBall item: ballsCollection) {
             item.positionChanging(currT);
-            checkRicochets();
+            checkRicochets(currT);
         }
     }
 

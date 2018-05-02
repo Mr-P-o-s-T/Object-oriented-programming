@@ -32,8 +32,7 @@ public abstract class Ball {
     }
 
     public void impulseChanging(Vector startImp) {
-        impulse.x = startImp.x;
-        impulse.y = startImp.y;
+        impulse = startImp;
     }
 
     public void impulseChanging(double impulseX, double impulseY) {

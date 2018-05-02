@@ -40,7 +40,7 @@ public final class PhysicBall extends Ball {
 
     public void collisionProcessing(PhysicBall b) {
         // getting collision (C) axis
-        Vector collisionAxis = b.position.subtract(position);
+        Vector collisionAxis = b.position.subtract(position).normalise();
 
         // getting parallel to collision (C) axis impulse component (which is changeable)
         double i1 = impulse.scalarCompos(collisionAxis) / collisionAxis.length(), i2 = b.impulse.scalarCompos(collisionAxis) / collisionAxis.length();
@@ -55,7 +55,7 @@ public final class PhysicBall extends Ball {
 
         // restoring default impulse vectors
         impulse = impulse.add(collisionAxis.multOnScalar(_i1));
-        b.impulse = b.impulse.subtract(collisionAxis.multOnScalar(_i2));
+        b.impulse = b.impulse.add(collisionAxis.multOnScalar(_i2));
     }
 
     public void positionChanging(double deltaT) {
@@ -69,11 +69,25 @@ public final class PhysicBall extends Ball {
         else relativeImpulseChanging(friction.x * deltaT, friction.y * deltaT);
     }
 
-    public void horizontalRicochet() {
-        impulseChanging(-0.95 * impulse.x, impulse.y);
+    public void horizontalRicochet(double dT) {
+        impulseChanging(impulse.multOnScalar(1.0 / 0.95));
+        double outRangedTime;
+        if (impulse.x > 0.0) outRangedTime = (position.x - xMax + getRadius()) / (impulse.x / mass * dT);
+        else outRangedTime = (getRadius() - position.x) / (impulse.x / mass * dT);
+        position.subtract(impulse.multOnScalar(1.0 / mass).multOnScalar(outRangedTime));
+        updateImpulse(1.0 - outRangedTime);
+        impulseChanging(-impulse.x, impulse.y);
+        positionChanging(outRangedTime);
     }
 
-    public void verticalRicochet() {
-        impulseChanging(impulse.x, - 0.95 * impulse.y);
+    public void verticalRicochet(double dT) {
+        impulseChanging(impulse.multOnScalar(1.0 / 0.95));
+        double outRangedTime;
+        if (impulse.y > 0.0) outRangedTime = (position.y - yMax + getRadius()) / (impulse.y / mass * dT);
+        else outRangedTime = (getRadius() - position.y) / (impulse.y / mass * dT);
+        position.subtract(impulse.multOnScalar(1.0 / mass).multOnScalar(outRangedTime));
+        updateImpulse(1.0 - outRangedTime);
+        impulseChanging(impulse.x, -impulse.y);
+        positionChanging(outRangedTime);
     }
 }
