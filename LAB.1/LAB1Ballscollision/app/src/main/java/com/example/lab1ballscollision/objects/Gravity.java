@@ -15,7 +15,7 @@ public final class Gravity extends Force {
     }
 
     @Override
-    public void Update(Vector... dependencies) { // no arguments needed
+    public void Update(double mass, Vector... dependencies) { // no arguments needed
 
     }
 }

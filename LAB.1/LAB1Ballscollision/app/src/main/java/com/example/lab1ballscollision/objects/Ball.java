@@ -1,7 +1,11 @@
 package com.example.lab1ballscollision.objects;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+
 public abstract class Ball {
     Vector position, impulse;
+    static public double xMax, yMax;
     double mass;
 
     Ball(double x, double y, double m) {
@@ -27,9 +31,14 @@ public abstract class Ball {
         return (Math.abs(collisionTime) < Vector.epsilon) || ((0.0 < collisionTime) && (collisionTime < dT)) || (Math.abs(collisionTime - dT) < Vector.epsilon);
     }
 
-    void impulseChanging(double speedX, double speedY) {
-        impulse.x = speedX * mass;
-        impulse.y = speedY * mass;
+    public void impulseChanging(Vector startImp) {
+        impulse.x = startImp.x;
+        impulse.y = startImp.y;
+    }
+
+    public void impulseChanging(double impulseX, double impulseY) {
+        impulse.x = impulseX;
+        impulse.y = impulseY;
     }
 
     void relativeImpulseChanging(double deltaSpeedX, double deltaSpeedY) {
@@ -59,5 +68,9 @@ public abstract class Ball {
             else return (-b - Math.sqrt(D)) / (2 * a);
         }
         else return Double.MAX_VALUE;
+    }
+
+    public void drawMe(Canvas canvas, Paint paint) {
+        canvas.drawCircle((float) (position.x / xMax * canvas.getWidth()), (float) (position.y / yMax * canvas.getHeight()), (float) (getRadius() / xMax * canvas.getWidth()), paint);
     }
 }

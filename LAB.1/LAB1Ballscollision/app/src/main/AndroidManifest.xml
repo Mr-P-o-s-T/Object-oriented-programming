@@ -19,7 +19,8 @@
         <activity
             android:name=".PropertiesActivity"
             android:label="@string/env_prop" />
-        <activity android:name=".EnvironmentScreen"></activity>
+        <activity android:name=".EnvironmentScreen"
+            android:theme="@style/NoActionBar" />
     </application>
 
 </manifest>

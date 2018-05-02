@@ -10,14 +10,14 @@ public final class PhysicBall extends Ball {
         super(x, y, m);
         arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + m / (N + 1);
         N++;
-        friction = new Friction();
+        friction = new Friction(0.4);
     }
 
     public PhysicBall(PhysicBall origin) {
         super(origin);
         arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + origin.mass / (N + 1);
         N++;
-        friction = new Friction();
+        friction = new Friction(0.4);
     }
 
     public void preDeletingActions() {
@@ -61,7 +61,7 @@ public final class PhysicBall extends Ball {
     public void positionChanging(double deltaT) {
         super.positionChanging(deltaT);
         updateImpulse(deltaT);
-        friction.Update(impulse, gravity);
+        friction.Update(mass, impulse, gravity);
     }
 
     private void updateImpulse(double deltaT) {

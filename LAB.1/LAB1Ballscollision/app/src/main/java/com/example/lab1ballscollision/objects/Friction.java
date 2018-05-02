@@ -13,20 +13,16 @@ final class Friction extends Force {
         mu = nMu;
     }
 
-    Friction() {
-        super();
-    }
-
     Friction(Friction origin) {
         super(origin);
         mu = origin.mu;
     }
 
     @Override
-    public void Update(Vector... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
+    public void Update(double mass, Vector... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
         Vector tmp = new Vector();
         tmp = tmp.subtract(dependencies[0].normalise()); //tmp = -(normalised impulse)
-        tmp = tmp.multOnScalar(mu).multOnScalar(dependencies[1].length());
+        tmp = tmp.multOnScalar(mu).multOnScalar(mass).multOnScalar(dependencies[1].length());
         x = tmp.x;
         y = tmp.y;
         z = tmp.z;

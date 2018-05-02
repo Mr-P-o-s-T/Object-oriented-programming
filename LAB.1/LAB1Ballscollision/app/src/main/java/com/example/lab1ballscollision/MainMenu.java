@@ -14,6 +14,12 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
     }
 
+    @Override
+    public void finish() {
+        super.finish();
+        Toast.makeText(this, "Already leaving?", Toast.LENGTH_SHORT).show();
+    }
+
     public void onStartClick(View view) {
         Intent intent = new Intent(MainMenu.this, PropertiesActivity.class);
         startActivity(intent);
@@ -21,6 +27,5 @@ public class MainMenu extends AppCompatActivity {
 
     public void onExitClick(View view) {
         finish();
-        Toast.makeText(this, "Already leaving?", Toast.LENGTH_SHORT).show();
     }
 }

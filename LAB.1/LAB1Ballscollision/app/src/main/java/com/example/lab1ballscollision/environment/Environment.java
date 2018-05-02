@@ -1,5 +1,10 @@
 package com.example.lab1ballscollision.environment;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
+import com.example.lab1ballscollision.objects.Ball;
 import com.example.lab1ballscollision.objects.PhysicBall;
 import com.example.lab1ballscollision.objects.Force;
 import com.example.lab1ballscollision.objects.Vector;
@@ -38,11 +43,14 @@ public final class Environment {
 
     public Environment() {
         PhysicBall.gravity = gravity;
+        Ball.xMax = xMax;
+        Ball.yMax = yMax;
         Vector.epsilon = epsilon;
     }
 
-    public void addBall(double x, double y, double m) {
+    public void addBall(double x, double y, double m, Vector startImp) {
         PhysicBall newBall = new PhysicBall(x, y, m);
+        newBall.impulseChanging(startImp.x, startImp.y);
         ballsCollection.add(newBall);
     }
 
@@ -103,5 +111,11 @@ public final class Environment {
             item.positionChanging(currT);
             checkRicochets();
         }
+    }
+
+    public void drawBalls(Canvas canvas) {
+        Paint circle = new Paint();
+        circle.setColor(Color.GREEN);
+        for (PhysicBall item: ballsCollection) item.drawMe(canvas, circle);
     }
 }

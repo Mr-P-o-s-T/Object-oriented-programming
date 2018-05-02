@@ -4,19 +4,19 @@ public class Vector {
     public static double epsilon;
     public double x, y, z;
 
-    Vector(double nX, double nY, double nZ) {
+    public Vector(double nX, double nY, double nZ) {
         x = nX; y = nY; z = nZ;
     }
 
-    Vector(double nX, double nY) {
+    public Vector(double nX, double nY) {
         this(nX, nY, 0.0);
     }
 
-    Vector () {
+    public Vector () {
         this(0.0, 0.0);
     }
 
-    Vector(Vector origin) {
+    public Vector(Vector origin) {
         x = origin.x;
         y = origin.y;
         z = origin.z;

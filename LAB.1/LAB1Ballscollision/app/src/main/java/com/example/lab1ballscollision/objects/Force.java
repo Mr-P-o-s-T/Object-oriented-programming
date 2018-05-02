@@ -18,5 +18,5 @@ public abstract class Force extends Vector {
         super(origin);
     }
 
-    public abstract void Update(Vector ... dependencies);
+    public abstract void Update(double mass, Vector ... dependencies);
 }
