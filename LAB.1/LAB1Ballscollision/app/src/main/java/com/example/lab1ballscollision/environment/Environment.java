@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-import com.example.lab1ballscollision.objects.Ball;
 import com.example.lab1ballscollision.objects.PhysicBall;
 import com.example.lab1ballscollision.objects.Force;
 import com.example.lab1ballscollision.objects.Vector;
@@ -15,6 +14,7 @@ import java.util.PriorityQueue;
 public final class Environment {
     public static double dT, xMax, yMax, epsilon;
     public static Force gravity;
+    public boolean paused = true;
     private PhysicBall highlighted;
     private ArrayList<PhysicBall> ballsCollection = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public final class Environment {
         }
 
         void Reaction() {
-                first.collisionProcessing(last);
+            first.collisionProcessing(last);
         }
 
         public int compareTo(Pair p) {
@@ -43,13 +43,13 @@ public final class Environment {
 
     public Environment() {
         PhysicBall.gravity = gravity;
-        Ball.xMax = xMax;
-        Ball.yMax = yMax;
+        PhysicBall.xMax = xMax;
+        PhysicBall.yMax = yMax;
         Vector.epsilon = epsilon;
     }
 
     public void addBall(double x, double y, double m, Vector startImp) {
-        PhysicBall newBall = new PhysicBall(x, y, m);
+        PhysicBall newBall = new PhysicBall(x * xMax, y * yMax, m);
         newBall.impulseChanging(startImp.x, startImp.y);
         ballsCollection.add(newBall);
     }
@@ -67,12 +67,17 @@ public final class Environment {
             }
     }
 
-    private void checkRicochets(double dT) {
+    public void clearBalls() {
+        ballsCollection.clear();
+        PhysicBall.resetMass();
+    }
+
+    private void checkRicochets() {
         for (PhysicBall item: ballsCollection) {
             if ((item.getX() < item.getRadius()) || (item.getX() > xMax - item.getRadius()))
-                item.horizontalRicochet(dT);
+                item.horizontalRicochet();
             if ((item.getY() < item.getRadius()) || (item.getY() > yMax - item.getRadius()))
-                item.verticalRicochet(dT);
+                item.verticalRicochet();
         }
     }
 
@@ -104,12 +109,12 @@ public final class Environment {
             tmp.Reaction();
             checkCollisions(tmp.first, tmp.dT);
             checkCollisions(tmp.last, tmp.dT);
-            checkRicochets(tmp.dT);
+            checkRicochets();
             currT -= tmp.dT;
         }
         for (PhysicBall item: ballsCollection) {
             item.positionChanging(currT);
-            checkRicochets(currT);
+            checkRicochets();
         }
     }
 

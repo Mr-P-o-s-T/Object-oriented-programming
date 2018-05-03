@@ -65,29 +65,28 @@ public final class PhysicBall extends Ball {
     }
 
     private void updateImpulse(double deltaT) {
-        if (impulse.subtract(friction).length() < Vector.epsilon) impulse = new Vector();
-        else relativeImpulseChanging(friction.x * deltaT, friction.y * deltaT);
+        Vector tmp = new Vector(impulse);
+        relativeImpulseChanging(friction.x * deltaT, friction.y * deltaT);
+        if (impulse.x * tmp.x < 0.0) impulse.x = 0.0;
+        if (impulse.y * tmp.y < 0.0) impulse.y = 0.0;
     }
 
-    public void horizontalRicochet(double dT) {
-        impulseChanging(impulse.multOnScalar(1.0 / 0.95));
-        double outRangedTime;
-        if (impulse.x > 0.0) outRangedTime = (position.x - xMax + getRadius()) / (impulse.x / mass * dT);
-        else outRangedTime = (getRadius() - position.x) / (impulse.x / mass * dT);
-        position.subtract(impulse.multOnScalar(1.0 / mass).multOnScalar(outRangedTime));
-        updateImpulse(1.0 - outRangedTime);
+    public void horizontalRicochet() {
+        if (impulse.x > 0.0) position.x -= 2 * (position.x - xMax + getRadius());
+        else position.x += 2 * (getRadius() - position.x);
         impulseChanging(-impulse.x, impulse.y);
-        positionChanging(outRangedTime);
+        friction.Update(mass, impulse, gravity);
     }
 
-    public void verticalRicochet(double dT) {
-        impulseChanging(impulse.multOnScalar(1.0 / 0.95));
-        double outRangedTime;
-        if (impulse.y > 0.0) outRangedTime = (position.y - yMax + getRadius()) / (impulse.y / mass * dT);
-        else outRangedTime = (getRadius() - position.y) / (impulse.y / mass * dT);
-        position.subtract(impulse.multOnScalar(1.0 / mass).multOnScalar(outRangedTime));
-        updateImpulse(1.0 - outRangedTime);
+    public void verticalRicochet() {
+        if (impulse.y > 0.0) position.y -= 2 * (position.y - yMax + getRadius());
+        else position.y += 2 * (getRadius() - position.y);
         impulseChanging(impulse.x, -impulse.y);
-        positionChanging(outRangedTime);
+        friction.Update(mass, impulse, gravity);
+    }
+
+    static public void resetMass() {
+        N = 0;
+        arithmeticMeanMass = 0.0;
     }
 }
