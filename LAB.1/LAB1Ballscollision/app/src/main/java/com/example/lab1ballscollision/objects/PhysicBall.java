@@ -6,17 +6,15 @@ public final class PhysicBall extends Ball {
     public static Force gravity;
     private Force friction;
 
-    public PhysicBall(double x, double y, double m) {
-        super(x, y, m);
-        arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + m / (N + 1);
+    public PhysicBall(double x, double y, double r) {
+        super(x, y, r * N * arithmeticMeanMass / (N + 1 - r));
+        arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + mass / (N + 1);
         N++;
         friction = new Friction(0.4);
     }
 
     public PhysicBall(PhysicBall origin) {
         super(origin);
-        arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + origin.mass / (N + 1);
-        N++;
         friction = new Friction(0.4);
     }
 

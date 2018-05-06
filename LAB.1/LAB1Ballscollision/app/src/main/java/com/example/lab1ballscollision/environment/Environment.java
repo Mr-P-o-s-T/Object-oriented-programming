@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.example.lab1ballscollision.objects.Ball;
 import com.example.lab1ballscollision.objects.PhysicBall;
 import com.example.lab1ballscollision.objects.Force;
 import com.example.lab1ballscollision.objects.Vector;
@@ -48,10 +49,11 @@ public final class Environment {
         Vector.epsilon = epsilon;
     }
 
-    public void addBall(double x, double y, double m, Vector startImp) {
-        PhysicBall newBall = new PhysicBall(x * xMax, y * yMax, m);
+    public PhysicBall addBall(double x, double y, double r, Vector startImp) {
+        PhysicBall newBall = new PhysicBall(x * xMax, y * yMax, r);
         newBall.impulseChanging(startImp.x, startImp.y);
         ballsCollection.add(newBall);
+        return newBall;
     }
 
     void deleteBall() {
@@ -122,5 +124,11 @@ public final class Environment {
         Paint circle = new Paint();
         circle.setColor(Color.GREEN);
         for (PhysicBall item: ballsCollection) item.drawMe(canvas, circle);
+    }
+
+    public boolean areCollidedWithAny(double x, double y, double r) {
+        for (PhysicBall item: ballsCollection)
+            if ((item.getX() - x) * (item.getX() - x) + (item.getY() - y) * (item.getY() - y) <= r + item.getRadius()) return true;
+        return false;
     }
 }
