@@ -15,6 +15,7 @@ import java.util.PriorityQueue;
 public final class Environment {
     public static double dT, xMax, yMax, epsilon;
     public static Force gravity;
+    private double lastMass = 0.0;
     public boolean paused = true;
     private PhysicBall highlighted;
     private ArrayList<PhysicBall> ballsCollection = new ArrayList<>();
@@ -49,8 +50,25 @@ public final class Environment {
         Vector.epsilon = epsilon;
     }
 
-    public PhysicBall addBall(double x, double y, double r, Vector startImp) {
-        PhysicBall newBall = new PhysicBall(x * xMax, y * yMax, r);
+    public void increaseMass(double byMass) {
+        if (!(Math.abs(byMass) < Vector.epsilon)) {
+            lastMass = byMass;
+            PhysicBall.increaseArithmeticMeanMass(byMass);
+        }
+    }
+
+    public void returnMass() {
+        if (!(Math.abs(lastMass) < Vector.epsilon)) {
+            PhysicBall.decreaseArithmeticMeanMass(lastMass);
+        }
+    }
+
+    public double getMass() {
+        return PhysicBall.arithmeticMeanMass;
+    }
+
+    public PhysicBall addBall(double x, double y, double m, Vector startImp) {
+        PhysicBall newBall = new PhysicBall(x * xMax, y * yMax, m);
         newBall.impulseChanging(startImp.x, startImp.y);
         ballsCollection.add(newBall);
         return newBall;
@@ -61,12 +79,17 @@ public final class Environment {
         ballsCollection.remove(highlighted);
     }
 
-    public void highligntBall(double x, double y) {
+    public boolean highligntBall(double x, double y) {
         for (PhysicBall item: ballsCollection)
             if ((x - item.getX()) * (x - item.getX()) + (y - item.getY()) * (y - item.getY()) < item.getRadius() * item.getRadius()) {
                 highlighted = item;
-                break;
+                return true;
             }
+        return false;
+    }
+
+    public void  unhighlightBall() {
+        highlighted = null;
     }
 
     public void clearBalls() {
@@ -106,17 +129,17 @@ public final class Environment {
             checkCollisions(i, currT);
         }
         while (!collisionQueue.isEmpty()) {
+            checkRicochets();
             Pair tmp = collisionQueue.poll();
             move(tmp.dT);
             tmp.Reaction();
             checkCollisions(tmp.first, tmp.dT);
             checkCollisions(tmp.last, tmp.dT);
-            checkRicochets();
             currT -= tmp.dT;
         }
         for (PhysicBall item: ballsCollection) {
-            item.positionChanging(currT);
             checkRicochets();
+            item.positionChanging(currT);
         }
     }
 
@@ -124,11 +147,17 @@ public final class Environment {
         Paint circle = new Paint();
         circle.setColor(Color.GREEN);
         for (PhysicBall item: ballsCollection) item.drawMe(canvas, circle);
+        if (highlighted != null) {
+            circle.setColor(Color.MAGENTA);
+            highlighted.drawMe(canvas, circle);
+        }
     }
 
-    public boolean areCollidedWithAny(double x, double y, double r) {
-        for (PhysicBall item: ballsCollection)
+    public boolean areCollidedWithAny(double x, double y, double m) {
+        for (PhysicBall item: ballsCollection) {
+            double r = m / getMass();
             if ((item.getX() - x) * (item.getX() - x) + (item.getY() - y) * (item.getY() - y) <= r + item.getRadius()) return true;
+        }
         return false;
     }
 }

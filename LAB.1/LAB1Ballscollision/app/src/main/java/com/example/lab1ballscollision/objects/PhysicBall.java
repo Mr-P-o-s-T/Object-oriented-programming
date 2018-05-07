@@ -1,15 +1,14 @@
 package com.example.lab1ballscollision.objects;
 
 public final class PhysicBall extends Ball {
-    private static double arithmeticMeanMass = 0.0;
-    private static long N = 0;
+    public static double arithmeticMeanMass = 0.0;
+    public static long N = 0;
     public static Force gravity;
     private Force friction;
 
-    public PhysicBall(double x, double y, double r) {
-        super(x, y, r * N * arithmeticMeanMass / (N + 1 - r));
-        arithmeticMeanMass = N / (N + 1) * arithmeticMeanMass + mass / (N + 1);
-        N++;
+    public PhysicBall(double x, double y, double m) {
+        super(x, y, m);
+        increaseArithmeticMeanMass(m);
         friction = new Friction(0.4);
     }
 
@@ -18,16 +17,25 @@ public final class PhysicBall extends Ball {
         friction = new Friction(0.4);
     }
 
-    public void preDeletingActions() {
-        arithmeticMeanMass = N / (N - 1) * arithmeticMeanMass - mass / (N - 1);
+    static public void increaseArithmeticMeanMass(double newMass) {
+        arithmeticMeanMass = ((double) N) / (N + 1) * arithmeticMeanMass + newMass / (N + 1);
+        N++;
+    }
+
+    static public void decreaseArithmeticMeanMass(double newMass) {
+        arithmeticMeanMass = ((double) N) / (N - 1) * arithmeticMeanMass - newMass / (N - 1);
         N--;
+    }
+
+    public void preDeletingActions() {
+        decreaseArithmeticMeanMass(mass);
     }
 
     public double getX() {
         return position.x;
     }
 
-    public  double getY() {
+    public double getY() {
         return position.y;
     }
 
