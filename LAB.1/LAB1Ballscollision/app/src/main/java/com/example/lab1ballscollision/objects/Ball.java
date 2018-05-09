@@ -40,6 +40,15 @@ public abstract class Ball {
         impulse.y = impulseY;
     }
 
+    public void speedChanging(Vector startSpeed) {
+        impulse = startSpeed.multOnScalar(mass);
+    }
+
+    public void speedChanging(double speedX, double speedY) {
+        impulse.x = speedX * mass;
+        impulse.y = speedY * mass;
+    }
+
     void relativeImpulseChanging(double deltaSpeedX, double deltaSpeedY) {
         impulse.x += deltaSpeedX * mass;
         impulse.y += deltaSpeedY * mass;
@@ -57,8 +66,8 @@ public abstract class Ball {
         Vector deltaPos = getPosDiff(secondBall), deltaVel = getVelocityDiff(secondBall);
         double a = deltaVel.length() * deltaVel.length(),
                 b = 2 * deltaPos.scalarCompos(deltaVel),
-                c = deltaPos.length() * deltaPos.length() - (getRadius() + getRadius()) *
-                        (getRadius() + getRadius());
+                c = deltaPos.length() * deltaPos.length() - (getRadius() + secondBall.getRadius()) *
+                        (getRadius() + secondBall.getRadius());
         if (Math.abs(a) < Vector.epsilon) return Double.MAX_VALUE;
         else if (b < 0.0) {
             double D = b * b - 4 * a * c;
@@ -70,6 +79,7 @@ public abstract class Ball {
     }
 
     public void drawMe(Canvas canvas, Paint paint) {
-        canvas.drawCircle((float) (position.x / xMax * canvas.getWidth()), (float) (position.y / yMax * canvas.getHeight()), (float) (getRadius() / xMax * canvas.getWidth()), paint);
+        canvas.drawCircle((float) position.x, (float) position.y, (float) getRadius(), paint);
+        //canvas.drawLine((float) position.x, (float) position.y, (float) (position.x + impulse.x), (float) (position.y + impulse.y), paint);
     }
 }

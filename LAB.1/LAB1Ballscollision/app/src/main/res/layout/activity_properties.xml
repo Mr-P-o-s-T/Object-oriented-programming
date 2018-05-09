@@ -8,62 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/xMax"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:width="150dp"/>
-
-        <EditText
-            android:id="@+id/xMax"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:text="45.0"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/yMax"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            android:width="150dp"/>
-
-        <EditText
-            android:id="@+id/yMax"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:text="80.0" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:padding="16dp"
         android:orientation="horizontal" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/timeSpeed"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
             android:textAlignment="center"
             android:textSize="20sp"
             android:width="150dp"/>
@@ -71,7 +23,8 @@
         <EditText
             android:id="@+id/secsPerSec"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:ems="10"
             android:inputType="numberDecimal"
             android:text="0.01" />
@@ -81,41 +34,40 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:padding="16dp"
         android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/accuracy"
-            android:layout_marginLeft="16dp"
             android:textSize="20sp" />
 
         <RadioGroup
             android:id="@+id/accuracyRG"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal" >
 
             <RadioButton
                 android:id="@+id/lowRB"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/low" />
 
             <RadioButton
                 android:id="@+id/mediumRB"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/medium" />
 
             <RadioButton
                 android:id="@+id/highRB"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/high"
                 android:checked="true" />
@@ -123,7 +75,7 @@
             <RadioButton
                 android:id="@+id/ultraRB"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/ultra" />
         </RadioGroup>
@@ -133,20 +85,19 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:padding="16dp"
         android:orientation="vertical" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:layout_marginLeft="16dp"
             android:text="@string/gravity"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp" >
+            android:layout_gravity="center" >
 
             <EditText
                 android:id="@+id/X"

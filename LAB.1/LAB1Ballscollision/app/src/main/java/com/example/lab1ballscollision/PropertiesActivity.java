@@ -20,8 +20,6 @@ public class PropertiesActivity extends AppCompatActivity {
     }
 
     public void onStartButtonClick(View v) {
-        Environment.xMax = Double.parseDouble(((EditText) findViewById(R.id.xMax)).getText().toString());
-        Environment.yMax = Double.parseDouble(((EditText) findViewById(R.id.yMax)).getText().toString());
         Environment.dT = Double.parseDouble(((EditText) findViewById(R.id.secsPerSec)).getText().toString());
         Environment.gravity = new Gravity(
                 Double.parseDouble(((EditText) findViewById(R.id.X)).getText().toString()),
@@ -42,7 +40,5 @@ public class PropertiesActivity extends AppCompatActivity {
 
         Intent intent = new Intent(PropertiesActivity.this, EnvironmentScreen.class);
         startActivity(intent);
-
-        Toast.makeText(this, Double.toString(Environment.xMax) + " " + Environment.yMax + " " + Environment.dT + " " + Environment.epsilon, Toast.LENGTH_LONG).show();
     }
 }

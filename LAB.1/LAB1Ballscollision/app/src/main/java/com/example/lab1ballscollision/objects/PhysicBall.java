@@ -2,7 +2,7 @@ package com.example.lab1ballscollision.objects;
 
 public final class PhysicBall extends Ball {
     public static double arithmeticMeanMass = 0.0;
-    public static long N = 0;
+    private static long N = 0;
     public static Force gravity;
     private Force friction;
 
@@ -23,7 +23,8 @@ public final class PhysicBall extends Ball {
     }
 
     static public void decreaseArithmeticMeanMass(double newMass) {
-        arithmeticMeanMass = ((double) N) / (N - 1) * arithmeticMeanMass - newMass / (N - 1);
+        if (N > 1) arithmeticMeanMass = ((double) N) / (N - 1) * arithmeticMeanMass - newMass / (N - 1);
+        else arithmeticMeanMass = 0.0;
         N--;
     }
 
@@ -41,7 +42,7 @@ public final class PhysicBall extends Ball {
 
     @Override
     public double getRadius() {
-        return mass / arithmeticMeanMass;
+        return mass / arithmeticMeanMass * xMax / 20;
     }
 
     public void collisionProcessing(PhysicBall b) {

@@ -4,10 +4,13 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.example.lab1ballscollision.environment.Environment;
@@ -20,62 +23,70 @@ import java.util.TimerTask;
 public class EnvironmentScreen extends AppCompatActivity implements View.OnTouchListener  {
     private Environment environment;
     private RelativeLayout RL;
-    Field f;
+    private ImageButton imgB;
+    private double x, y;
+    private Field f;
     private Timer t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RL = (RelativeLayout) getDelegate().findViewById(R.id.newRelLayout);
-
-        /*f = new Field(this);
-        f.setOnTouchListener(this);
-        f.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
-
-        RL.addView(f);*/
         setContentView(R.layout.activity_environment_screen);
 
-        environment = new Environment();
-        environment.addBall(0.1, 0.1, 10.0, new Vector(50, 50));
-        environment.addBall(0.7, 0.4, 20.0, new Vector(50, 20));
-        environment.addBall(0.7, 0.6, 20.0, new Vector(50, 30));
+        RL = findViewById(R.id.newRelLayout);
+
+        f = new Field(this);
+        f.setOnTouchListener(this);
+        f.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+        f.setLongClickable(true);
+
+        RL.addView(f);
+
+        imgB = findViewById(R.id.play_pause);
+        imgB.bringToFront();
+
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        environment = new Environment(size.x, size.y - 60);
+        /*environment.addBall(0.1, 0.1, 1.0, new Vector(500, 500));
+        environment.addBall(0.7, 0.4, 2.0, new Vector(500, 200));
+        environment.addBall(0.7, 0.6, 2.0, new Vector(500, 300));*/
 
         t = new Timer();
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        double x = event.getX(), y = event.getY(), m;
+        x = event.getX();
+        y = event.getY();
+        double m;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 if (!environment.highligntBall(x, y)) {
                     environment.unhighlightBall();
-                    environment.paused = !environment.paused;
-                    if (!environment.paused) t.schedule(new Update(), 10);
-                }
-                else {
-
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (f.ballCreation && !environment.areCollidedWithAny(f.xC, f.yC, m = Math.sqrt((f.xC - event.getX()) * (f.xC - event.getX()) + (f.yC - event.getY()) * (f.yC - event.getY())))) {
+                if (f.ballCreation && !environment.areCollidedWithAny(f.xC, f.yC, m =
+                        Math.sqrt((f.xC - x) * (f.xC - x) + (f.yC - y) * (f.yC - y)) / 10.0)) {
                     environment.returnMass();
                     f.m = m;
                     environment.increaseMass(f.m);
                 }
                 else if (f.impulseSetting) {
-                    f.x = x; f.y = y;
+                    f.xS = x; f.yS = y;
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 if (f.ballCreation) {
                     environment.returnMass();
-                    f.ball = environment.addBall(f.xC / f.getWidth(), f.yC / f.getHeight(), f.m, new Vector());
-                    f.impulseSetting = true;
+                    environment.addBall(f.xC, f.yC, f.m);
+                    f.ballCreation = false;
                 }
                 else if (f.impulseSetting) {
-                    f.imp = new Vector(f.x - x, f.y - y);
+                    environment.highlighted.speedChanging(new Vector(environment.highlighted.getX()
+                            - x,environment.highlighted.getY() - y).multOnScalar(10));
                     f.impulseSetting = false;
                 }
                 break;
@@ -90,10 +101,8 @@ public class EnvironmentScreen extends AppCompatActivity implements View.OnTouch
     }
 
     public class Field extends View {
-        double xC, yC, m, x, y;
+        double xC, yC, xS, yS, m;
         boolean ballCreation = false, impulseSetting = false;
-        PhysicBall ball;
-        Vector imp;
         Paint newBall = new Paint(), line = new Paint();
 
         public Field(Context context) {
@@ -104,13 +113,13 @@ public class EnvironmentScreen extends AppCompatActivity implements View.OnTouch
             setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    if (f.ballCreation) {
-                        f.ballCreation = false;
+                    if (environment.highlighted != null) {
                         f.impulseSetting = true;
                     }
-                    else {
+                    else if (!f.ballCreation) {
                         f.xC = x; f.yC = y;
                         environment.paused = true;
+                        imgB.setImageURI(Uri.parse("android.resource://com.example.lab1ballscollision/" + R.drawable.play));
                         f.ballCreation = true;
                     }
                     return true;
@@ -121,13 +130,17 @@ public class EnvironmentScreen extends AppCompatActivity implements View.OnTouch
         @Override
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
-            canvas.drawColor(Color.RED | Color.GREEN);
+            canvas.drawColor(Color.parseColor("#FFF5EE"));
             environment.drawBalls(canvas);
             if (ballCreation) {
-                canvas.drawCircle(((float) xC), ((float) yC), (float) (m / environment.getMass() / environment.xMax * getWidth()), newBall);
+                canvas.drawCircle((float) xC, (float) yC, (float) (m / environment.getMass() *
+                        getWidth() / 20), newBall);
             }
             else if (impulseSetting) {
-                canvas.drawLine(((float) xC), ((float) yC), (float) (2 * xC - x), (float) (2 * yC - y), line);
+                double lx = environment.highlighted.getX(),
+                        ly = environment.highlighted.getY();
+                canvas.drawLine((float) lx, (float) ly, (float) (2 * lx - xS),
+                        (float) (2 * ly - yS), line);
             }
             invalidate();
         }
@@ -140,6 +153,17 @@ public class EnvironmentScreen extends AppCompatActivity implements View.OnTouch
             if (!environment.paused) {
                 t.schedule(new Update(), 10);
             }
+        }
+    }
+
+    public void onPlayPauseClick(View v) {
+        environment.paused = !environment.paused;
+        if (!environment.paused) {
+            imgB.setImageURI(Uri.parse("android.resource://com.example.lab1ballscollision/" + R.drawable.pause));
+            t.schedule(new Update(), 10);
+        }
+        else {
+            imgB.setImageURI(Uri.parse("android.resource://com.example.lab1ballscollision/" + R.drawable.play));
         }
     }
 }

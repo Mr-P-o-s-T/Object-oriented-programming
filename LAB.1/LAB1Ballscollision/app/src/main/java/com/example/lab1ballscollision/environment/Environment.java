@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 
 public final class Environment {
-    public static double dT, xMax, yMax, epsilon;
+    public static double dT, epsilon;
     public static Force gravity;
     private double lastMass = 0.0;
     public boolean paused = true;
-    private PhysicBall highlighted;
+    public PhysicBall highlighted;
     private ArrayList<PhysicBall> ballsCollection = new ArrayList<>();
 
     private class Pair implements Comparable<Pair> {
@@ -43,7 +43,7 @@ public final class Environment {
 
     private PriorityQueue<Pair> collisionQueue = new PriorityQueue<>();
 
-    public Environment() {
+    public Environment(double xMax, double yMax) {
         PhysicBall.gravity = gravity;
         PhysicBall.xMax = xMax;
         PhysicBall.yMax = yMax;
@@ -67,11 +67,17 @@ public final class Environment {
         return PhysicBall.arithmeticMeanMass;
     }
 
-    public PhysicBall addBall(double x, double y, double m, Vector startImp) {
-        PhysicBall newBall = new PhysicBall(x * xMax, y * yMax, m);
-        newBall.impulseChanging(startImp.x, startImp.y);
+    public void addBall(double x, double y, double m, Vector startImp) {
+        PhysicBall newBall = new PhysicBall(x * PhysicBall.xMax, y * PhysicBall.yMax, m);
+        newBall.impulseChanging(startImp);
         ballsCollection.add(newBall);
-        return newBall;
+    }
+
+    public void addBall(double x, double y, double m) {
+        PhysicBall newBall = new PhysicBall(x, y, m);
+        ballsCollection.add(newBall);
+        highlighted = newBall;
+        lastMass = 0.0;
     }
 
     void deleteBall() {
@@ -99,9 +105,9 @@ public final class Environment {
 
     private void checkRicochets() {
         for (PhysicBall item: ballsCollection) {
-            if ((item.getX() < item.getRadius()) || (item.getX() > xMax - item.getRadius()))
+            if ((item.getX() < item.getRadius()) || (item.getX() > PhysicBall.xMax - item.getRadius()))
                 item.horizontalRicochet();
-            if ((item.getY() < item.getRadius()) || (item.getY() > yMax - item.getRadius()))
+            if ((item.getY() < item.getRadius()) || (item.getY() > PhysicBall.yMax - item.getRadius()))
                 item.verticalRicochet();
         }
     }
@@ -145,7 +151,7 @@ public final class Environment {
 
     public void drawBalls(Canvas canvas) {
         Paint circle = new Paint();
-        circle.setColor(Color.GREEN);
+        circle.setColor(Color.parseColor("#7BE61E"));
         for (PhysicBall item: ballsCollection) item.drawMe(canvas, circle);
         if (highlighted != null) {
             circle.setColor(Color.MAGENTA);
@@ -155,7 +161,7 @@ public final class Environment {
 
     public boolean areCollidedWithAny(double x, double y, double m) {
         for (PhysicBall item: ballsCollection) {
-            double r = m / getMass();
+            double r = m / getMass() * PhysicBall.xMax / 10;
             if ((item.getX() - x) * (item.getX() - x) + (item.getY() - y) * (item.getY() - y) <= r + item.getRadius()) return true;
         }
         return false;

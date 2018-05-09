@@ -8,10 +8,14 @@
     android:id="@+id/newRelLayout" >
 
     <ImageButton
+        android:id="@+id/play_pause"
         android:src="@drawable/play"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="fitXY"
+        android:layout_margin="8dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:onClick="onPlayPauseClick" />
 
 </RelativeLayout>
