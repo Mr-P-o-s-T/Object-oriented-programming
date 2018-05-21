@@ -22,7 +22,7 @@ final class Friction extends Force {
     public void Update(double mass, Vector... dependencies) { // dependencies[0] - impulse, // dependencies[1] - gravity force
         Vector tmp = new Vector();
         tmp = tmp.subtract(dependencies[0].normalise()); //tmp = -(normalised impulse)
-        tmp = tmp.multOnScalar(mu).multOnScalar(mass).multOnScalar(dependencies[1].length());
+        tmp = tmp.multOnScalar(mu).multOnScalar(mass).multOnScalar(dependencies[1].z);
         x = tmp.x;
         y = tmp.y;
         z = tmp.z;
