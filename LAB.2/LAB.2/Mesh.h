@@ -23,7 +23,7 @@ public:
 		center->changeCoordinates(dx, dy, dz);
 	}
 
-	void setAngles(double phi, double xi, double psi) {
+	void setAngles(double phi = 0.0, double xi = 0.0, double psi = 0.0) {
 		this->phi = phi; this->xi = xi; this->psi = psi;
 	}
 
@@ -126,6 +126,6 @@ private:
 	std::vector<Vertex> vertexes;
 	std::vector<Polygon> polygons;
 	Vertex *center = nullptr;
-	double phi, xi, psi;
+	double phi = 0.0, xi = 0.0, psi = 0.0;
 	double scale = 1;
 };
