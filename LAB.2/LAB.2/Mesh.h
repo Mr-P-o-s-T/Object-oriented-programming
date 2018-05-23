@@ -5,8 +5,39 @@
 class Mesh {
 public:
 	Mesh() = default;
-	Mesh(const char *meshPath);
-	~Mesh() = default;
+
+	Mesh(const char *meshPath) {
+		loadMesh(meshPath);
+	}
+
+	~Mesh() {
+		if (center) delete center;
+	}
+
+	void setPosition(double x, double y, double z) {
+		if (center) delete center;
+		center = new Vertex(x, y, z);
+	}
+
+	void changePosition(double dx, double dy, double dz) {
+		center->changeCoordinates(dx, dy, dz);
+	}
+
+	void setAngles(double phi, double xi, double psi) {
+		this->phi = phi; this->xi = xi; this->psi = psi;
+	}
+
+	void changeAngles(double dphi, double dxi, double dpsi) {
+		this->phi += dphi; this->xi += dxi; this->psi += dpsi;
+	}
+
+	void setScale(double scale = 1.0) {
+		this->scale = scale;
+	}
+
+	double getScale() {
+		return scale;
+	}
 
 	void loadMesh();
 	void loadMesh(const char *meshPath) {
@@ -14,7 +45,7 @@ public:
 		loadMesh();
 	}
 
-
+	void drawMesh();
 private:
 	class Vertex {
 	public:
@@ -23,12 +54,16 @@ private:
 	private:
 		Vertex() = default;
 
+	public:
 		Vertex(double x, double y, double z) {
 			this->x = x; this->y = y; this->z = z;
 		}
 
-	public:
 		~Vertex() = default;
+
+		void changeCoordinates(double dx, double dy, double dz) {
+			x += dx; y += dy; z += dz;
+		}
 
 		static Vertex loadVertex(std::ifstream &file) {
 			Vertex res;
@@ -73,11 +108,20 @@ private:
 			}
 		}
 	};
+
+	class Color	{
+	public:
+		float r = 0.0f, g = 0.0f, b = 0.0f;
+
+		Color() = default;
+
+		~Color() = default;
+	} color;
 	
 	const char *path = nullptr;
 	std::vector<Vertex> vertexes;
 	std::vector<Polygon> polygons;
 	Vertex *center = nullptr;
 	double phi, xi, psi;
-	double size;
+	double scale = 1;
 };
