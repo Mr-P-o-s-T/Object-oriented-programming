@@ -20,7 +20,7 @@ void Mesh::drawMesh() {
 	if (center) {
 		glPushMatrix();
 
-		glTranslatef(center->x, center->y, center->z);
+		glTranslated(center->x, center->y, center->z);
 		glColor3f(color.r, color.g, color.b);
 
 		glRotated(phi, 1.0, 0.0, 0.0);
@@ -37,4 +37,28 @@ void Mesh::drawMesh() {
 
 		glPopMatrix();
 	}
+}
+
+vector<Mesh::Vertex> Mesh::getVertexesProjectionOXY() {
+	vector<Vertex> res;
+	for (auto i: vertexes) {
+		res.push_back(Vertex(i.x, i.y, 0.0));
+	}
+	return res;
+}
+
+vector<Mesh::Vertex> Mesh::getVertexesProjectionOXZ() {
+	vector<Vertex> res;
+	for (auto i : vertexes) {
+		res.push_back(Vertex(i.x, 0.0, i.z));
+	}
+	return res;
+}
+
+vector<Mesh::Vertex> Mesh::getVertexesProjectionOYZ() {
+	vector<Vertex> res;
+	for (auto i : vertexes) {
+		res.push_back(Vertex(0.0, i.y, i.z));
+	}
+	return res;
 }

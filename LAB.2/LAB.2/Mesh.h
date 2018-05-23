@@ -46,7 +46,7 @@ public:
 	}
 
 	void drawMesh();
-private:
+
 	class Vertex {
 	public:
 		double x, y, z;
@@ -75,7 +75,11 @@ private:
 			file.write((char *)this, sizeof(this));
 		}
 	};
-	
+
+	std::vector<Mesh::Vertex> getVertexesProjectionOXY();
+	std::vector <Mesh::Vertex> getVertexesProjectionOXZ();
+	std::vector <Mesh::Vertex> getVertexesProjectionOYZ();
+private:
 	class Polygon {
 	public:
 		static size_t n;
