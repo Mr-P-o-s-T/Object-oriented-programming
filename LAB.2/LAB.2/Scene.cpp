@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Vertex.h"
+#include "glut.h"
 #include <algorithm>
 using namespace std;
 
@@ -9,8 +10,15 @@ bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
 	return ((b.y - a.y) * (c.z - a.z) - (b.z - a.z) * (c.y - a.y)) < 0;
 }
 
-vector<Vertex> Scene::getOXYProj() {
-	vector<Vertex> set = meshes[0].getVertexesProjectionOXY();
+void Scene::BuildScene() {
+	cam.updateCamera();
+	meshes[0].drawMesh();
+	meshes[1].drawMesh();
+	drawAxes();
+}
+
+vector<Vertex> Scene::getOXYProj(Mesh &m) {
+	vector<Vertex> set = m.getVertexesProjectionOXY();
 	for (size_t i = 1; i < set.size(); i++)
 		if (set[i].x < set[0].x) swap(set[i], set[0]);
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
@@ -24,8 +32,8 @@ vector<Vertex> Scene::getOXYProj() {
 	return set;
 }
 
-vector<Vertex> Scene::getOXZProj() {
-	vector<Vertex> set = meshes[0].getVertexesProjectionOXY();
+vector<Vertex> Scene::getOXZProj(Mesh &m) {
+	vector<Vertex> set = m.getVertexesProjectionOXY();
 	for (size_t i = 1; i < set.size(); i++)
 		if (set[i].x < set[0].x) swap(set[i], set[0]);
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
@@ -39,8 +47,8 @@ vector<Vertex> Scene::getOXZProj() {
 	return set;
 }
 
-vector<Vertex> Scene::getOYZProj() {
-	vector<Vertex> set = meshes[0].getVertexesProjectionOXY();
+vector<Vertex> Scene::getOYZProj(Mesh &m) {
+	vector<Vertex> set = m.getVertexesProjectionOXY();
 	for (size_t i = 1; i < set.size(); i++)
 		if (set[i].x < set[0].x) swap(set[i], set[0]);
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
@@ -52,4 +60,26 @@ vector<Vertex> Scene::getOYZProj() {
 		top++;
 	}
 	return set;
+}
+
+void Scene::drawAxes() {
+	glPushMatrix();
+	glLoadIdentity();
+	glBegin(GL_LINES);
+	glColor3f(0.5, 0.5, 0.5);
+	glVertex3d(-10.0, 0.0, 0.0);
+	glColor3f(0.0, 1.0, 0.0);
+	glVertex3d(10.0, 0.0, 0.0);
+
+	glColor3f(0.5, 0.5, 0.5);
+	glVertex3d(0.0, -10.0, 0.0);
+	glColor3f(0.0, 1.0, 0.0);
+	glVertex3d(0.0, 10.0, 0.0);
+
+	glColor3f(0.5, 0.5, 0.5);
+	glVertex3d(0.0, 0.0, -10.0);
+	glColor3f(0.0, 1.0, 0.0);
+	glVertex3d(0.0, 0.0, 10.0);
+	glEnd();
+	glPopMatrix();
 }

@@ -9,11 +9,16 @@ public:
 		meshes[1].loadMesh(mesh1);
 	}
 
+	void BuildScene();
+
 	~Scene() = default;
 private:
-	std::vector<class Vertex> getOXYProj();
-	std::vector<class Vertex> getOXZProj();
-	std::vector<class Vertex> getOYZProj();
-
 	Mesh meshes[2];
+	Camera cam;
+
+	std::vector<class Vertex> getOXYProj(Mesh &m);
+	std::vector<class Vertex> getOXZProj(Mesh &m);
+	std::vector<class Vertex> getOYZProj(Mesh &m);
+
+	void drawAxes();
 };

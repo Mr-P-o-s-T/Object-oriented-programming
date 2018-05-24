@@ -53,14 +53,14 @@ public:
 private:
 	class Polygon {
 	public:
-		static size_t n;
-		std::vector<size_t> indexes;
+		static uint64_t n;
+		std::vector<uint64_t> indexes;
 	private:
 		Polygon() {
 			indexes.reserve(n);
 		}
 
-		Polygon(size_t n) {
+		Polygon(uint64_t n) {
 			this->n = n;
 			indexes.reserve(n);
 		}
@@ -70,7 +70,7 @@ private:
 
 		static Polygon loadPolygon(std::ifstream &file) {
 			if (n) {
-				size_t n;
+				uint64_t n;
 				file.read((char *)&n, sizeof(n));
 				Polygon polygon(n);
 				file.read((char *) polygon.indexes.data(), polygon.indexes.capacity());
@@ -89,7 +89,7 @@ private:
 		float r = 0.0f, g = 0.0f, b = 0.0f;
 
 		Color() = default;
-		Color(double r, double g, double b) {
+		Color(float r, float g, float b) {
 			this->r = r; this->g = g; this->b = b;
 		}
 		~Color() = default;
