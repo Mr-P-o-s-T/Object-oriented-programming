@@ -1,6 +1,6 @@
 #pragma once
+#include "Vertex.h"
 #include <vector>
-#include <fstream>
 
 class Mesh {
 public:
@@ -47,38 +47,9 @@ public:
 
 	void drawMesh();
 
-	class Vertex {
-	public:
-		double x, y, z;
-
-	private:
-		Vertex() = default;
-
-	public:
-		Vertex(double x, double y, double z) {
-			this->x = x; this->y = y; this->z = z;
-		}
-
-		~Vertex() = default;
-
-		void changeCoordinates(double dx, double dy, double dz) {
-			x += dx; y += dy; z += dz;
-		}
-
-		static Vertex loadVertex(std::ifstream &file) {
-			Vertex res;
-			file.read((char *)&res, sizeof(res));
-			return res;
-		}
-
-		void saveVertex(std::ofstream &file) {
-			file.write((char *)this, sizeof(this));
-		}
-	};
-
-	std::vector<Mesh::Vertex> getVertexesProjectionOXY();
-	std::vector <Mesh::Vertex> getVertexesProjectionOXZ();
-	std::vector <Mesh::Vertex> getVertexesProjectionOYZ();
+	std::vector<Vertex> getVertexesProjectionOXY();
+	std::vector <Vertex> getVertexesProjectionOXZ();
+	std::vector <Vertex> getVertexesProjectionOYZ();
 private:
 	class Polygon {
 	public:

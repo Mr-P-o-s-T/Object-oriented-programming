@@ -10,9 +10,9 @@ public:
 
 	~Scene() = default;
 private:
-	std::vector<Mesh::Vertex> getOXYProj();
-	std::vector<Mesh::Vertex> getOXZProj();
-	std::vector<Mesh::Vertex> getOYZProj();
+	std::vector<class Vertex> getOXYProj();
+	std::vector<class Vertex> getOXZProj();
+	std::vector<class Vertex> getOYZProj();
 
 	Mesh meshes[2];
 };

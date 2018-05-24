@@ -39,7 +39,7 @@ void Mesh::drawMesh() {
 	}
 }
 
-vector<Mesh::Vertex> Mesh::getVertexesProjectionOXY() {
+vector<Vertex> Mesh::getVertexesProjectionOXY() {
 	vector<Vertex> res;
 	for (auto i: vertexes) {
 		res.push_back(Vertex(i.x, i.y, 0.0));
@@ -47,7 +47,7 @@ vector<Mesh::Vertex> Mesh::getVertexesProjectionOXY() {
 	return res;
 }
 
-vector<Mesh::Vertex> Mesh::getVertexesProjectionOXZ() {
+vector<Vertex> Mesh::getVertexesProjectionOXZ() {
 	vector<Vertex> res;
 	for (auto i : vertexes) {
 		res.push_back(Vertex(i.x, 0.0, i.z));
@@ -55,7 +55,7 @@ vector<Mesh::Vertex> Mesh::getVertexesProjectionOXZ() {
 	return res;
 }
 
-vector<Mesh::Vertex> Mesh::getVertexesProjectionOYZ() {
+vector<Vertex> Mesh::getVertexesProjectionOYZ() {
 	vector<Vertex> res;
 	for (auto i : vertexes) {
 		res.push_back(Vertex(0.0, i.y, i.z));
