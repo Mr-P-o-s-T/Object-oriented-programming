@@ -12,8 +12,9 @@ bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
 
 void Scene::BuildScene() {
 	cam->updateCamera();
-	meshes[0].drawMesh();
-	meshes[1].drawMesh();
+	
+	meshes[0].first.drawMesh();
+	meshes[1].first.drawMesh();
 	drawAxes();
 }
 
@@ -64,19 +65,18 @@ vector<Vertex> Scene::getOYZProj(Mesh &m) {
 
 void Scene::drawAxes() {
 	glPushMatrix();
-	glLoadIdentity();
 	glBegin(GL_LINES);
-	glColor3f(0.5, 0.5, 0.5);
+	glColor3f(1.0, 0.0, 0.0);
 	glVertex3d(-10.0, 0.0, 0.0);
 	glColor3f(0.0, 1.0, 0.0);
 	glVertex3d(10.0, 0.0, 0.0);
 
-	glColor3f(0.5, 0.5, 0.5);
+	glColor3f(1.0, 0.0, 0.0);
 	glVertex3d(0.0, -10.0, 0.0);
 	glColor3f(0.0, 1.0, 0.0);
 	glVertex3d(0.0, 10.0, 0.0);
 
-	glColor3f(0.5, 0.5, 0.5);
+	glColor3f(1.0, 0.0, 0.0);
 	glVertex3d(0.0, 0.0, -10.0);
 	glColor3f(0.0, 1.0, 0.0);
 	glVertex3d(0.0, 0.0, 10.0);

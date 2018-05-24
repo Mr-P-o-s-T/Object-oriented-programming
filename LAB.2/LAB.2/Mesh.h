@@ -39,6 +39,10 @@ public:
 		return scale;
 	}
 
+	void setColor(float r, float g, float b) {
+		color = Color(r, g, b);
+	}
+
 	void loadMesh();
 	void loadMesh(const char *meshPath) {
 		path = meshPath;
@@ -47,9 +51,20 @@ public:
 
 	void drawMesh();
 
-	std::vector<Vertex> getVertexesProjectionOXY();
+	std::vector <Vertex> getVertexesProjectionOXY();
 	std::vector <Vertex> getVertexesProjectionOXZ();
 	std::vector <Vertex> getVertexesProjectionOYZ();
+
+	class Color {
+	public:
+		float r = 0.0f, g = 0.0f, b = 0.0f;
+
+		Color() = default;
+		Color(float r, float g, float b) {
+			this->r = r; this->g = g; this->b = b;
+		}
+		~Color() = default;
+	};
 private:
 	class Polygon {
 	public:
@@ -92,16 +107,7 @@ private:
 		}
 	};
 
-	class Color	{
-	public:
-		float r = 0.0f, g = 0.0f, b = 0.0f;
-
-		Color() = default;
-		Color(float r, float g, float b) {
-			this->r = r; this->g = g; this->b = b;
-		}
-		~Color() = default;
-	} color;
+	Color color;
 	
 	const char *path = nullptr;
 	std::vector<Vertex> vertexes;

@@ -14,19 +14,29 @@ void Mesh::loadMesh() {
 	polygons.reserve(n);
 	polygons.push_back(Polygon::loadPolygon(file));
 	for (size_t i = 1; i < polygons.capacity(); i++) polygons.push_back(Polygon::loadPolygon(file));
+	Polygon::n = 0;
+	file.close();
 }
 
 void Mesh::drawMesh() {
 	if (center) {
 		glPushMatrix();
-
 		glTranslated(center->x, center->y, center->z);
-		glColor3f(color.r, color.g, color.b);
-
+		
 		glRotated(phi, 1.0, 0.0, 0.0);
 		glRotated(xi, 0.0, 1.0, 0.0);
 		glRotated(psi, 0.0, 0.0, 1.0);
 
+		glColor3f(0.0f, 0.0f, 0.0f);
+		for (auto polgs : polygons) {
+			glBegin(GL_LINE_LOOP);
+			for (auto ind : polgs.indexes) {
+				glVertex3d(vertexes[ind].x * scale, vertexes[ind].y * scale, vertexes[ind].z * scale);
+			}
+			glEnd();
+		}
+
+		glColor3f(color.r, color.g, color.b);
 		for (auto polgs : polygons) {
 			glBegin(GL_POLYGON);
 			for (auto ind : polgs.indexes) {
