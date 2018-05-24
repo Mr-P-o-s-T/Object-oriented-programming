@@ -11,7 +11,7 @@ bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
 }
 
 void Scene::BuildScene() {
-	cam.updateCamera();
+	cam->updateCamera();
 	meshes[0].drawMesh();
 	meshes[1].drawMesh();
 	drawAxes();

@@ -14,7 +14,7 @@ public:
 	~Scene() = default;
 private:
 	Mesh meshes[2];
-	Camera cam;
+	Camera *cam;
 
 	std::vector<class Vertex> getOXYProj(Mesh &m);
 	std::vector<class Vertex> getOXZProj(Mesh &m);

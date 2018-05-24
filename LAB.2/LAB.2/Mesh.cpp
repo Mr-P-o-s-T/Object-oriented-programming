@@ -2,18 +2,18 @@
 #include "glut.h"
 using namespace std;
 
-uint64_t Mesh::Polygon::n = 0;
+size_t Mesh::Polygon::n = 0;
 
 void Mesh::loadMesh() {
 	ifstream file(path, ios::binary);
-	uint64_t n;
+	size_t n;
 	file.read((char *)&n, sizeof(n));
 	vertexes.reserve(n);
-	for (uint64_t i = 0; i < vertexes.capacity(); i++) vertexes.push_back(Vertex::loadVertex(file));
+	for (size_t i = 0; i < vertexes.capacity(); i++) vertexes.push_back(Vertex::loadVertex(file));
 	file.read((char *)&n, sizeof(n));
 	polygons.reserve(n);
 	polygons.push_back(Polygon::loadPolygon(file));
-	for (uint64_t i = 1; i < polygons.capacity(); i++) polygons.push_back(Polygon::loadPolygon(file));
+	for (size_t i = 1; i < polygons.capacity(); i++) polygons.push_back(Polygon::loadPolygon(file));
 }
 
 void Mesh::drawMesh() {

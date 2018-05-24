@@ -53,14 +53,14 @@ public:
 private:
 	class Polygon {
 	public:
-		static uint64_t n;
-		std::vector<uint64_t> indexes;
+		static size_t n;
+		std::vector<size_t> indexes;
 	private:
 		Polygon() {
 			indexes.reserve(n);
 		}
 
-		Polygon(uint64_t n) {
+		Polygon(size_t n) {
 			this->n = n;
 			indexes.reserve(n);
 		}
@@ -69,16 +69,24 @@ private:
 		~Polygon() = default;
 
 		static Polygon loadPolygon(std::ifstream &file) {
-			if (n) {
-				uint64_t n;
+			if (!n) {
+				size_t n;
 				file.read((char *)&n, sizeof(n));
 				Polygon polygon(n);
-				file.read((char *) polygon.indexes.data(), polygon.indexes.capacity());
+				for (size_t i = 0; i < polygon.indexes.capacity(); i++) {
+					size_t ind;
+					file.read((char *)&ind, sizeof(ind));
+					polygon.indexes.push_back(ind);
+				}
 				return polygon;
 			} 
 			else {
 				Polygon polygon;
-				file.read((char *)polygon.indexes.data(), polygon.indexes.capacity());
+				for (size_t i = 0; i < polygon.indexes.capacity(); i++) {
+					size_t ind;
+					file.read((char *)&ind, sizeof(ind));
+					polygon.indexes.push_back(ind);
+				}
 				return polygon;
 			}
 		}
