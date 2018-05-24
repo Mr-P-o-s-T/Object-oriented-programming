@@ -6,7 +6,7 @@ using namespace std;
 bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
 	if (!a.z) return ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) < 0;
 	if (!a.y) return ((b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x)) < 0;
-	if (!a.x) return ((b.y - a.y) * (c.z - a.z) - (b.z - a.z) * (c.y - a.y)) < 0;
+	return ((b.y - a.y) * (c.z - a.z) - (b.z - a.z) * (c.y - a.y)) < 0;
 }
 
 vector<Vertex> Scene::getOXYProj() {

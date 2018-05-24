@@ -1,9 +1,6 @@
 #include "Camera.h"
+#include "glut.h"
 
-Camera::Camera() {
-
-}
-
-Camera::~Camera() {
-
+void Camera::updateCamera() {
+	gluLookAt(camPos->x, camPos->y, camPos->z, camFocus->x, camFocus->y, camFocus->z, 0.0, 0.0, 1.0);
 }

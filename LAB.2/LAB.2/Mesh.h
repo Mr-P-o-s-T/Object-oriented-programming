@@ -89,7 +89,9 @@ private:
 		float r = 0.0f, g = 0.0f, b = 0.0f;
 
 		Color() = default;
-
+		Color(double r, double g, double b) {
+			this->r = r; this->g = g; this->b = b;
+		}
 		~Color() = default;
 	} color;
 	

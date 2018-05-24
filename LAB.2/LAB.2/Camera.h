@@ -3,9 +3,18 @@
 
 class Camera {
 public:
-	Camera();
-	Camera(double x, double y, double z);
-	~Camera();
+	Camera(double x, double y, double z) {
+		if (camPos) delete camPos;
+		camPos = new Vertex(x, y, z);
+		if (camFocus) delete camFocus;
+		camFocus = new Vertex();
+	}
+	~Camera() {
+		if (camPos) delete camPos;
+		if (camFocus) delete camFocus;
+	}
+
+	void updateCamera();
 private:
-	double eX, eY, eZ;
+	class Vertex *camPos = nullptr, *camFocus = nullptr;
 };
