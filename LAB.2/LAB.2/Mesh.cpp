@@ -18,10 +18,34 @@ void Mesh::loadMesh() {
 	file.close();
 }
 
-void Mesh::drawMesh() {
+void Mesh::drawMesh(bool isPick) {
 	if (center) {
 		glPushMatrix();
 		glTranslated(center->x, center->y, center->z);
+
+		switch (axis) {
+		case x: 
+			glBegin(GL_LINES);
+			glColor3f(1.0, 0.0, 0.0);
+			glVertex3d(-10.0, 0.0, 0.0);
+			glVertex3d(10.0, 0.0, 0.0);
+			glEnd();
+			break;
+		case y: 
+			glBegin(GL_LINES);
+			glColor3f(0.0, 1.0, 0.0);
+			glVertex3d(0.0, -10.0, 0.0);
+			glVertex3d(0.0, 10.0, 0.0);
+			glEnd();
+			break;
+		case z:	
+			glBegin(GL_LINES);
+			glColor3f(0.0, 0.0, 1.0);
+			glVertex3d(0.0, 0.0, -10.0);
+			glVertex3d(0.0, 0.0, 10.0);
+			glEnd();
+			break;
+		}
 		
 		glRotated(phi, 1.0, 0.0, 0.0);
 		glRotated(xi, 0.0, 1.0, 0.0);
@@ -35,8 +59,8 @@ void Mesh::drawMesh() {
 			}
 			glEnd();
 		}
-
-		glColor3f(color.r, color.g, color.b);
+		if (isPick) glColor3f(colorPick.r, colorPick.g, colorPick.b);
+		else glColor3f(colorUnpick.r, colorUnpick.g, colorUnpick.b);
 		for (auto polgs : polygons) {
 			glBegin(GL_POLYGON);
 			for (auto ind : polgs.indexes) {

@@ -40,7 +40,10 @@ public:
 	}
 
 	void setColor(float r, float g, float b) {
-		color = Color(r, g, b);
+		static bool pick = false;
+		if (pick) colorPick = Color(r, g, b);
+		else colorUnpick = Color(r, g, b);
+		pick = !pick;
 	}
 
 	void loadMesh();
@@ -49,7 +52,7 @@ public:
 		loadMesh();
 	}
 
-	void drawMesh();
+	void drawMesh(bool isPick);
 
 	std::vector <Vertex> getVertexesProjectionOXY();
 	std::vector <Vertex> getVertexesProjectionOXZ();
@@ -107,7 +110,12 @@ private:
 		}
 	};
 
-	Color color;
+	enum AxisChosen {
+		None,
+		x, y, z
+	} axis = None;
+
+	Color colorPick, colorUnpick;
 	
 	const char *path = nullptr;
 	std::vector<Vertex> vertexes;
@@ -115,4 +123,6 @@ private:
 	Vertex *center = nullptr;
 	double phi = 0.0, xi = 0.0, psi = 0.0;
 	double scale = 1;
+
+	friend class Scene;
 };

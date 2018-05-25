@@ -13,27 +13,35 @@ public:
 
 	void BuildScene();
 
-	void keyFunc(unsigned char key, int x, int y) {
-		switch (key) {
-		case '1': meshes[0].second = !meshes[0].second;
+	void keyFunc(unsigned char key, int x, int y);
 
-			break;
-		case '3':
-		case '2':
-			break;
-		default:
-			break;
-		}
-	}
+	void mouseFunc(int button, int state, int x, int y);
+
+	void mouseMoveFunc(int x, int y);
 
 	~Scene() = default;
 //private:
 	std::pair<Mesh, bool> meshes[2];
 	Camera *cam;
 
+	enum State {
+		None,
+		Translation,
+		Rotation,
+		Scale
+	} currState = None;
+
+	bool change = false;
+
 	std::vector<class Vertex> getOXYProj(Mesh &m);
 	std::vector<class Vertex> getOXZProj(Mesh &m);
 	std::vector<class Vertex> getOYZProj(Mesh &m);
+
+	Vertex get3DEquivalent(Vertex &vector);
+
+	void changePosition(Vertex &moveVect);
+	void changeRotation(Vertex &moveVect);
+	void changeScale(Vertex &moveVect);
 
 	void drawAxes();
 };

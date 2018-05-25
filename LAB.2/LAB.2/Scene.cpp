@@ -12,10 +12,82 @@ bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
 
 void Scene::BuildScene() {
 	cam->updateCamera();
-	
-	meshes[0].first.drawMesh();
-	meshes[1].first.drawMesh();
+	meshes[0].first.drawMesh(meshes[0].second);
+	meshes[1].first.drawMesh(meshes[1].second);
 	drawAxes();
+}
+
+void Scene::keyFunc(unsigned char key, int x, int y) {
+	switch (key) {
+	case '1': meshes[0].second = !meshes[0].second;
+		break;
+	case '2': meshes[1].second = !meshes[1].second;
+		break;
+	case 't': 
+		if (currState == Translation) currState = None;
+		else currState = Translation;
+		break;
+	case 'r':
+		if (currState == Rotation) currState = None;
+		else currState = Rotation;
+		break;
+	case 's':
+		if (currState == Scale) currState = None;
+		else currState = Scale;
+		break;
+	case 'x':
+		if (meshes[0].first.axis == Mesh::x) meshes[0].first.axis = Mesh::None;
+		else meshes[0].first.axis = Mesh::x;
+		if (meshes[1].first.axis == Mesh::x) meshes[1].first.axis = Mesh::None;
+		else meshes[1].first.axis = Mesh::x;
+		break;
+	case 'y':
+		if (meshes[0].first.axis == Mesh::y) meshes[0].first.axis = Mesh::None;
+		else meshes[0].first.axis = Mesh::y;
+		if (meshes[1].first.axis == Mesh::y) meshes[1].first.axis = Mesh::None;
+		else meshes[1].first.axis = Mesh::y;
+		break;
+	case 'z':
+		if (meshes[0].first.axis == Mesh::z) meshes[0].first.axis = Mesh::None;
+		else meshes[0].first.axis = Mesh::z;
+		if (meshes[1].first.axis == Mesh::z) meshes[1].first.axis = Mesh::None;
+		else meshes[1].first.axis = Mesh::z;
+		break;
+	}
+	if (!(meshes[0].second || meshes[1].second)) currState = None;
+	if (currState == None) {
+		meshes[0].first.axis = Mesh::None;
+		meshes[1].first.axis = Mesh::None;
+	}
+	else {
+		if (!meshes[0].second) meshes[0].first.axis = Mesh::None;
+		if (!meshes[1].second) meshes[1].first.axis = Mesh::None;
+	}
+}
+
+void Scene::mouseFunc(int button, int state, int x, int y) {
+	if (button == GLUT_LEFT_BUTTON) {
+		if (state == GLUT_UP) {
+			change = false;
+		}
+		else {
+			change = true;
+		}
+	}
+}
+
+void Scene::mouseMoveFunc(int x, int y) {
+
+	if (change) {
+		switch (currState) {
+		case Translation: 
+			break;
+		case Rotation: 
+			break;
+		case Scale: 
+			break;
+		}
+	}
 }
 
 vector<Vertex> Scene::getOXYProj(Mesh &m) {
@@ -63,22 +135,56 @@ vector<Vertex> Scene::getOYZProj(Mesh &m) {
 	return set;
 }
 
+Vertex Scene::get3DEquivalent(Vertex &vector) {
+	Vertex camVect = cam->getCameraVector();
+	Vertex oXEqv(-camVect.y, camVect.x), oYEqv(-camVect.x * camVect.z, -camVect.y * camVect.z, camVect.x * camVect.x + camVect.y * camVect.y);
+	return Vertex(vector.x * oXEqv.x + vector.y * oYEqv.x, vector.x * oXEqv.y + vector.y * oYEqv.y, vector.x * oXEqv.z + vector.y * oYEqv.z);
+}
+
+void Scene::changePosition(Vertex &moveVect) {
+	Vertex eqv = get3DEquivalent(moveVect);
+	if (meshes[0].second) {
+		meshes[0].first.changePosition(eqv.x, eqv.y, eqv.z);
+	}
+	if (meshes[1].second) {
+		meshes[1].first.changePosition(eqv.x, eqv.y, eqv.z);
+	}
+}
+
+void Scene::changeRotation(Vertex &moveVect) {
+	if (meshes[0].second) {
+
+	}
+	if (meshes[1].second) {
+
+	}
+}
+
+void Scene::changeScale(Vertex &moveVect) {
+	if (meshes[0].second) {
+
+	}
+	if (meshes[1].second) {
+
+	}
+}
+
 void Scene::drawAxes() {
 	glPushMatrix();
 	glBegin(GL_LINES);
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(0.0, 0.0, 0.0);
 	glVertex3d(-10.0, 0.0, 0.0);
-	glColor3f(0.0, 1.0, 0.0);
+	glColor3f(1.0, 0, 0.0);
 	glVertex3d(10.0, 0.0, 0.0);
 
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(0.0, 0.0, 0.0);
 	glVertex3d(0.0, -10.0, 0.0);
 	glColor3f(0.0, 1.0, 0.0);
 	glVertex3d(0.0, 10.0, 0.0);
 
-	glColor3f(1.0, 0.0, 0.0);
+	glColor3f(0.0, 0.0, 0.0);
 	glVertex3d(0.0, 0.0, -10.0);
-	glColor3f(0.0, 1.0, 0.0);
+	glColor3f(0.0, 0.0, 1.0);
 	glVertex3d(0.0, 0.0, 10.0);
 	glEnd();
 	glPopMatrix();
