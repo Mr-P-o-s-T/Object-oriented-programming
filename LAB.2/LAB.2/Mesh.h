@@ -20,7 +20,16 @@ public:
 	}
 
 	void changePosition(double dx, double dy, double dz) {
-		center->changeCoordinates(dx, dy, dz);
+		switch (axis) {
+		case None: center->changeCoordinates(dx, dy, dz);						
+			break;
+		case x: center->changeCoordinates(dx, 0.0, 0.0);
+			break;
+		case y: center->changeCoordinates(0.0, dy, 0.0);
+			break;
+		case z: center->changeCoordinates(0.0, 0.0, dz);
+			break;
+		}
 	}
 
 	void setAngles(double phi = 0.0, double xi = 0.0, double psi = 0.0) {
@@ -28,7 +37,18 @@ public:
 	}
 
 	void changeAngles(double dphi, double dxi, double dpsi) {
-		this->phi += dphi; this->xi += dxi; this->psi += dpsi;
+		switch (axis) {
+		case None: this->phi += dphi; 
+			this->xi += dxi; 
+			this->psi += dpsi;
+			break;
+		case x: this->phi += dphi;
+			break;
+		case y: this->xi += dxi;
+			break;
+		case z: this->psi += dpsi;
+			break;
+		}
 	}
 
 	void setScale(double scale = 1.0) {
@@ -67,6 +87,29 @@ public:
 			this->r = r; this->g = g; this->b = b;
 		}
 		~Color() = default;
+	};
+
+	class Vector : public Vertex {
+	public:
+		Vector(double x, double y, double z) : Vertex(x, y, z) {}
+		~Vector() = default;
+
+		double scalarComposition(const Vector &b) {
+			return x * b.x + y * b.y + z * b.z;
+		}
+
+		Vector vectorComposition(Vector &b) {
+			return Vector(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x);
+		}
+		
+		double length() {
+			return sqrt(scalarComposition(*this));
+		}
+
+		Vector normalise() {
+			double len = length();
+			return Vector(x / len, y / len, z / len);
+		}
 	};
 private:
 	class Polygon {

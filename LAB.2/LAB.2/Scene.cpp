@@ -1,7 +1,10 @@
+#define _USE_MATH_DEFINES
+
 #include "Scene.h"
 #include "Vertex.h"
 #include "glut.h"
 #include <algorithm>
+#include <cmath>
 using namespace std;
 
 bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
@@ -72,21 +75,24 @@ void Scene::mouseFunc(int button, int state, int x, int y) {
 		}
 		else {
 			change = true;
+			px = x;
+			py = y;
 		}
 	}
 }
 
 void Scene::mouseMoveFunc(int x, int y) {
-
 	if (change) {
+		Mesh::Vector mouseVect(-(x - px) / 400.0, -(y - py) / 400.0, 0.0);
 		switch (currState) {
-		case Translation: 
+		case Translation: changePosition(mouseVect);
 			break;
-		case Rotation: 
+		case Rotation: changeRotation(mouseVect);
 			break;
-		case Scale: 
+		case Scale: changeScale(mouseVect);
 			break;
 		}
+		px = x; py = y;
 	}
 }
 
@@ -135,14 +141,15 @@ vector<Vertex> Scene::getOYZProj(Mesh &m) {
 	return set;
 }
 
-Vertex Scene::get3DEquivalent(Vertex &vector) {
-	Vertex camVect = cam->getCameraVector();
-	Vertex oXEqv(-camVect.y, camVect.x), oYEqv(-camVect.x * camVect.z, -camVect.y * camVect.z, camVect.x * camVect.x + camVect.y * camVect.y);
-	return Vertex(vector.x * oXEqv.x + vector.y * oYEqv.x, vector.x * oXEqv.y + vector.y * oYEqv.y, vector.x * oXEqv.z + vector.y * oYEqv.z);
+Mesh::Vector Scene::get3DEquivalent(Mesh::Vector &vector) {
+	Mesh::Vector camVect = cam->getCameraVector();
+	Mesh::Vector oXEqv = Mesh::Vector(0.0, 0.0, 1.0).vectorComposition(camVect), oYEqv = camVect.vectorComposition(oXEqv);
+	oXEqv = oXEqv.normalise(); oYEqv = oYEqv.normalise();
+	return Mesh::Vector(vector.x * oXEqv.x + vector.y * oYEqv.x, vector.x * oXEqv.y + vector.y * oYEqv.y, vector.x * oXEqv.z + vector.y * oYEqv.z);
 }
 
-void Scene::changePosition(Vertex &moveVect) {
-	Vertex eqv = get3DEquivalent(moveVect);
+void Scene::changePosition(Mesh::Vector &moveVect) {
+	Mesh::Vector eqv = get3DEquivalent(moveVect);
 	if (meshes[0].second) {
 		meshes[0].first.changePosition(eqv.x, eqv.y, eqv.z);
 	}
@@ -151,16 +158,27 @@ void Scene::changePosition(Vertex &moveVect) {
 	}
 }
 
-void Scene::changeRotation(Vertex &moveVect) {
+void Scene::changeRotation(Mesh::Vector &rotVect) {
+	Mesh::Vector eqv = get3DEquivalent(rotVect);
+	double R = cam->getCameraVector().length();
+	R = 2 * R * R;
+	double dphi = eqv.x >= 0.0 ? 1.0 : -1.0, dxi = eqv.y >= 0.0 ? 1.0 : -1.0, dpsi = eqv.z >= 0.0 ? 1.0 : -1.0;
 	if (meshes[0].second) {
-
+		dphi *= acos(1.0 - abs(eqv.x) / R) * 180 / M_PI;
+		dxi *= acos(1.0 - abs(eqv.y) / R) * 180 / M_PI;
+		dpsi *= acos(1.0 - abs(eqv.z) / R) * 180 / M_PI;
+		meshes[0].first.changeAngles(dphi, dxi, dpsi);
 	}
 	if (meshes[1].second) {
-
+		dphi *= acos(1.0 - abs(eqv.x) / R) * 180 / M_PI;
+		dxi *= acos(1.0 - abs(eqv.y) / R) * 180 / M_PI;
+		dpsi *= acos(1.0 - abs(eqv.z) / R) * 180 / M_PI;
+		meshes[1].first.changeAngles(dphi, dxi, dpsi);
 	}
 }
 
-void Scene::changeScale(Vertex &moveVect) {
+void Scene::changeScale(Mesh::Vector &scaleVect) {
+	Mesh::Vector eqv = get3DEquivalent(scaleVect);
 	if (meshes[0].second) {
 
 	}

@@ -16,8 +16,8 @@ public:
 
 	void updateCamera();
 
-	Vertex getCameraVector() {
-		return Vertex(camFocus->x - camPos->x, camFocus->y - camPos->y, camFocus->z - camPos->z);
+	Mesh::Vector getCameraVector() {
+		return Mesh::Vector(camFocus->x - camPos->x, camFocus->y - camPos->y, camFocus->z - camPos->z);
 	}
 private:
 	class Vertex *camPos = nullptr, *camFocus = nullptr;

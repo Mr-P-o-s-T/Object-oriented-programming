@@ -1,4 +1,6 @@
 // main file
+#define ANIMATION_SPEED 10
+
 #include "Scene.h"
 #include "glut.h"
 
@@ -27,7 +29,7 @@ void renderScene(void) {
 
 void timerFunc(int value) {
 	glutPostRedisplay();
-	glutTimerFunc(500, timerFunc, 0);
+	glutTimerFunc(ANIMATION_SPEED, timerFunc, 0);
 }
 
 void keyboardFunc(unsigned char key, int x, int y) {
@@ -58,7 +60,7 @@ int main(int argc, char **argv) {
 	glutMouseFunc(mouseFunc);
 	glutMotionFunc(mouseMoveFunc);
 
-	glutTimerFunc(500, timerFunc, 0);
+	glutTimerFunc(ANIMATION_SPEED, timerFunc, 0);
 
 	glutMainLoop();
 	return 0;

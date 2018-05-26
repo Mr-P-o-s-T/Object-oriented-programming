@@ -32,16 +32,17 @@ public:
 	} currState = None;
 
 	bool change = false;
+	int px = 0, py = 0;
 
 	std::vector<class Vertex> getOXYProj(Mesh &m);
 	std::vector<class Vertex> getOXZProj(Mesh &m);
 	std::vector<class Vertex> getOYZProj(Mesh &m);
 
-	Vertex get3DEquivalent(Vertex &vector);
+	Mesh::Vector get3DEquivalent(Mesh::Vector &vector);
 
-	void changePosition(Vertex &moveVect);
-	void changeRotation(Vertex &moveVect);
-	void changeScale(Vertex &moveVect);
+	void changePosition(Mesh::Vector &moveVect);
+	void changeRotation(Mesh::Vector &moveVect);
+	void changeScale(Mesh::Vector &moveVect);
 
 	void drawAxes();
 };
