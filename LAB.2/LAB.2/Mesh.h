@@ -108,7 +108,8 @@ public:
 
 		Vector normalise() {
 			double len = length();
-			return Vector(x / len, y / len, z / len);
+			if (len) return Vector(x / len, y / len, z / len);
+			else return Vector(0.0, 0.0, 0.0);
 		}
 	};
 private:

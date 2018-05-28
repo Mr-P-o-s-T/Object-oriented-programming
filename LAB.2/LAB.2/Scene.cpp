@@ -58,7 +58,7 @@ void Scene::keyFunc(unsigned char key, int x, int y) {
 		break;
 	}
 	if (!(meshes[0].second || meshes[1].second)) currState = None;
-	if (currState == None) {
+	if (currState == None || currState == Scale) {
 		meshes[0].first.axis = Mesh::None;
 		meshes[1].first.axis = Mesh::None;
 	}
@@ -70,9 +70,7 @@ void Scene::keyFunc(unsigned char key, int x, int y) {
 
 void Scene::mouseFunc(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON) {
-		if (state == GLUT_UP) {
-			change = false;
-		}
+		if (state == GLUT_UP) change = false;
 		else {
 			change = true;
 			px = x;
@@ -86,13 +84,14 @@ void Scene::mouseMoveFunc(int x, int y) {
 		Mesh::Vector mouseVect(-(x - px) / 400.0, -(y - py) / 400.0, 0.0);
 		switch (currState) {
 		case Translation: changePosition(mouseVect);
+			px = x; py = y;
 			break;
 		case Rotation: changeRotation(mouseVect);
+			px = x; py = y;
 			break;
 		case Scale: changeScale(mouseVect);
 			break;
 		}
-		px = x; py = y;
 	}
 }
 
@@ -179,12 +178,14 @@ void Scene::changeRotation(Mesh::Vector &rotVect) {
 
 void Scene::changeScale(Mesh::Vector &scaleVect) {
 	Mesh::Vector eqv = get3DEquivalent(scaleVect);
+	static Mesh::Vector prev = eqv;
 	if (meshes[0].second) {
-
+		meshes[0].first.setScale(meshes[0].first.getScale() + eqv.length() - prev.length());
 	}
 	if (meshes[1].second) {
-
+		meshes[1].first.setScale(meshes[1].first.getScale() + eqv.length() - prev.length());
 	}
+	prev = eqv;
 }
 
 void Scene::drawAxes() {
