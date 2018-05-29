@@ -77,21 +77,29 @@ void Scene::mouseFunc(int button, int state, int x, int y) {
 			change = true;
 			px = x;
 			py = y;
+			if (currState == Scale) {
+				px = -px / 400.0 + 1;
+				py = -py / 400.0 + 1;
+			}
 		}
 	}
 }
 
 void Scene::mouseMoveFunc(int x, int y) {
 	if (change) {
-		Mesh::Vector mouseVect(-(x - px) / 400.0, -(y - py) / 400.0, 0.0);
+		Mesh::Vector mouseVect(0.0, 0.0, 0.0);
 		switch (currState) {
-		case Translation: changePosition(mouseVect);
+		case Translation: mouseVect = Mesh::Vector(-(x - px) / 400.0, -(y - py) / 400.0, 0.0);
+			changePosition(mouseVect);
 			px = x; py = y;
 			break;
-		case Rotation: changeRotation(mouseVect);
+		case Rotation: mouseVect = Mesh::Vector(-(x - px) / 400.0, -(y - py) / 400.0, 0.0);
+			changeRotation(mouseVect);
 			px = x; py = y;
 			break;
-		case Scale: changeScale(mouseVect);
+		case Scale: mouseVect = Mesh::Vector(-x / 400.0 + 1, -y / 400.0 + 1, 0.0);
+			changeScale(mouseVect);
+			px = mouseVect.x; py = mouseVect.y;
 			break;
 		}
 	}
@@ -209,16 +217,11 @@ void Scene::changeRotation(Mesh::Vector &rotVect) {
 }
 
 void Scene::changeScale(Mesh::Vector &scaleVect) {
-	Mesh::Vector eqv = get3DEquivalent(scaleVect), camV = cam->getCameraVector();
 	if (meshes[0].second) {
-		double R = Mesh::Vector(eqv.x + camV.x - meshes[0].first.center->x, eqv.y + camV.y - meshes[0].first.center->y, eqv.z + camV.z - meshes[0].first.center->z).length() - camV.length();
-		static double prevR0 = R - camV.length();
-		meshes[0].first.setScale(meshes[0].first.getScale() * R / prevR0);
+		meshes[0].first.setScale(meshes[0].first.getScale() * scaleVect.length() / Mesh::Vector(px, py, 0.0).length());
 	}
 	if (meshes[1].second) {
-		double R = Mesh::Vector(eqv.x + camV.x - meshes[1].first.center->x, eqv.y + camV.y - meshes[1].first.center->y, eqv.z + camV.z - meshes[1].first.center->z).length();
-		static double prevR1 = R;
-		meshes[1].first.setScale(R / prevR1);
+		meshes[1].first.setScale(meshes[1].first.getScale() * scaleVect.length() / Mesh::Vector(px, py, 0.0).length());
 	}
 }
 

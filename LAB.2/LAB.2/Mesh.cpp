@@ -78,7 +78,7 @@ vector<Vertex> Mesh::getVertexesProjectionOXY() {
 				cont = true;
 				break;
 			}
-		if (!cont) res.push_back(Vector(i.x, i.y, 0.0));
+		if (!cont) res.push_back(Vector(i.x * scale, i.y * scale, 0.0));
 		else cont = false;
 	}
 	return res;
@@ -93,7 +93,7 @@ vector<Vertex> Mesh::getVertexesProjectionOXZ() {
 				cont = true;
 				break;
 			}
-		if (!cont) res.push_back(Vertex(i.x, 0.0, i.z));
+		if (!cont) res.push_back(Vertex(i.x * scale, 0.0, i.z * scale));
 		else cont = false;
 	}
 	return res;
@@ -108,7 +108,7 @@ vector<Vertex> Mesh::getVertexesProjectionOYZ() {
 				cont = true;
 				break;
 			}
-		if (!cont) res.push_back(Vertex(0.0, i.y, i.z));
+		if (!cont) res.push_back(Vertex(0.0, i.y * scale, i.z * scale));
 		else cont = false;
 	}
 	return res;

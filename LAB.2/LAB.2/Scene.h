@@ -32,7 +32,7 @@ public:
 	} currState = None;
 
 	bool change = false;
-	int px = 0, py = 0;
+	double px = 0, py = 0;
 
 	void drawProjections(Mesh &m);
 
