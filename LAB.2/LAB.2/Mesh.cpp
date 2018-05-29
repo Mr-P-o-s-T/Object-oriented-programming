@@ -4,7 +4,7 @@ using namespace std;
 
 size_t Mesh::Polygon::n = 0;
 
-void Mesh::loadMesh() {
+void Mesh::createMesh() {
 	ifstream file(path, ios::binary);
 	size_t n;
 	file.read((char *)&n, sizeof(n));
@@ -16,6 +16,42 @@ void Mesh::loadMesh() {
 	for (size_t i = 1; i < polygons.capacity(); i++) polygons.push_back(Polygon::loadPolygon(file));
 	Polygon::n = 0;
 	file.close();
+}
+
+void Mesh::saveMesh(ofstream &file) {
+	file.write((char *)center, sizeof(Vertex));
+	file.write((char *)&scale, sizeof(scale));
+	file.write((char *)&colorPick, sizeof(colorPick));
+	file.write((char *)&colorUnpick, sizeof(colorUnpick));
+	size_t n = vertexes.size();
+	file.write((char *)&n, sizeof(n));
+	file.write((char *)vertexes.data(), sizeof(Vertex) * vertexes.size());
+	n = polygons.size();
+	file.write((char *)&n, sizeof(n));
+	n = polygons.front().indexes.size();
+	file.write((char *)&n, sizeof(n));
+	for (auto i: polygons) {
+		file.write((char *)i.indexes.data(), sizeof(size_t) * i.indexes.size());
+	}
+}
+
+void Mesh::loadMesh(std::ifstream & file) {
+	center = new Vertex(0.0, 0.0, 0.0);
+	file.read((char *)center, sizeof(Vertex));
+	file.read((char *)&scale, sizeof(scale));
+	file.read((char *)&colorPick, sizeof(colorPick));
+	file.read((char *)&colorUnpick, sizeof(colorUnpick));
+	size_t n;
+	file.read((char *)&n, sizeof(n));
+	vertexes.reserve(n);
+	for (size_t i = 0; i < vertexes.capacity(); i++) {
+		vertexes.push_back(Vertex::loadVertex(file));
+	}
+	file.read((char *)&n, sizeof(n));
+	polygons.reserve(n);
+	polygons.push_back(Polygon::loadPolygon(file));
+	for (size_t i = 1; i < polygons.capacity(); i++) polygons.push_back(Polygon::loadPolygon(file));
+	Polygon::n = 0;
 }
 
 void Mesh::drawMesh(bool isPick) {

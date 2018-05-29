@@ -5,13 +5,16 @@
 class Scene {
 public:
 	Scene(const char *mesh0, const char *mesh1) {
-		meshes[0].first.loadMesh(mesh0);
+		meshes[0].first.createMesh(mesh0);
 		meshes[0].second = false;
-		meshes[1].first.loadMesh(mesh1);
+		meshes[1].first.createMesh(mesh1);
 		meshes[1].second = false;
 	}
 
 	void BuildScene();
+
+	void Save();
+	void Load();
 
 	void keyFunc(unsigned char key, int x, int y);
 

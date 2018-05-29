@@ -22,21 +22,42 @@ void Scene::BuildScene() {
 	drawAxes();
 }
 
+void Scene::Save() {
+	ofstream file("scene.save", ios::binary);
+	meshes[0].first.saveMesh(file);
+	meshes[1].first.saveMesh(file);
+	file.close();
+}
+
+void Scene::Load() {
+	ifstream file("scene.save", ios::binary);
+	delete meshes[0].first.center;
+	meshes[0].first.vertexes.clear();
+	meshes[0].first.polygons.clear();
+	meshes[0].first.loadMesh(file);
+
+	delete meshes[1].first.center;
+	meshes[1].first.vertexes.clear();
+	meshes[1].first.polygons.clear();
+	meshes[1].first.loadMesh(file);
+	file.close();
+}
+
 void Scene::keyFunc(unsigned char key, int x, int y) {
 	switch (key) {
 	case '1': meshes[0].second = !meshes[0].second;
 		break;
 	case '2': meshes[1].second = !meshes[1].second;
 		break;
-	case 't': 
+	case 'q': 
 		if (currState == Translation) currState = None;
 		else currState = Translation;
 		break;
-	case 'r':
+	case 'w':
 		if (currState == Rotation) currState = None;
 		else currState = Rotation;
 		break;
-	case 's':
+	case 'e':
 		if (currState == Scale) currState = None;
 		else currState = Scale;
 		break;
@@ -57,6 +78,10 @@ void Scene::keyFunc(unsigned char key, int x, int y) {
 		else meshes[0].first.axis = Mesh::z;
 		if (meshes[1].first.axis == Mesh::z) meshes[1].first.axis = Mesh::None;
 		else meshes[1].first.axis = Mesh::z;
+		break;
+	case 's': Save();
+		break;
+	case 'l': Load();
 		break;
 	}
 	if (!(meshes[0].second || meshes[1].second)) currState = None;

@@ -7,7 +7,7 @@ public:
 	Mesh() = default;
 
 	Mesh(const char *meshPath) {
-		loadMesh(meshPath);
+		createMesh(meshPath);
 	}
 
 	~Mesh() {
@@ -30,10 +30,6 @@ public:
 		case z: center->changeCoordinates(0.0, 0.0, dz);
 			break;
 		}
-	}
-
-	void setAngles(double phi = 0.0, double xi = 0.0, double psi = 0.0) {
-		//this->phi = phi; this->xi = xi; this->psi = psi;
 	}
 
 	void changeAngles(double dphi, double dxi, double dpsi) {
@@ -66,11 +62,14 @@ public:
 		pick = !pick;
 	}
 
-	void loadMesh();
-	void loadMesh(const char *meshPath) {
+	void createMesh();
+	void createMesh(const char *meshPath) {
 		path = meshPath;
-		loadMesh();
+		createMesh();
 	}
+
+	void saveMesh(std::ofstream &file);
+	void loadMesh(std::ifstream &file);
 
 	void drawMesh(bool isPick);
 
@@ -165,7 +164,6 @@ private:
 	std::vector<Vertex> vertexes;
 	std::vector<Polygon> polygons;
 	Vertex *center = nullptr;
-//	double phi = 0.0, xi = 0.0, psi = 0.0;
 	double scale = 1;
 
 	void rotateOXY(double dphi) {
