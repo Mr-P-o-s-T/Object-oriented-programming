@@ -16,7 +16,9 @@ bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
 void Scene::BuildScene() {
 	cam->updateCamera();
 	meshes[0].first.drawMesh(meshes[0].second);
+	if (meshes[0].second) drawProjections(meshes[0].first);
 	meshes[1].first.drawMesh(meshes[1].second);
+	if (meshes[1].second) drawProjections(meshes[1].first);
 	drawAxes();
 }
 
@@ -95,6 +97,37 @@ void Scene::mouseMoveFunc(int x, int y) {
 	}
 }
 
+void Scene::drawProjections(Mesh &m) {
+	vector<Vertex> OXY = getOXYProj(m), OXZ = getOXZProj(m), OYZ = getOYZProj(m);
+
+	glPushMatrix();
+	glTranslated(m.center->x, m.center->y, 0.0);
+	glBegin(GL_LINE_LOOP);
+	for (auto i: OXY) {
+		glVertex3d(i.x, i.y, i.z);
+	}
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(m.center->x, 0.0, m.center->z);
+	glBegin(GL_LINE_LOOP);
+	for (auto i : OXZ) {
+		glVertex3d(i.x, i.y, i.z);
+	}
+	glEnd();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(0.0, m.center->y, m.center->z);
+	glBegin(GL_LINE_LOOP);
+	for (auto i : OYZ) {
+		glVertex3d(i.x, i.y, i.z);
+	}
+	glEnd();
+	glPopMatrix();
+}
+
 vector<Vertex> Scene::getOXYProj(Mesh &m) {
 	vector<Vertex> set = m.getVertexesProjectionOXY();
 	for (size_t i = 1; i < set.size(); i++)
@@ -104,14 +137,13 @@ vector<Vertex> Scene::getOXYProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while (clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
-		top++;
+		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
 	}
 	return set;
 }
 
 vector<Vertex> Scene::getOXZProj(Mesh &m) {
-	vector<Vertex> set = m.getVertexesProjectionOXY();
+	vector<Vertex> set = m.getVertexesProjectionOXZ();
 	for (size_t i = 1; i < set.size(); i++)
 		if (set[i].x < set[0].x) swap(set[i], set[0]);
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
@@ -119,23 +151,21 @@ vector<Vertex> Scene::getOXZProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while (clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
-		top++;
+		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
 	}
 	return set;
 }
 
 vector<Vertex> Scene::getOYZProj(Mesh &m) {
-	vector<Vertex> set = m.getVertexesProjectionOXY();
+	vector<Vertex> set = m.getVertexesProjectionOYZ();
 	for (size_t i = 1; i < set.size(); i++)
-		if (set[i].x < set[0].x) swap(set[i], set[0]);
+		if (set[i].y < set[0].y) swap(set[i], set[0]);
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
 		return ((a.y - set[0].y) * (b.z - set[0].z) - (a.z - set[0].z) * (b.y - set[0].y)) < 0;
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while (clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
-		top++;
+		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
 	}
 	return set;
 }
@@ -162,30 +192,29 @@ void Scene::changeRotation(Mesh::Vector &rotVect) {
 	double R = cam->getCameraVector().length();
 	R = 2 * R * R;
 	double dphi = eqv.x >= 0.0 ? 1.0 : -1.0, dxi = eqv.y >= 0.0 ? 1.0 : -1.0, dpsi = eqv.z >= 0.0 ? 1.0 : -1.0;
+	dphi *= acos(1.0 - abs(Mesh::Vector(eqv.x, eqv.y, 0.0).length()) / R) * 180 / M_PI;
+	dxi *= acos(1.0 - abs(Mesh::Vector(eqv.x, 0.0, eqv.z).length()) / R) * 180 / M_PI;
+	dpsi *= acos(1.0 - abs(Mesh::Vector(0.0, eqv.y, eqv.z).length()) / R) * 180 / M_PI;
 	if (meshes[0].second) {
-		dphi *= acos(1.0 - abs(eqv.x) / R) * 180 / M_PI;
-		dxi *= acos(1.0 - abs(eqv.y) / R) * 180 / M_PI;
-		dpsi *= acos(1.0 - abs(eqv.z) / R) * 180 / M_PI;
 		meshes[0].first.changeAngles(dphi, dxi, dpsi);
 	}
 	if (meshes[1].second) {
-		dphi *= acos(1.0 - abs(eqv.x) / R) * 180 / M_PI;
-		dxi *= acos(1.0 - abs(eqv.y) / R) * 180 / M_PI;
-		dpsi *= acos(1.0 - abs(eqv.z) / R) * 180 / M_PI;
 		meshes[1].first.changeAngles(dphi, dxi, dpsi);
 	}
 }
 
 void Scene::changeScale(Mesh::Vector &scaleVect) {
-	Mesh::Vector eqv = get3DEquivalent(scaleVect);
-	static Mesh::Vector prev = eqv;
+	Mesh::Vector eqv = get3DEquivalent(scaleVect), camV = cam->getCameraVector();
 	if (meshes[0].second) {
-		meshes[0].first.setScale(meshes[0].first.getScale() + eqv.length() - prev.length());
+		double R = Mesh::Vector(eqv.x + camV.x - meshes[0].first.center->x, eqv.y + camV.y - meshes[0].first.center->y, eqv.z + camV.z - meshes[0].first.center->z).length() - camV.length();
+		static double prevR0 = R - camV.length();
+		meshes[0].first.setScale(meshes[0].first.getScale() * R / prevR0);
 	}
 	if (meshes[1].second) {
-		meshes[1].first.setScale(meshes[1].first.getScale() + eqv.length() - prev.length());
+		double R = Mesh::Vector(eqv.x + camV.x - meshes[1].first.center->x, eqv.y + camV.y - meshes[1].first.center->y, eqv.z + camV.z - meshes[1].first.center->z).length();
+		static double prevR1 = R;
+		meshes[1].first.setScale(R / prevR1);
 	}
-	prev = eqv;
 }
 
 void Scene::drawAxes() {

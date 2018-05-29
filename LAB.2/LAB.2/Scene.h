@@ -34,6 +34,8 @@ public:
 	bool change = false;
 	int px = 0, py = 0;
 
+	void drawProjections(Mesh &m);
+
 	std::vector<class Vertex> getOXYProj(Mesh &m);
 	std::vector<class Vertex> getOXZProj(Mesh &m);
 	std::vector<class Vertex> getOYZProj(Mesh &m);

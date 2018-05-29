@@ -46,10 +46,6 @@ void Mesh::drawMesh(bool isPick) {
 			glEnd();
 			break;
 		}
-		
-		glRotated(phi, 1.0, 0.0, 0.0);
-		glRotated(xi, 0.0, 1.0, 0.0);
-		glRotated(psi, 0.0, 0.0, 1.0);
 
 		glColor3f(0.0f, 0.0f, 0.0f);
 		for (auto polgs : polygons) {
@@ -75,24 +71,45 @@ void Mesh::drawMesh(bool isPick) {
 
 vector<Vertex> Mesh::getVertexesProjectionOXY() {
 	vector<Vertex> res;
+	bool cont = false;
 	for (auto i: vertexes) {
-		res.push_back(Vertex(i.x, i.y, 0.0));
+		for (auto j : res)
+			if ((abs(j.x - i.x) < 0.001) && (abs(j.y - i.y) < 0.001)) {
+				cont = true;
+				break;
+			}
+		if (!cont) res.push_back(Vector(i.x, i.y, 0.0));
+		else cont = false;
 	}
 	return res;
 }
 
 vector<Vertex> Mesh::getVertexesProjectionOXZ() {
 	vector<Vertex> res;
+	bool cont = false;
 	for (auto i : vertexes) {
-		res.push_back(Vertex(i.x, 0.0, i.z));
+		for (auto j : res)
+			if ((abs(j.x - i.x) < 0.001) && (abs(j.z - i.z) < 0.001)) {
+				cont = true;
+				break;
+			}
+		if (!cont) res.push_back(Vertex(i.x, 0.0, i.z));
+		else cont = false;
 	}
 	return res;
 }
 
 vector<Vertex> Mesh::getVertexesProjectionOYZ() {
 	vector<Vertex> res;
+	bool cont = false;
 	for (auto i : vertexes) {
-		res.push_back(Vertex(0.0, i.y, i.z));
+		for (auto j : res)
+			if ((abs(j.y - i.y) < 0.001) && (abs(j.z - i.z) < 0.001)) {
+				cont = true;
+				break;
+			}
+		if (!cont) res.push_back(Vertex(0.0, i.y, i.z));
+		else cont = false;
 	}
 	return res;
 }

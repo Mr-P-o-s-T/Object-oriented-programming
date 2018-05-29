@@ -33,20 +33,20 @@ public:
 	}
 
 	void setAngles(double phi = 0.0, double xi = 0.0, double psi = 0.0) {
-		this->phi = phi; this->xi = xi; this->psi = psi;
+		//this->phi = phi; this->xi = xi; this->psi = psi;
 	}
 
 	void changeAngles(double dphi, double dxi, double dpsi) {
 		switch (axis) {
-		case None: this->phi += dphi; 
-			this->xi += dxi; 
-			this->psi += dpsi;
+		case None: rotateOXY(dphi); 
+			rotateOXZ(dxi); 
+			rotateOYZ(dpsi);
 			break;
-		case x: this->phi += dphi;
+		case x: rotateOXY(dphi);
 			break;
-		case y: this->xi += dxi;
+		case y: rotateOXZ(dxi);
 			break;
-		case z: this->psi += dpsi;
+		case z: rotateOYZ(dpsi);
 			break;
 		}
 	}
@@ -165,8 +165,29 @@ private:
 	std::vector<Vertex> vertexes;
 	std::vector<Polygon> polygons;
 	Vertex *center = nullptr;
-	double phi = 0.0, xi = 0.0, psi = 0.0;
+//	double phi = 0.0, xi = 0.0, psi = 0.0;
 	double scale = 1;
+
+	void rotateOXY(double dphi) {
+		for (size_t i = 0; i < vertexes.size(); i++) {
+			Vertex tmp(vertexes[i].x * cos(dphi / 90) - vertexes[i].y * sin(dphi / 90), vertexes[i].x * sin(dphi / 90) + vertexes[i].y * cos(dphi / 90), vertexes[i].z);
+			vertexes[i].x = tmp.x; vertexes[i].y = tmp.y;
+		}
+	}
+
+	void rotateOXZ(double dxi) {
+		for (size_t i = 0; i < vertexes.size(); i++) {
+			Vertex tmp(vertexes[i].x * cos(dxi / 90) - vertexes[i].z * sin(dxi / 90), vertexes[i].y, vertexes[i].x * sin(dxi / 90) + vertexes[i].z * cos(dxi / 90));
+			vertexes[i].x = tmp.x; vertexes[i].z = tmp.z;
+		}
+	}
+
+	void rotateOYZ(double dpsi) {
+		for (size_t i = 0; i < vertexes.size(); i++) {
+			Vertex tmp(vertexes[i].x, vertexes[i].y * cos(dpsi / 90) - vertexes[i].z * sin(dpsi / 90), vertexes[i].y * sin(dpsi / 90) + vertexes[i].z * cos(dpsi / 90));
+			vertexes[i].y = tmp.y; vertexes[i].z = tmp.z;
+		}
+	}
 
 	friend class Scene;
 };
