@@ -42,11 +42,11 @@ public:
 			rotateOXZ(dxi); 
 			rotateOYZ(dpsi);
 			break;
-		case x: rotateOXY(dphi);
+		case x: rotateOYZ(dpsi);
 			break;
 		case y: rotateOXZ(dxi);
 			break;
-		case z: rotateOYZ(dpsi);
+		case z: rotateOXY(dphi);
 			break;
 		}
 	}

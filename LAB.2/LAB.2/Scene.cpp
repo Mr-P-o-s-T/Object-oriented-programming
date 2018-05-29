@@ -188,13 +188,18 @@ void Scene::changePosition(Mesh::Vector &moveVect) {
 }
 
 void Scene::changeRotation(Mesh::Vector &rotVect) {
-	Mesh::Vector eqv = get3DEquivalent(rotVect);
-	double R = cam->getCameraVector().length();
+	Mesh::Vector eqv = get3DEquivalent(rotVect), camV = cam->getCameraVector();
+	double R = camV.length();
 	R = 2 * R * R;
-	double dphi = eqv.x >= 0.0 ? 1.0 : -1.0, dxi = eqv.y >= 0.0 ? 1.0 : -1.0, dpsi = eqv.z >= 0.0 ? 1.0 : -1.0;
-	dphi *= acos(1.0 - abs(Mesh::Vector(eqv.x, eqv.y, 0.0).length()) / R) * 180 / M_PI;
-	dxi *= acos(1.0 - abs(Mesh::Vector(eqv.x, 0.0, eqv.z).length()) / R) * 180 / M_PI;
-	dpsi *= acos(1.0 - abs(Mesh::Vector(0.0, eqv.y, eqv.z).length()) / R) * 180 / M_PI;
+	double dphi, dxi, dpsi;
+	if (Mesh::Vector(camV.x, camV.y, 0.0).vectorComposition(*&Mesh::Vector(eqv.x, eqv.y, 0.0)).z > 0) dphi = -acos(1.0 - abs(Mesh::Vector(eqv.x, eqv.y, 0.0).length()) / R) * 180 / M_PI;
+	else dphi = acos(1.0 - abs(Mesh::Vector(eqv.x, eqv.y, 0.0).length()) / R) * 180 / M_PI;
+	
+	if (Mesh::Vector(camV.x, 0.0, camV.z).vectorComposition(*&Mesh::Vector(eqv.x, 0.0, eqv.z)).y > 0) dxi = acos(1.0 - abs(Mesh::Vector(eqv.x, 0.0, eqv.z).length()) / R) * 180 / M_PI;
+	else dxi = -acos(1.0 - abs(Mesh::Vector(eqv.x, 0.0, eqv.z).length()) / R) * 180 / M_PI;
+
+	if (Mesh::Vector(0.0, camV.y, camV.z).vectorComposition(*&Mesh::Vector(0.0, eqv.y, eqv.z)).x > 0) dpsi = -acos(1.0 - abs(Mesh::Vector(0.0, eqv.y, eqv.z).length()) / R) * 180 / M_PI;
+	else dpsi = acos(1.0 - abs(Mesh::Vector(0.0, eqv.y, eqv.z).length()) / R) * 180 / M_PI;
 	if (meshes[0].second) {
 		meshes[0].first.changeAngles(dphi, dxi, dpsi);
 	}
