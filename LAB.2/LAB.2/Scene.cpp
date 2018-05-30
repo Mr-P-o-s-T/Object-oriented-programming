@@ -169,6 +169,9 @@ vector<Vertex> Scene::getOXYProj(Mesh &m) {
 			if (set[i].y < set[0].y) swap(set[i], set[0]);
 		}
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
+		return ((a.x - set[0].x) * (a.x - set[0].x) + (a.y - set[0].y) * (a.y - set[0].y)) < ((b.x - set[0].x) * (b.x - set[0].x) + (b.y - set[0].y) * (b.y - set[0].y));
+	});
+	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
 		return ((a.x - set[0].x) * (b.y - set[0].y) - (a.y - set[0].y) * (b.x - set[0].x)) < 0;
 	});
 	size_t top = 2;
@@ -186,6 +189,9 @@ vector<Vertex> Scene::getOXZProj(Mesh &m) {
 			if (set[i].z < set[0].z) swap(set[i], set[0]);
 		}
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
+		return ((a.x - set[0].x) * (a.x - set[0].x) + (a.z - set[0].z) * (a.z - set[0].z)) < ((b.x - set[0].x) * (b.x - set[0].x) + (b.z - set[0].z) * (b.z - set[0].z));
+	});
+	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
 		return ((a.x - set[0].x) * (b.z - set[0].z) - (a.z - set[0].z) * (b.x - set[0].x)) < 0;
 	});
 	size_t top = 2;
@@ -202,6 +208,9 @@ vector<Vertex> Scene::getOYZProj(Mesh &m) {
 		else if (abs(set[i].y - set[0].y) < 0.001) {
 			if (set[i].z < set[0].z) swap(set[i], set[0]);
 		}
+	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
+		return ((a.y - set[0].y) * (a.y - set[0].y) + (a.z - set[0].z) * (a.z - set[0].z)) < ((b.y - set[0].y) * (b.y - set[0].y) + (b.z - set[0].z) * (b.z - set[0].z));
+	});
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
 		return ((a.y - set[0].y) * (b.z - set[0].z) - (a.z - set[0].z) * (b.y - set[0].y)) < 0;
 	});

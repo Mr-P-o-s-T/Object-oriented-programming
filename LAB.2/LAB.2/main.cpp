@@ -49,28 +49,28 @@ void mouseMoveFunc(int x, int y) {
 int main(int argc, char **argv) {
 	char answ;
 	do {
-		cout << "Want to load scene from file scene.save& (y/n):";
+		cout << "Want to load scene from file scene.save& (y/n): ";
 		cin >> answ;
 	} while ((answ != 'y') && (answ != 'n'));
 	if (answ == 'n') {
-		cout << "Set first mesh parameters:\n" << "Position (x, y, z):";
+		cout << "Set first mesh parameters:\n" << "Position (x, y, z): ";
 		double x, y, z;
 		cin >> x >> y >> z;
 		scene.getMesh(true).setPosition(x, y, z);
-		cout << "Standart color (r, g, b):";
+		cout << "Standart color (r, g, b): ";
 		cin >> x >> y >> z;
 		scene.getMesh(true).setColor(x, y, z);
-		cout << "Picked color (r, g, b):";
+		cout << "Picked color (r, g, b): ";
 		cin >> x >> y >> z;
 		scene.getMesh(true).setColor(x, y, z);
 
-		cout << "Set second mesh parameters:\n" << "Position (x, y, z):";
+		cout << "Set second mesh parameters:\n" << "Position (x, y, z): ";
 		cin >> x >> y >> z;
 		scene.getMesh(false).setPosition(x, y, z);
-		cout << "Standart color (r, g, b):";
+		cout << "Standart color (r, g, b): ";
 		cin >> x >> y >> z;
 		scene.getMesh(false).setColor(x, y, z);
-		cout << "Picked color (r, g, b):";
+		cout << "Picked color (r, g, b): ";
 		cin >> x >> y >> z;
 		scene.getMesh(false).setColor(x, y, z);
 	}
