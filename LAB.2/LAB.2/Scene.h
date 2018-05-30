@@ -9,6 +9,7 @@ public:
 		meshes[0].second = false;
 		meshes[1].first.createMesh(mesh1);
 		meshes[1].second = false;
+		cam = new Camera(5, 5, 5);
 	}
 
 	void BuildScene();
@@ -22,8 +23,13 @@ public:
 
 	void mouseMoveFunc(int x, int y);
 
+	Mesh &getMesh(bool first) {
+		if (first) return meshes[0].first;
+		return meshes[1].first;
+	}
+
 	~Scene() = default;
-//private:
+private:
 	std::pair<Mesh, bool> meshes[2];
 	Camera *cam;
 

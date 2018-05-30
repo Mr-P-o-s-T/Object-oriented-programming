@@ -165,6 +165,9 @@ vector<Vertex> Scene::getOXYProj(Mesh &m) {
 	vector<Vertex> set = m.getVertexesProjectionOXY();
 	for (size_t i = 1; i < set.size(); i++)
 		if (set[i].x < set[0].x) swap(set[i], set[0]);
+		else if (abs(set[i].x - set[0].x) < 0.001) {
+			if (set[i].y < set[0].y) swap(set[i], set[0]);
+		}
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
 		return ((a.x - set[0].x) * (b.y - set[0].y) - (a.y - set[0].y) * (b.x - set[0].x)) < 0;
 	});
@@ -179,6 +182,9 @@ vector<Vertex> Scene::getOXZProj(Mesh &m) {
 	vector<Vertex> set = m.getVertexesProjectionOXZ();
 	for (size_t i = 1; i < set.size(); i++)
 		if (set[i].x < set[0].x) swap(set[i], set[0]);
+		else if (abs(set[i].x - set[0].x) < 0.001) {
+			if (set[i].z < set[0].z) swap(set[i], set[0]);
+		}
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
 		return ((a.x - set[0].x) * (b.z - set[0].z) - (a.z - set[0].z) * (b.x - set[0].x)) < 0;
 	});
@@ -193,6 +199,9 @@ vector<Vertex> Scene::getOYZProj(Mesh &m) {
 	vector<Vertex> set = m.getVertexesProjectionOYZ();
 	for (size_t i = 1; i < set.size(); i++)
 		if (set[i].y < set[0].y) swap(set[i], set[0]);
+		else if (abs(set[i].y - set[0].y) < 0.001) {
+			if (set[i].z < set[0].z) swap(set[i], set[0]);
+		}
 	sort(set.begin() + 1, set.end(), [&set](Vertex a, Vertex b)->bool {
 		return ((a.y - set[0].y) * (b.z - set[0].z) - (a.z - set[0].z) * (b.y - set[0].y)) < 0;
 	});

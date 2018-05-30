@@ -3,6 +3,8 @@
 
 #include "Scene.h"
 #include "glut.h"
+#include <iostream>
+using namespace std;
 
 Scene scene("meshes/mesh.mesh", "meshes/mesh.mesh");
 
@@ -45,14 +47,35 @@ void mouseMoveFunc(int x, int y) {
 }
 
 int main(int argc, char **argv) {
+	char answ;
+	do {
+		cout << "Want to load scene from file scene.save& (y/n):";
+		cin >> answ;
+	} while ((answ != 'y') && (answ != 'n'));
+	if (answ == 'n') {
+		cout << "Set first mesh parameters:\n" << "Position (x, y, z):";
+		double x, y, z;
+		cin >> x >> y >> z;
+		scene.getMesh(true).setPosition(x, y, z);
+		cout << "Standart color (r, g, b):";
+		cin >> x >> y >> z;
+		scene.getMesh(true).setColor(x, y, z);
+		cout << "Picked color (r, g, b):";
+		cin >> x >> y >> z;
+		scene.getMesh(true).setColor(x, y, z);
 
-	scene.meshes[0].first.setPosition(1, 1, 1);
-	scene.meshes[0].first.setColor(1, 0, 0);
-	scene.meshes[0].first.setColor(1, 1, 0);
-	scene.meshes[1].first.setPosition(-1, -1, -1);
-	scene.meshes[1].first.setColor(0, 0, 1);
-	scene.meshes[1].first.setColor(0, 1, 1);
-	scene.cam = new Camera(5, 5, 5);
+		cout << "Set second mesh parameters:\n" << "Position (x, y, z):";
+		cin >> x >> y >> z;
+		scene.getMesh(false).setPosition(x, y, z);
+		cout << "Standart color (r, g, b):";
+		cin >> x >> y >> z;
+		scene.getMesh(false).setColor(x, y, z);
+		cout << "Picked color (r, g, b):";
+		cin >> x >> y >> z;
+		scene.getMesh(false).setColor(x, y, z);
+	}
+	else scene.Load();
+
 	initialization(argc, argv);
 
 	glutDisplayFunc(renderScene);
