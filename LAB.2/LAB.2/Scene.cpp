@@ -176,7 +176,10 @@ vector<Vertex> Scene::getOXYProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
+		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) {
+			set.erase(set.begin() + top - 1);
+			top--;
+		}
 	}
 	return set;
 }
@@ -196,7 +199,10 @@ vector<Vertex> Scene::getOXZProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
+		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) {
+			set.erase(set.begin() + top - 1);
+			top--;
+		}
 	}
 	return set;
 }
@@ -216,7 +222,10 @@ vector<Vertex> Scene::getOYZProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) set.erase(set.begin() + top - 1);
+		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) {
+			set.erase(set.begin() + top - 1);
+			top--;
+		}
 	}
 	return set;
 }

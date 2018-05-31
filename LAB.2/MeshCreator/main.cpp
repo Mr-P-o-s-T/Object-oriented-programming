@@ -6,7 +6,7 @@ using namespace std;
 int main() {
 	size_t n;
 	cin >> n;
-	ofstream meshHolder("../LAB.2/meshes/mesh.mesh");
+	ofstream meshHolder("../LAB.2/meshes/mesh.mesh", ios::binary);
 	meshHolder.write((char *)&n, sizeof(n));
 	for (size_t i = 0; i < 3 * n; i++) {
 		double coord;

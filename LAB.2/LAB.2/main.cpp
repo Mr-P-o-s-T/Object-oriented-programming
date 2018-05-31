@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-Scene scene("meshes/mesh.mesh", "meshes/mesh.mesh");
+Scene scene("meshes/cube.mesh", "meshes/prism.mesh");
 
 void initialization(int argc, char **argv) {
 	glutInit(&argc, argv);
@@ -16,7 +16,6 @@ void initialization(int argc, char **argv) {
 	glutCreateWindow("");
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//glOrtho(-3, 3, -3, 3, 0.1, 20);
 	gluPerspective(90, 1, 0.1, 20);
 	glMatrixMode(GL_MODELVIEW);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
