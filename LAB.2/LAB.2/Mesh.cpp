@@ -110,7 +110,7 @@ vector<Vertex> Mesh::getVertexesProjectionOXY() {
 	bool cont = false;
 	for (auto i: vertexes) {
 		for (auto j : res)
-			if ((abs(j.x - i.x) < 0.001) && (abs(j.y - i.y) < 0.001)) {
+			if ((abs(j.x - i.x * scale) < 0.001) && (abs(j.y - i.y * scale) < 0.001)) {
 				cont = true;
 				break;
 			}
@@ -125,7 +125,7 @@ vector<Vertex> Mesh::getVertexesProjectionOXZ() {
 	bool cont = false;
 	for (auto i : vertexes) {
 		for (auto j : res)
-			if ((abs(j.x - i.x) < 0.001) && (abs(j.z - i.z) < 0.001)) {
+			if ((abs(j.x - i.x * scale) < 0.001) && (abs(j.z - i.z * scale) < 0.001)) {
 				cont = true;
 				break;
 			}
@@ -140,7 +140,7 @@ vector<Vertex> Mesh::getVertexesProjectionOYZ() {
 	bool cont = false;
 	for (auto i : vertexes) {
 		for (auto j : res)
-			if ((abs(j.y - i.y) < 0.001) && (abs(j.z - i.z) < 0.001)) {
+			if ((abs(j.y - i.y * scale) < 0.001) && (abs(j.z - i.z * scale) < 0.001)) {
 				cont = true;
 				break;
 			}

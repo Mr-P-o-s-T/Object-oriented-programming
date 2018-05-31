@@ -48,7 +48,7 @@ void mouseMoveFunc(int x, int y) {
 int main(int argc, char **argv) {
 	char answ;
 	do {
-		cout << "Want to load scene from file scene.save& (y/n): ";
+		cout << "Want to load scene from file 'scene.save' (y/n): ";
 		cin >> answ;
 	} while ((answ != 'y') && (answ != 'n'));
 	if (answ == 'n') {
@@ -74,6 +74,10 @@ int main(int argc, char **argv) {
 		scene.getMesh(false).setColor(x, y, z);
 	}
 	else scene.Load();
+
+	cout << "\n1 - choose 1st mesh, 2 - choose 2nd mesh\n\nQ - translation\nW - rotation\nE - changing scale\n	X - changings along X axis\n	Y - changings along Y axis\n	Z - changings along Z axis\n\nS - save scene\nL - load scene from 'scene.save' file (root catalog)\n\n";
+
+	system("pause");
 
 	initialization(argc, argv);
 
