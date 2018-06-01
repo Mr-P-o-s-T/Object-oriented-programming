@@ -7,9 +7,15 @@
 #include <cmath>
 using namespace std;
 
-bool clockwiseRot(const Vertex &a, const Vertex &b, const Vertex &c) {
-	if (!a.z) return ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) < 0;
-	if (!a.y) return ((b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x)) < 0;
+bool clockwiseRotOXY(const Vertex &a, const Vertex &b, const Vertex &c) {
+	return ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) < 0;
+}
+
+bool clockwiseRotOXZ(const Vertex &a, const Vertex &b, const Vertex &c) {
+	return ((b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x)) < 0;
+}
+
+bool clockwiseRotOYZ(const Vertex &a, const Vertex &b, const Vertex &c) {
 	return ((b.y - a.y) * (c.z - a.z) - (b.z - a.z) * (c.y - a.y)) < 0;
 }
 
@@ -176,7 +182,7 @@ vector<Vertex> Scene::getOXYProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) {
+		while ((top >= 2) && (top != set.size()) && clockwiseRotOXY(set[top], set[top - 1], set[top - 2])) {
 			set.erase(set.begin() + top - 1);
 			top--;
 		}
@@ -199,7 +205,7 @@ vector<Vertex> Scene::getOXZProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) {
+		while ((top >= 2) && (top != set.size()) && clockwiseRotOXZ(set[top], set[top - 1], set[top - 2])) {
 			set.erase(set.begin() + top - 1);
 			top--;
 		}
@@ -222,7 +228,7 @@ vector<Vertex> Scene::getOYZProj(Mesh &m) {
 	});
 	size_t top = 2;
 	for (; top < set.size(); top++) {
-		while ((top != set.size()) && clockwiseRot(set[top], set[top - 1], set[top - 2])) {
+		while ((top >= 2) && (top != set.size()) && clockwiseRotOYZ(set[top], set[top - 1], set[top - 2])) {
 			set.erase(set.begin() + top - 1);
 			top--;
 		}
