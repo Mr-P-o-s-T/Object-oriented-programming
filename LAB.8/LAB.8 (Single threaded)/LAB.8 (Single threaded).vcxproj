@@ -115,12 +115,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bucket.cpp" />
+    <ClCompile Include="BucketSorter.cpp" />
+    <ClCompile Include="CombSorter.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Sorter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bucket.h" />
+    <ClInclude Include="BucketSorter.h" />
+    <ClInclude Include="CombSorter.h" />
     <ClInclude Include="Sorter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
