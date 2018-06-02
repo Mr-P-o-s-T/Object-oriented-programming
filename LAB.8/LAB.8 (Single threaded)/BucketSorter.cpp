@@ -1,4 +1,4 @@
-#define SORT_METHOD_SWITCHER_NUM 5
+#include "Settings.h"
 #include "BucketSorter.h"
 #include "CombSorter.h"
 using namespace std;
