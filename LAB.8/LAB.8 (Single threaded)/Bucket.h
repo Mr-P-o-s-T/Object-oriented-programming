@@ -3,10 +3,18 @@
 
 class Bucket {
 public:
-	Bucket();
-	~Bucket();
+	Bucket() = default;
+	Bucket(std::vector<int> &values) {
+		swap(values, data);
+	}
+	~Bucket() = default;
+
+	void AddData(int &newData) {
+		data.push_back(newData);
+	}
+	std::vector<int> &GiveData() {
+		return data;
+	}
 private:
 	std::vector<int> data;
-
-	void combSort();
 };
