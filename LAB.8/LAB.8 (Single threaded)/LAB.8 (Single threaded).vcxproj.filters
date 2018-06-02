@@ -21,9 +21,15 @@
     <ClCompile Include="Bucket.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Sorter.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bucket.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Sorter.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
