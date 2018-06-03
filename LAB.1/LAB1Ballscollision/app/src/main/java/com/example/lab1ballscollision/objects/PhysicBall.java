@@ -73,7 +73,7 @@ public final class PhysicBall extends Ball {
 
     private void updateImpulse(double deltaT) {
         Vector tmp = new Vector(impulse);
-        relativeImpulseChanging(friction.x * deltaT + gravity.x * deltaT, friction.y * deltaT + gravity.y * deltaT);
+        relativeImpulseChanging((friction.x + gravity.x) * deltaT, (friction.y + gravity.y ) * deltaT);
         if (impulse.x * tmp.x < 0.0) impulse.x = 0.0;
         if (impulse.y * tmp.y < 0.0) impulse.y = 0.0;
     }

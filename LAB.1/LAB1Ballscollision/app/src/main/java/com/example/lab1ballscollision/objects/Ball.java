@@ -49,9 +49,9 @@ public abstract class Ball {
         impulse.y = speedY * mass;
     }
 
-    void relativeImpulseChanging(double deltaSpeedX, double deltaSpeedY) {
-        impulse.x += deltaSpeedX * mass;
-        impulse.y += deltaSpeedY * mass;
+    void relativeImpulseChanging(double deltaImpX, double deltaImpY) {
+        impulse.x += deltaImpX;
+        impulse.y += deltaImpY;
     }
 
     private Vector getPosDiff(Ball secondBall) {

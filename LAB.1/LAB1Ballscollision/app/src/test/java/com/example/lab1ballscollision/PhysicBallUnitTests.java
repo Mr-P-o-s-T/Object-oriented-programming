@@ -6,6 +6,8 @@ import com.example.lab1ballscollision.objects.Vector;
 
 import org.junit.Test;
 
+import java.nio.DoubleBuffer;
+
 import static org.junit.Assert.*;
 
 /**
@@ -21,7 +23,7 @@ public class PhysicBallUnitTests {
         Ball a = new PhysicBall(0.0, 0.0, 0.2), b = new PhysicBall(100.0, 0.0, 0.2);
         a.speedChanging(1.0, 0.0); b.speedChanging(-1.0, 0.0);
         double dT = a.getCollisionTime(b);
-        if (Math.abs(dT - 45) >= 0.01) assertFalse(true);
+        if (Math.abs(dT - 45) >= 0.01) fail();
     }
 
     @Test
@@ -31,16 +33,26 @@ public class PhysicBallUnitTests {
         Ball a = new PhysicBall(0.0, 0.0, 0.2), b = new PhysicBall(100.0, 0.0, 0.2);
         a.speedChanging(1.0, 0.0); b.speedChanging(-1.0, 0.0);
         double dT = a.getCollisionTime(b);
-        if (Math.abs(dT - 45) >= 0.01) assertFalse(true);
+        if (Math.abs(dT - 45) >= 0.01) fail();
     }
 
     @Test
-    public void getCollisionTime_usualCollision_isCorrect() {
+    public void getCollisionTime_commonCollision_isCorrect() {
+        Vector.epsilon = 0.0001;
+        Ball.xMax = 100;
+        Ball a = new PhysicBall(0.0, 0.0, 0.2), b = new PhysicBall(15.0, 0.0, 0.2);
+        a.speedChanging(1.0, 0.5); b.speedChanging(-1.0, 2.0);
+        double dT = a.getCollisionTime(b);
+        if (Math.abs(dT - 3.06) >= 0.01) fail();
+    }
+
+    @Test
+    public void getCollisionTime_noCollision_isCorrect() {
         Vector.epsilon = 0.0001;
         Ball.xMax = 100;
         Ball a = new PhysicBall(0.0, 0.0, 0.2), b = new PhysicBall(100.0, 0.0, 0.2);
         a.speedChanging(1.0, 0.5); b.speedChanging(-1.0, 2.0);
         double dT = a.getCollisionTime(b);
-        if (Math.abs(dT - 45) >= 0.01) assertFalse(true);
+        if (Math.abs(dT - Double.MAX_VALUE) >= 0.01) fail();
     }
 }
