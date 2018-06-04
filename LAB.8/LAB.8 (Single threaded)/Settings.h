@@ -1,2 +1,2 @@
 #pragma once
-#define SORT_METHOD_SWITCHER_NUM 40
+#define SORT_METHOD_SWITCHER_NUM 1600

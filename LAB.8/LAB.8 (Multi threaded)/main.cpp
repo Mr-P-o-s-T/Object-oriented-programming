@@ -14,7 +14,7 @@ vector<int> getRandomVector(size_t size) {
 }
 
 int main() {
-	vector<int> data(getRandomVector(100000));
+	vector<int> data(getRandomVector(10000));
 	Bucket bucket(data);
 	Sorter *srtr = new BucketSorter(5);
 	clock_t start = clock();
