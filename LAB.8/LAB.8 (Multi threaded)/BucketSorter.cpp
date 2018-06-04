@@ -13,17 +13,12 @@ void BucketSorter::sortMethod() {
 		max += 1;
 		Bucket *buckets = new Bucket[k];
 
-		for (size_t i = 0; i < data->size(); i++) {
-			buckets[getIndex((*data)[i])].AddData((*data)[i]);
-		}
 
 		for (size_t i = 0; i < k; i++) {
-			Sorter *sorter;
-			if (buckets[i].GiveData().size() <= SORT_METHOD_SWITCHER_NUM) sorter = new CombSorter();
-			else sorter = new BucketSorter(k);
-			sorter->Sort(buckets[i]);
-			delete sorter;
+			buckets[i].setNewThread(new thread(&BucketSorter::multiSplitting, this, buckets));
 		}
+
+		for (size_t i = 0; i < k; i++) buckets[i].finalizeCurrThread();
 
 		vector<int> res;
 		for (size_t i = 0; i < k; i++) {
@@ -36,4 +31,24 @@ void BucketSorter::sortMethod() {
 
 		delete[] buckets;
 	}
+}
+
+void BucketSorter::multiSplitting(Bucket * buckets) {
+	Bucket *owner = &buckets[0];
+	for (size_t i = 0; i < k; i++) {
+		if (buckets[i].isCurrThread(std::this_thread::get_id())) {
+			owner = &buckets[i];
+			break;
+		}
+	}
+
+	for (size_t i = 0; i < data->size(); i++) {
+		if (&buckets[getIndex((*data)[i])] == owner) owner->AddData((*data)[i]);
+	}
+
+	Sorter *sorter;
+	if (owner->GiveData().size() <= SORT_METHOD_SWITCHER_NUM) sorter = new CombSorter();
+	else sorter = new BucketSorter(k);
+	sorter->Sort(*owner);
+	delete sorter;
 }

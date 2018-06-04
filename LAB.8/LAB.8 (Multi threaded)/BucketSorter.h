@@ -11,4 +11,5 @@ private:
 	size_t getIndex(const int &value) {
 		return (size_t) (k * ((double) value - min) / (max - min));
 	}
+	void multiSplitting(Bucket *buckets);
 };
