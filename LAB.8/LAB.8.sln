@@ -7,7 +7,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LAB.8 (Single threaded)", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LAB.8 (Multi threaded)", "LAB.8 (Multi threaded)\LAB.8 (Multi threaded).vcxproj", "{11319AF9-122C-4A29-8E92-381DDF63DC21}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SorterTests", "SorterTests\SorterTests.vcxproj", "{41A151AE-05CF-4745-8CE8-E0FBF75D8C36}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MultiThreadedSorterTests", "MultiThreadedSorterTests\MultiThreadedSorterTests.vcxproj", "{41A151AE-05CF-4745-8CE8-E0FBF75D8C36}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SingleThreadedSorterTests", "SingleThreadedSorterTests\SingleThreadedSorterTests.vcxproj", "{42C5F518-8981-452F-88D3-0DFE0D6E1632}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{41A151AE-05CF-4745-8CE8-E0FBF75D8C36}.Release|x64.Build.0 = Release|x64
 		{41A151AE-05CF-4745-8CE8-E0FBF75D8C36}.Release|x86.ActiveCfg = Release|Win32
 		{41A151AE-05CF-4745-8CE8-E0FBF75D8C36}.Release|x86.Build.0 = Release|Win32
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Debug|x64.ActiveCfg = Debug|x64
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Debug|x64.Build.0 = Debug|x64
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Debug|x86.ActiveCfg = Debug|Win32
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Debug|x86.Build.0 = Debug|Win32
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Release|x64.ActiveCfg = Release|x64
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Release|x64.Build.0 = Release|x64
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Release|x86.ActiveCfg = Release|Win32
+		{42C5F518-8981-452F-88D3-0DFE0D6E1632}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

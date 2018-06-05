@@ -4,7 +4,7 @@
 #include "../LAB.8 (Multi threaded)/CombSorter.cpp"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace SorterTests {		
+namespace MultiThreadedSorterTests {		
 	TEST_CLASS(CombSorterTests) {
 	public:
 		TEST_METHOD(PositiveArraySorting) {
