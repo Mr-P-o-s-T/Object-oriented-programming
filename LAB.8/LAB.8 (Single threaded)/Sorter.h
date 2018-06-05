@@ -8,7 +8,7 @@ public:
 
 	void Sort(Bucket &vault) {
 		data = &vault.GiveData();
-		sortMethod();
+		if (data->size() > 1) sortMethod();
 	}
 protected:
 	std::vector<int> *data;
