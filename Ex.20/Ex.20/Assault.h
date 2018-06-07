@@ -6,6 +6,6 @@ public:
 	~Assault() {}
 
 	const char *getSpeech() {
-		return "That is a risky operation but capturing of this facility will bring an ending of this war...\n";
+		return "That is a risky operation but capturing of this facility will bring an ending of this war more closer...\n";
 	}
 };
