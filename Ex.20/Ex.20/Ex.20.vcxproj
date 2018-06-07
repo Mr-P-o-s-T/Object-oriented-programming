@@ -116,7 +116,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Assault.h" />
+    <ClInclude Include="AttritionBattle.h" />
+    <ClInclude Include="Commander.h" />
+    <ClInclude Include="Domination.h" />
+    <ClInclude Include="Extermination.h" />
     <ClInclude Include="IAttackStrategy.h" />
+    <ClInclude Include="Infiltration.h" />
+    <ClInclude Include="Sabotage.h" />
+    <ClInclude Include="StrategicWeaponsStrike.h" />
+    <ClInclude Include="AttackStrategies.h" />
+    <ClInclude Include="Target.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

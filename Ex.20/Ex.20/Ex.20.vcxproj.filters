@@ -16,6 +16,9 @@
     <Filter Include="Файлы заголовков\Strategies">
       <UniqueIdentifier>{df5b0f79-9609-465f-b4c4-ab7437de1946}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Strategies\Interface">
+      <UniqueIdentifier>{7a8b94fd-b1e4-4433-b034-32da4d7de324}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -23,10 +26,37 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IAttackStrategy.h">
+    <ClInclude Include="Assault.h">
+      <Filter>Файлы заголовков\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="Extermination.h">
+      <Filter>Файлы заголовков\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="Infiltration.h">
+      <Filter>Файлы заголовков\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="StrategicWeaponsStrike.h">
+      <Filter>Файлы заголовков\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="Domination.h">
+      <Filter>Файлы заголовков\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="AttritionBattle.h">
+      <Filter>Файлы заголовков\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="Sabotage.h">
+      <Filter>Файлы заголовков\Strategies</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackStrategies.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Assault.h">
+    <ClInclude Include="IAttackStrategy.h">
+      <Filter>Файлы заголовков\Strategies\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Commander.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Target.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
