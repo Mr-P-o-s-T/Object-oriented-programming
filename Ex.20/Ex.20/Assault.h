@@ -5,7 +5,7 @@ public:
 	Assault() {}
 	~Assault() {}
 
-	const char *getStrategy() {
-		return "sda";
+	const char *getSpeech() {
+		return "That is a risky operation but capturing of this facility will bring an ending of this war...\n";
 	}
 };

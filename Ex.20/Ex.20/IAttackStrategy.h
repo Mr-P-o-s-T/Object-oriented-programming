@@ -4,5 +4,5 @@ public:
 	IAttackStrategy() {}
 	virtual ~IAttackStrategy() {}
 
-	virtual const  char*getStrategy() = 0;
+	virtual const  char *getSpeech() = 0;
 };

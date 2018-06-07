@@ -5,7 +5,7 @@ public:
 	Extermination() {}
 	~Extermination() {}
 
-	const char *getStrategy() {
-		return "";
+	const char *getSpeech() {
+		return "You will meet dangerous and well equiped enemy. So capture this position and show them no mercy...\n";
 	}
 };

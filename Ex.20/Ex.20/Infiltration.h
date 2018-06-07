@@ -5,7 +5,7 @@ public:
 	Infiltration() {}
 	~Infiltration() {}
 
-	const char *getStrategy() {
-		return "";
+	const char *getSpeech() {
+		return "Move quiet and capture that point...\n";
 	}
 };

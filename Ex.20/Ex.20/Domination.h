@@ -5,7 +5,7 @@ public:
 	Domination() {}
 	~Domination() {}
 
-	const char *getStrategy() {
-		return "";
+	const char *getSpeech() {
+		return "Our forces in this region are more numberous and better trained. So show our might to our foes...\n";
 	}
 };
