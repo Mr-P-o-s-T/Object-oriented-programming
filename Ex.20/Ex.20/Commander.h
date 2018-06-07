@@ -5,19 +5,26 @@
 class Commander {
 public:
 	Commander() {}
-	~Commander() {}
+	~Commander() {
+		if (strategy) delete strategy;
+	}
 
 	void setTarget(Target newTarget) {
 		currTarget = newTarget;
 	}
 
-	std::string getCurrStrategy() {
+	std::string getSpeech() {
+		if (strategy) delete strategy;
 		switch (currTarget.type) {
 		case targetType::None:
 			strategy = new Domination();
 			break;
 		case targetType::Field:
 			if (currTarget.garrison < targetDefend::EliteTroops) strategy = new Domination();
+			else strategy = new AttritionBattle();
+			break;
+		case targetType::Crossroad:
+			if (currTarget.garrison < targetDefend::RegularTroops) strategy = new Domination();
 			else strategy = new AttritionBattle();
 			break;
 		case targetType::Forest:
@@ -29,16 +36,17 @@ public:
 			else strategy = new Assault();
 			break;
 		case targetType::Town:
-			if (currTarget.garrison < targetDefend::TrainedTroops) strategy = new Assault();
+			if (currTarget.garrison < targetDefend::TrainedTroops) strategy = new Domination();
 			else strategy = new AttritionBattle();
 			break;
 		case targetType::City:
-			if (currTarget.garrison < targetDefend::Recruits) strategy = new Domination();
+			if (currTarget.garrison < targetDefend::Recruits) strategy = new Assault();
 			else if (currTarget.garrison < targetDefend::EliteTroops) strategy = new AttritionBattle();
 			else strategy = new StrategicWeaponsStrike();
 			break;
 		case targetType::DOT:
-			if (currTarget.garrison < targetDefend::Recruits) strategy = new Assault();
+			if (currTarget.garrison < targetDefend::TrainedTroops) strategy = new Domination();
+			else if (currTarget.garrison < targetDefend::RegularTroops) strategy = new Assault();
 			else strategy = new Extermination();
 			break;
 		case targetType::Bunker:
@@ -46,9 +54,9 @@ public:
 			else strategy = new StrategicWeaponsStrike();
 			break;
 		}
-		return strategy->getStrategy();
+		return strategy->getSpeech();
 	}
 private:
 	Target currTarget;
-	IAttackStrategy *strategy;
+	IAttackStrategy *strategy = nullptr;
 };
