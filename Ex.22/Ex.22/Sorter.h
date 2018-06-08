@@ -5,22 +5,34 @@
 class Sorter : public ObservableDouble, public IObserver<double> {
 public:
 	Sorter() {
-		
+		resList = new HistoryList();
 	}
-	~Sorter() {}
+	~Sorter() {
+		delete resList;
+	}
 
 	void setValue(double newValue) {
-		
-		notify();
+		delete resList;
+		vault.push_back(newValue);
+		sortVault();
+		resList = new HistoryList();
+		for (size_t i = 0; i < vault.size(); i++) notify(vault[i]);
 	}
 
 	void updated(double &data) {
 		setValue(data);
 	}
-private:
-	HistoryList resList;
 
-	void notify(double &value) {
-		for (auto item = observerList.begin(); item != observerList.end(); item++) (*item).updated(value);
+	const std::vector<double> &getSortedValues() {
+		return resList->getHistory();
+	}
+private:
+	HistoryList *resList = nullptr;
+	std::vector<double> vault;
+
+	void sortVault() {
+		qsort(vault.data(), vault.size(), sizeof(double), [](const void *a, const void *b) -> int {
+			return *(const double *)a - *(const double *)b;
+		});
 	}
 };

@@ -26,7 +26,7 @@ public:
 protected:
 	std::vector<IObserver<double> &> observerList;
 
-	virtual void notify(double &value) {
+	void notify(double &value) {
 		for (auto item = observerList.begin(); item != observerList.end(); item++) (*item).updated(value);
 	}
 private:
