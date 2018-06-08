@@ -21,12 +21,12 @@ public:
 
 	virtual void setValue(double newValue) {
 		value = newValue;
-		notify();
+		notify(value);
 	}
 protected:
 	std::vector<IObserver<double> &> observerList;
 
-	virtual void notify() {
+	virtual void notify(double &value) {
 		for (auto item = observerList.begin(); item != observerList.end(); item++) (*item).updated(value);
 	}
 private:

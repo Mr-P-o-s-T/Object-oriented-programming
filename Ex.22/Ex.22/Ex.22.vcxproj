@@ -122,6 +122,8 @@
     <ClInclude Include="IObservable.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="Mean.h" />
+    <ClInclude Include="ObservableDouble.h" />
+    <ClInclude Include="Sorter.h" />
     <ClInclude Include="Summator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

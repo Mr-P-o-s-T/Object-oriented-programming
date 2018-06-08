@@ -25,6 +25,9 @@
     <Filter Include="Файлы заголовков\Observable\Interface">
       <UniqueIdentifier>{af1ddbbc-19ca-4dbd-a0db-13050cc611b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Observable Observer">
+      <UniqueIdentifier>{fc17cad0-a5a8-46d3-aff9-262c08b6157d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,6 +49,12 @@
     </ClInclude>
     <ClInclude Include="IObservable.h">
       <Filter>Файлы заголовков\Observable\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ObservableDouble.h">
+      <Filter>Файлы заголовков\Observable</Filter>
+    </ClInclude>
+    <ClInclude Include="Sorter.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
