@@ -123,6 +123,7 @@
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="Mean.h" />
     <ClInclude Include="ObservableDouble.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Sorter.h" />
     <ClInclude Include="Summator.h" />
   </ItemGroup>

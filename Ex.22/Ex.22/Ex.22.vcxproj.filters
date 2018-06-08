@@ -54,6 +54,9 @@
       <Filter>Файлы заголовков\Observable</Filter>
     </ClInclude>
     <ClInclude Include="Sorter.h">
+      <Filter>Файлы заголовков\Observable Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -7,7 +7,7 @@ public:
 	IObservable() {}
 	virtual ~IObservable() {}
 
-	virtual void addObserver(IObserver &o) = 0;
-	virtual void removeObserver(IObserver &o) = 0;
+	virtual void addObserver(IObserver<T> &o) = 0;
+	virtual void removeObserver(IObserver<T> &o) = 0;
 	virtual void notify(T &data) = 0;
 };
