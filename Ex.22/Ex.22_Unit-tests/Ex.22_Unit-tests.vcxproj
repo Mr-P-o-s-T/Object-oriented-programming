@@ -164,6 +164,11 @@
     </ClCompile>
     <ClCompile Include="ObserverUnitTest.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex.22\Ex.22.vcxproj">
+      <Project>{f6089974-558f-4f34-983e-dcc12e2af8c3}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
