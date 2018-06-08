@@ -19,6 +19,12 @@
     <Filter Include="Файлы заголовков\Observers\Interface">
       <UniqueIdentifier>{42b168c7-14ab-4580-a29b-0f396c366fa4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Observable">
+      <UniqueIdentifier>{6bb4c85e-600a-4521-b89b-56f4bb766e31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Observable\Interface">
+      <UniqueIdentifier>{af1ddbbc-19ca-4dbd-a0db-13050cc611b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -37,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="HistoryList.h">
       <Filter>Файлы заголовков\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="IObservable.h">
+      <Filter>Файлы заголовков\Observable\Interface</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

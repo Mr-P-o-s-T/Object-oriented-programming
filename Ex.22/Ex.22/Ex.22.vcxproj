@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HistoryList.h" />
+    <ClInclude Include="IObservable.h" />
     <ClInclude Include="IObserver.h" />
     <ClInclude Include="Mean.h" />
     <ClInclude Include="Summator.h" />
