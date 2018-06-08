@@ -10,7 +10,7 @@ public:
 		n++;
 	}
 
-	const double &getResult() {
+	const double &getMean() {
 		return currMean;
 	}
 private:

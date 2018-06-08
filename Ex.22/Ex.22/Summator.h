@@ -9,7 +9,7 @@ public:
 		currSumm += data;
 	}
 
-	const double &getResult() {
+	const double &getSumm() {
 		return currSumm;
 	}
 private:

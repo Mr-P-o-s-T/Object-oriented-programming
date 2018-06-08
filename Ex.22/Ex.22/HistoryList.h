@@ -2,7 +2,7 @@
 #include "IObserver.h"
 #include <vector>
 
-class HistoryList : public IObserver<std::vector<double>> {
+class HistoryList : public IObserver<double> {
 public:
 	HistoryList() {}
 	~HistoryList() {}
@@ -11,7 +11,7 @@ public:
 		history.push_back(data);
 	}
 
-	const std::vector<double> &getResult() {
+	const std::vector<double> &getHistory() {
 		return history;
 	}
 private:
