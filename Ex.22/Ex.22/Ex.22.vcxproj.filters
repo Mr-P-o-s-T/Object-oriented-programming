@@ -35,5 +35,8 @@
     <ClInclude Include="Mean.h">
       <Filter>Файлы заголовков\Observers</Filter>
     </ClInclude>
+    <ClInclude Include="HistoryList.h">
+      <Filter>Файлы заголовков\Observers</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
