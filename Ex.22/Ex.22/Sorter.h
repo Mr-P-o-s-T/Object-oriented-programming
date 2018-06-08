@@ -2,7 +2,7 @@
 #include "ObservableDouble.h"
 #include "HistoryList.h"
 
-class Sorter : public ObservableDouble, public IObserver<double> {
+class Sorter : private ObservableDouble, public IObserver<double> {
 public:
 	Sorter() {
 		resList = new HistoryList();
