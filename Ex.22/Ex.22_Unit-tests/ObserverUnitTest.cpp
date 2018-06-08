@@ -53,4 +53,20 @@ namespace Ex22_Unittests {
 		}
 
 	};
+
+	TEST_CLASS(ObservableUnitTests) {
+	public:
+
+		TEST_METHOD(RemovingOfObserver) {
+			ObservableDouble a;
+			Summator summ;
+			a.addObserver(summ);
+			a.setValue(1.0);
+			a.removeObserver(summ);
+			a.setValue(2.0);
+			if (abs(summ.getSumm() - 1.0) >= 0.01) Assert::Fail();
+		}
+
+	};
+
 }
