@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">LAB.1 Balls collision</string>
+    <string name="env_prop">Environment properties</string>
+    <string name="start">Start</string>
+    <string name="exit">Exit</string>
+    <string name="xMax">Maximal X coordinate:</string>
+    <string name="yMax">Maximal Y coordinate:</string>
+    <string name="timeSpeed">Simulation time per 1 second</string>
+    <string name="accuracy">Accuracy:</string>
+    <string name="low">Low</string>
+    <string name="medium">Medium</string>
+    <string name="high">High</string>
+    <string name="ultra">Ultra</string>
+    <string name="gravity">Gravity:</string>
+</resources>
