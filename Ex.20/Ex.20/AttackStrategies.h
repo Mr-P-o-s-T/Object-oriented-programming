@@ -1,0 +1,9 @@
+#pragma once
+#include "IAttackStrategy.h"
+#include "Assault.h"
+#include "AttritionBattle.h"
+#include "Domination.h"
+#include "Extermination.h"
+#include "Infiltration.h"
+#include "Sabotage.h"
+#include "StrategicWeaponsStrike.h"

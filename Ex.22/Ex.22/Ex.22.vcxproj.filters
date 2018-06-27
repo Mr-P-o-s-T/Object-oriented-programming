@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Исходные файлы">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Файлы ресурсов">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Файлы заголовков\Observers">
+      <UniqueIdentifier>{d5fea785-0ac9-40a3-893d-72da25639d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Observers\Interface">
+      <UniqueIdentifier>{42b168c7-14ab-4580-a29b-0f396c366fa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Observable">
+      <UniqueIdentifier>{6bb4c85e-600a-4521-b89b-56f4bb766e31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Observable\Interface">
+      <UniqueIdentifier>{af1ddbbc-19ca-4dbd-a0db-13050cc611b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Observable Observer">
+      <UniqueIdentifier>{fc17cad0-a5a8-46d3-aff9-262c08b6157d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IObserver.h">
+      <Filter>Файлы заголовков\Observers\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Summator.h">
+      <Filter>Файлы заголовков\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mean.h">
+      <Filter>Файлы заголовков\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="HistoryList.h">
+      <Filter>Файлы заголовков\Observers</Filter>
+    </ClInclude>
+    <ClInclude Include="IObservable.h">
+      <Filter>Файлы заголовков\Observable\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ObservableDouble.h">
+      <Filter>Файлы заголовков\Observable</Filter>
+    </ClInclude>
+    <ClInclude Include="Sorter.h">
+      <Filter>Файлы заголовков\Observable Observer</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
